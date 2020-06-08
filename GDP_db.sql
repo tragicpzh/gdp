@@ -17,11 +17,9 @@ drop table if exists major;
 
 drop table if exists student;
 
-drop table if exists subject;
+drop table if exists `subject`;
 
 drop table if exists teacher;
-
-drop table if exists user;
 
 /*==============================================================*/
 /* Table: administrator                                         */
@@ -114,7 +112,7 @@ create table student
 /*==============================================================*/
 /* Table: subject                                               */
 /*==============================================================*/
-create table subject
+create table `subject`
 (
    id                   varchar(20) not null,
    teacher_id           varchar(20) not null,
@@ -154,30 +152,8 @@ create table teacher
    primary key (id)
 );
 
-/*==============================================================*/
-/* Table: user                                                  */
-/*==============================================================*/
-create table user
-(
-   id                   varchar(20) not null,
-   `password`           varchar(20) not null,
-   `role`               varchar(10) not null,
-   nickname             varchar(20),
-   head_portrait        varchar(1024),
-   phone_number         varchar(10),
-   email                varchar(50),
-   registration_time    timestamp,
-   primary key (id)
-);
-
-alter table administrator add constraint FK_Inheritance_3 foreign key (id)
-      references user (id) on delete restrict on update restrict;
-
 alter table major add constraint FK_Relationship_1 foreign key (college_id)
       references college (id) on delete restrict on update restrict;
-
-alter table student add constraint FK_Inheritance_2 foreign key (id)
-      references user (id) on delete restrict on update restrict;
 
 alter table student add constraint FK_Relationship_10 foreign key (subject_id)
       references subject (id) on delete restrict on update restrict;
@@ -199,9 +175,6 @@ alter table subject add constraint FK_Relationship_6 foreign key (review_teacher
 
 alter table subject add constraint FK_Relationship_7 foreign key (review_teacher_id3)
       references teacher (id) on delete restrict on update restrict;
-
-alter table teacher add constraint FK_Inheritance_1 foreign key (id)
-      references user (id) on delete restrict on update restrict;
 
 alter table teacher add constraint FK_Relationship_2 foreign key (college_id)
       references college (id) on delete restrict on update restrict;
