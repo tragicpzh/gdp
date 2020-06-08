@@ -28,7 +28,6 @@ create table administrator
 (
    id                   varchar(20) not null,
    `password`           varchar(20) not null,
-   `role`               varchar(10) not null,
    nickname             varchar(20),
    head_portrait        varchar(1024),
    phone_number         varchar(10),
@@ -74,7 +73,6 @@ create table student
    subject_id           varchar(20),
    cross_review_student_id varchar(20),
    `password`           varchar(20) not null,
-   `role`               varchar(10) not null,
    nickname             varchar(20),
    head_portrait        varchar(1024),
    phone_number         varchar(10),
@@ -137,7 +135,6 @@ create table teacher
    id                   varchar(20) not null,
    college_id           varchar(20),
    `password`           varchar(20) not null,
-   `role`               varchar(10) not null,
    nickname             varchar(20),
    head_portrait        varchar(1024),
    phone_number         varchar(10),
