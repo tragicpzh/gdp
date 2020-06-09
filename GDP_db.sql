@@ -1,178 +1,195 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/6/8 21:12:58                            */
-/*==============================================================*/
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+--
+-- Host: localhost    Database: gdp
+-- ------------------------------------------------------
+-- Server version	8.0.20
 
-drop database if exists gdp;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-create database gdp;
+--
+-- Table structure for table `administrator`
+--
 
-use gdp;
+DROP TABLE IF EXISTS `administrator`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `administrator` (
+  `id` varchar(20) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `admin_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-drop table if exists administrator;
+--
+-- Table structure for table `college`
+--
 
-drop table if exists college;
+DROP TABLE IF EXISTS `college`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `college` (
+  `id` varchar(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone_numer` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-drop table if exists major;
+--
+-- Table structure for table `major`
+--
 
-drop table if exists student;
+DROP TABLE IF EXISTS `major`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `major` (
+  `id` varchar(6) NOT NULL,
+  `college_id` varchar(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `major_college_id_idx` (`college_id`),
+  CONSTRAINT `major_college_id` FOREIGN KEY (`college_id`) REFERENCES `college` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-drop table if exists `subject`;
+--
+-- Table structure for table `student`
+--
 
-drop table if exists teacher;
+DROP TABLE IF EXISTS `student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `student` (
+  `id` varchar(20) NOT NULL,
+  `major_id` varchar(6) NOT NULL,
+  `state` varchar(20) NOT NULL DEFAULT 'NO_SELECTION',
+  `email` varchar(50) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `subject_id` bigint DEFAULT NULL,
+  `cross_student_id` varchar(20) DEFAULT NULL,
+  `open_document` varchar(1023) DEFAULT NULL,
+  `middle_document` varchar(1023) DEFAULT NULL,
+  `conclusion_document` varchar(1023) DEFAULT NULL,
+  `paper_document` varchar(1023) DEFAULT NULL,
+  `open_score1` int DEFAULT NULL,
+  `open_score2` int DEFAULT NULL,
+  `open_score3` int DEFAULT NULL,
+  `middle_score1` int DEFAULT NULL,
+  `middle_score2` int DEFAULT NULL,
+  `middle_score3` int DEFAULT NULL,
+  `conclusion_score1` int DEFAULT NULL,
+  `conclusion_score2` int DEFAULT NULL,
+  `conclusion_score3` int DEFAULT NULL,
+  `teacher_paper_score` int DEFAULT NULL,
+  `student_paper_score` int DEFAULT NULL,
+  `final_score` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_cross_student_id_idx` (`cross_student_id`),
+  KEY `student_major_id` (`major_id`),
+  CONSTRAINT `student_cross_student_id` FOREIGN KEY (`cross_student_id`) REFERENCES `student` (`id`),
+  CONSTRAINT `student_major_id` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
+  CONSTRAINT `student_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* Table: administrator                                         */
-/*==============================================================*/
-create table administrator
-(
-   id                   varchar(20) not null,
-   `password`           varchar(20) not null,
-   nickname             varchar(20),
-   head_portrait        varchar(1024),
-   phone_number         varchar(10),
-   email                varchar(50),
-   registration_time    timestamp,
-   primary key (id)
-);
+--
+-- Table structure for table `subject`
+--
 
-/*==============================================================*/
-/* Table: college                                               */
-/*==============================================================*/
-create table college
-(
-   id                   varchar(20) not null,
-   `name`               varchar(50) not null,
-   address              varchar(50) not null,
-   email                varchar(50) not null,
-   phone_number         varchar(10) not null,
-   primary key (id)
-);
+DROP TABLE IF EXISTS `subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `subject` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_teacher_id` varchar(20) NOT NULL,
+  `major_id` varchar(6) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `direction` varchar(50) NOT NULL,
+  `difficulty` decimal(2,2) NOT NULL,
+  `technology` varchar(255) NOT NULL,
+  `describe` varchar(1023) NOT NULL,
+  `document` varchar(1023) DEFAULT NULL,
+  `review_teacher_id1` varchar(20) DEFAULT NULL,
+  `review_teacher_id2` varchar(20) DEFAULT NULL,
+  `review_teacher_id3` varchar(20) DEFAULT NULL,
+  `state` varchar(20) NOT NULL DEFAULT 'NEW',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `subject_teacher_id0_idx` (`create_teacher_id`),
+  KEY `subject_teacher_id1_idx` (`review_teacher_id1`),
+  KEY `subject_teacher_id2_idx` (`review_teacher_id2`),
+  KEY `subject_teacher_id3_idx` (`review_teacher_id3`),
+  KEY `subject_major_id_idx` (`major_id`),
+  CONSTRAINT `subject_major_id` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
+  CONSTRAINT `subject_teacher_id0` FOREIGN KEY (`create_teacher_id`) REFERENCES `teacher` (`id`),
+  CONSTRAINT `subject_teacher_id1` FOREIGN KEY (`review_teacher_id1`) REFERENCES `teacher` (`id`),
+  CONSTRAINT `subject_teacher_id2` FOREIGN KEY (`review_teacher_id2`) REFERENCES `teacher` (`id`),
+  CONSTRAINT `subject_teacher_id3` FOREIGN KEY (`review_teacher_id3`) REFERENCES `teacher` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* Table: major                                                 */
-/*==============================================================*/
-create table major
-(
-   id                   varchar(20) not null,
-   college_id           varchar(20) not null,
-   `name`               varchar(50) not null,
-   address              varchar(50) not null,
-   email                varchar(50) not null,
-   phone_number         varchar(10) not null,
-   primary key (id)
-);
+--
+-- Table structure for table `teacher`
+--
 
-/*==============================================================*/
-/* Table: student                                               */
-/*==============================================================*/
-create table student
-(
-   id                   varchar(20) not null,
-   major_id             varchar(20) not null,
-   subject_id           varchar(20),
-   cross_review_student_id varchar(20),
-   `password`           varchar(20) not null,
-   nickname             varchar(20),
-   head_portrait        varchar(1024),
-   phone_number         varchar(10),
-   email                varchar(50),
-   registration_time    timestamp,
-   `name`               varchar(50) not null,
-   sex                  varchar(10) not null,
-   id_type              varchar(30) not null,
-   id_number            varchar(30) not null,
-   address              varchar(50) not null,
-   nationality          varchar(50) not null,
-   grade                varchar(4) not null,
-   class                varchar(10) not null,
-   enrollment_time      time not null,
-   open_document        varchar(1024),
-   middle_document      varchar(1024),
-   paper_document       varchar(1024),
-   conclusion_document  varchar(1024),
-   open_score1          int,
-   open_score2          int,
-   open_score3          int,
-   middle_score1        int,
-   middle_score2        int,
-   middle_score3        int,
-   conclusion_score1    int,
-   conclusion_score2    int,
-   conclusion_score3    int,
-   paper_score0         int,
-   paper_score1         int,
-   final_score          decimal(5,2),
-   state                varchar(20) not null,
-   primary key (id)
-);
+DROP TABLE IF EXISTS `teacher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `teacher` (
+  `id` varchar(20) NOT NULL,
+  `college_id` varchar(3) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `direction` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `college_id_idx` (`college_id`),
+  CONSTRAINT `teacher_college_id` FOREIGN KEY (`college_id`) REFERENCES `college` (`id`),
+  CONSTRAINT `teacher_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* Table: subject                                               */
-/*==============================================================*/
-create table `subject`
-(
-   id                   varchar(20) not null,
-   teacher_id           varchar(20) not null,
-   review_teacher_id1   varchar(20),
-   review_teacher_id2   varchar(20),
-   review_teacher_id3   varchar(20),
-   `name`               varchar(50) not null,
-   direction            varchar(50) not null,
-   difficulty           int not null,
-   technology           varchar(1024) not null,
-   `describe`           varchar(1024) not null,
-   `file`               varchar(1024) not null,
-   state                varchar(20) not null,
-   primary key (id)
-);
+--
+-- Table structure for table `user`
+--
 
-/*==============================================================*/
-/* Table: teacher                                               */
-/*==============================================================*/
-create table teacher
-(
-   id                   varchar(20) not null,
-   college_id           varchar(20),
-   `password`           varchar(20) not null,
-   nickname             varchar(20),
-   head_portrait        varchar(1024),
-   phone_number         varchar(10),
-   email                varchar(50),
-   registration_time    timestamp,
-   `name`               varchar(50) not null,
-   sex                  varchar(10) not null,
-   id_type              varchar(30) not null,
-   id_number            varchar(30) not null,
-   address              varchar(50) not null,
-   nationality          varchar(50) not null,
-   primary key (id)
-);
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '',
+  `role` varchar(3) NOT NULL,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-alter table major add constraint FK_Relationship_1 foreign key (college_id)
-      references college (id) on delete restrict on update restrict;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-alter table student add constraint FK_Relationship_10 foreign key (subject_id)
-      references subject (id) on delete restrict on update restrict;
-
-alter table student add constraint FK_Relationship_3 foreign key (major_id)
-      references major (id) on delete restrict on update restrict;
-
-alter table student add constraint FK_Relationship_9 foreign key (cross_review_student_id)
-      references student (id) on delete restrict on update restrict;
-
-alter table subject add constraint FK_Relationship_4 foreign key (teacher_id)
-      references teacher (id) on delete restrict on update restrict;
-
-alter table subject add constraint FK_Relationship_5 foreign key (review_teacher_id1)
-      references teacher (id) on delete restrict on update restrict;
-
-alter table subject add constraint FK_Relationship_6 foreign key (review_teacher_id2)
-      references teacher (id) on delete restrict on update restrict;
-
-alter table subject add constraint FK_Relationship_7 foreign key (review_teacher_id3)
-      references teacher (id) on delete restrict on update restrict;
-
-alter table teacher add constraint FK_Relationship_2 foreign key (college_id)
-      references college (id) on delete restrict on update restrict;
-
+-- Dump completed on 2020-06-09 17:22:31

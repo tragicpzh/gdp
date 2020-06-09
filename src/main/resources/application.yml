@@ -1,1 +1,13 @@
-
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/gdp?serverTimeZone=UTC
+    username: root
+    password: 123456
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  jackson:
+    date-format: yyyy-MM-dd
