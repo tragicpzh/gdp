@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <a th:href="@{/login}">登录</a>
+    Hello <span th:text="${session.USER_INFO.getName()}"></span>!
+    <form th:action="@{/logout}" method="post">
+        <button>登出</button>
+    </form>
 </body>
 </html>

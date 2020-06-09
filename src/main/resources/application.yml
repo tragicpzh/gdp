@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gdp?serverTimeZone=UTC
+    url: jdbc:mysql://localhost:3306/gdp?serverTimezone=UTC
     username: root
     password: 123456
   thymeleaf:
@@ -11,3 +11,6 @@ spring:
     suffix: .html
   jackson:
     date-format: yyyy-MM-dd
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  type-aliases-package: org.t01.gdp.domain
