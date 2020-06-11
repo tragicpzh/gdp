@@ -76,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_teacher_id, major_id, name, direction, difficulty, technology, describe, 
+    id, create_teacher_id, major_id, `name`, direction, difficulty, technology, `describe`,
     document, review_teacher_id1, review_teacher_id2, review_teacher_id3, state, create_time
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
@@ -94,7 +94,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from subject
     where id = #{id,jdbcType=BIGINT}
@@ -231,7 +231,7 @@
         major_id = #{record.majorId,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        'name' = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
         technology = #{record.technology,jdbcType=VARCHAR},
       </if>
       <if test="record.describe != null">
-        describe = #{record.describe,jdbcType=VARCHAR},
+        'describe' = #{record.describe,jdbcType=VARCHAR},
       </if>
       <if test="record.document != null">
         document = #{record.document,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
         major_id = #{majorId,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="direction != null">
         direction = #{direction,jdbcType=VARCHAR},
@@ -310,7 +310,7 @@
         technology = #{technology,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="document != null">
         document = #{document,jdbcType=VARCHAR},

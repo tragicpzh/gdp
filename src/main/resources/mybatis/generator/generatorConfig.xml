@@ -39,7 +39,9 @@
         <!--<table tableName="user" catalog="gdp" domainObjectName="User">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>-->
-        <table tableName="subject"  domainObjectName="Subject"></table>
+        <!--<table tableName="subject"  domainObjectName="Subject"></table>-->
+        <!--table tableName="teacher" domainObjectName="Teacher"></table>-->
+        <!--<table tableName="college" domainObjectName="College"></table>-->
 
     </context>
 </generatorConfiguration>
