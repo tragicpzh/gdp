@@ -1,0 +1,16 @@
+PUT http://127.0.0.1:8080/examine/pass
+Content-Type: application/json
+
+{
+    "id": "4"
+}
+###
+
+PUT http://127.0.0.1:8080/examine/fail
+Content-Type: application/json
+
+{
+  "id": "5"
+}
+###
+
