@@ -9,7 +9,7 @@
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.css}">
     <!--  Icon  -->
     <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}" />
 </head>
@@ -23,7 +23,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">首页</a>
+                <a href="index3.html" class="nav-link"></a>
             </li>
         </ul>
 
@@ -58,8 +58,6 @@
                 </div>
             </div>
 
-
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -87,6 +85,15 @@
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>账号信息</p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="addSubject.html" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>添加题目</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a th:href="@{/logout}" class="nav-link" th:method="post">
@@ -101,6 +108,7 @@
                         <a href="#" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>题目管理</p>
+                            <i class="right fas fa-angle-left"></i>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
@@ -158,42 +166,61 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Welcome <span th:text="${session.USER_INFO.getName()}"></span> !</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <!--                            <li class="breadcrumb-item"><a href="#">Home</a></li>-->
-                            <li class="breadcrumb-item active">首页</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+        <section class="content-header">
+            <h1>
+                新增题目
+            </h1>
+        </section>
 
         <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-
+        <section class="content">
+                <div>
+                    <form role="form" action="/teacher/addSubject" method="post" enctype="multipart/form-data" onsubmit="submit_form()">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>题目标题</label>
+                            <input type="text" name="name" class="form-control" placeholder="请输入题目标题（50字内）">
+                        </div>
+                        <div class="form-group">
+                            <label>所属专业</label>
+                            <select class="form-control" name="major">
+                                <option>专业A</option>
+                                <option>专业B</option>
+                                <option>专业C</option>
+                                <option>专业D</option>
+                                <option>专业E</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>题目方向</label>
+                            <input type="text" name="direction" class="form-control" placeholder="请输入题目方向（50字内）">
+                        </div>
+                        <div class="form-group">
+                            <label>题目难度</label>
+                            <input type="text" name="difficulty" class="form-control" placeholder="请输入题目难度（百分制）">
+                        </div>
+                        <div class="form-group">
+                            <label>所需技术</label>
+                            <input type="text" name="technology" class="form-control" placeholder="请输入题目所需要的技术（255字内）">
+                        </div>
+                        <div class="form-group">
+                            <label>题目描述</label>
+                            <input type="text" name="describe" class="form-control" placeholder="请输入题目描述（1023字内）">
+                        </div>
+                        <div class="form-group">
+                            <label>题目资料</label>
+                            <input name="file" type="file" id="exampleInputFile">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-block btn-primary" type="submit">添加</button>
+                        </div>
+                    </form>
                 </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
+            <!-- /.row -->
+        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -219,5 +246,17 @@
 <script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
 <script th:src="@{/Rendering/dist/js/demo.js}"></script>
 <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+
+<script src="/static/bower_components/layer/layer.js"
+        th:src="@{/bower_components/layer/layer.js}"></script>
+
+<script language="JavaScript">
+    function submit_form() {
+        var choice = confirm("确认添加？");
+        if(choice == true){return true;}
+        else{return false;}
+    }
+</script>
+
 </body>
 </html>

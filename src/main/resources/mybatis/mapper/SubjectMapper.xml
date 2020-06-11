@@ -111,8 +111,8 @@
   </delete>
   <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
     insert into subject (id, create_teacher_id, major_id, 
-      name, direction, difficulty, 
-      technology, describe, document, 
+      `name`, direction, difficulty,
+      technology, `describe`, document,
       review_teacher_id1, review_teacher_id2, review_teacher_id3, 
       state, create_time)
     values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, 
@@ -134,7 +134,7 @@
         major_id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="direction != null">
         direction,
@@ -146,7 +146,7 @@
         technology,
       </if>
       <if test="describe != null">
-        describe,
+        `describe`,
       </if>
       <if test="document != null">
         document,
@@ -231,7 +231,7 @@
         major_id = #{record.majorId,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        'name' = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
@@ -273,11 +273,11 @@
     set id = #{record.id,jdbcType=BIGINT},
       create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
       major_id = #{record.majorId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       direction = #{record.direction,jdbcType=VARCHAR},
       difficulty = #{record.difficulty,jdbcType=DECIMAL},
       technology = #{record.technology,jdbcType=VARCHAR},
-      describe = #{record.describe,jdbcType=VARCHAR},
+      `describe` = #{record.describe,jdbcType=VARCHAR},
       document = #{record.document,jdbcType=VARCHAR},
       review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
       review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
@@ -337,11 +337,11 @@
     update subject
     set create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
       major_id = #{majorId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       direction = #{direction,jdbcType=VARCHAR},
       difficulty = #{difficulty,jdbcType=DECIMAL},
       technology = #{technology,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       document = #{document,jdbcType=VARCHAR},
       review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
       review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},
