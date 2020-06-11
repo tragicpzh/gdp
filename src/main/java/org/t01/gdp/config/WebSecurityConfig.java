@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.t01.gdp.handler.LoginSuccessHandler;
+import org.t01.gdp.handler.MyLogoutSuccessHandler;
 import org.t01.gdp.service.MyUserDetailService;
 
 import javax.annotation.Resource;
@@ -19,6 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyUserDetailService myUserDetailService;
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
+    @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
+                .logoutSuccessHandler(myLogoutSuccessHandler)
                 .and()
                 .logout()
                 .permitAll()
