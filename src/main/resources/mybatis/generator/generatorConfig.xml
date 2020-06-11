@@ -36,9 +36,10 @@
         </javaClientGenerator>
 
         <!--  对应的表生成对应的 实体类 -->
-        <table tableName="user" catalog="gdp" domainObjectName="User">
+        <!--<table tableName="user" catalog="gdp" domainObjectName="User">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
+        </table>-->
+        <table tableName="subject"  domainObjectName="Subject"></table>
 
     </context>
 </generatorConfiguration>

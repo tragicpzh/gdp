@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.t01.gdp.mapper.SubjectMapper">
+  <resultMap id="BaseResultMap" type="org.t01.gdp.domain.Subject">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_teacher_id" jdbcType="VARCHAR" property="createTeacherId" />
+    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="difficulty" jdbcType="DECIMAL" property="difficulty" />
+    <result column="technology" jdbcType="VARCHAR" property="technology" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="document" jdbcType="VARCHAR" property="document" />
+    <result column="review_teacher_id1" jdbcType="VARCHAR" property="reviewTeacherId1" />
+    <result column="review_teacher_id2" jdbcType="VARCHAR" property="reviewTeacherId2" />
+    <result column="review_teacher_id3" jdbcType="VARCHAR" property="reviewTeacherId3" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_teacher_id, major_id, name, direction, difficulty, technology, describe, 
+    document, review_teacher_id1, review_teacher_id2, review_teacher_id3, state, create_time
+  </sql>
+  <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from subject
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.t01.gdp.domain.SubjectExample">
+    delete from subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
+    insert into subject (id, create_teacher_id, major_id, 
+      name, direction, difficulty, 
+      technology, describe, document, 
+      review_teacher_id1, review_teacher_id2, review_teacher_id3, 
+      state, create_time)
+    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{difficulty,jdbcType=DECIMAL}, 
+      #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{document,jdbcType=VARCHAR}, 
+      #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, #{reviewTeacherId3,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject">
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTeacherId != null">
+        create_teacher_id,
+      </if>
+      <if test="majorId != null">
+        major_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="technology != null">
+        technology,
+      </if>
+      <if test="describe != null">
+        describe,
+      </if>
+      <if test="document != null">
+        document,
+      </if>
+      <if test="reviewTeacherId1 != null">
+        review_teacher_id1,
+      </if>
+      <if test="reviewTeacherId2 != null">
+        review_teacher_id2,
+      </if>
+      <if test="reviewTeacherId3 != null">
+        review_teacher_id3,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createTeacherId != null">
+        #{createTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null">
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DECIMAL},
+      </if>
+      <if test="technology != null">
+        #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="document != null">
+        #{document,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId1 != null">
+        #{reviewTeacherId1,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId2 != null">
+        #{reviewTeacherId2,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId3 != null">
+        #{reviewTeacherId3,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultType="java.lang.Long">
+    select count(*) from subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update subject
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTeacherId != null">
+        create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorId != null">
+        major_id = #{record.majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.direction != null">
+        direction = #{record.direction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.difficulty != null">
+        difficulty = #{record.difficulty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.technology != null">
+        technology = #{record.technology,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe != null">
+        describe = #{record.describe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.document != null">
+        document = #{record.document,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewTeacherId1 != null">
+        review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewTeacherId2 != null">
+        review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewTeacherId3 != null">
+        review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update subject
+    set id = #{record.id,jdbcType=BIGINT},
+      create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      direction = #{record.direction,jdbcType=VARCHAR},
+      difficulty = #{record.difficulty,jdbcType=DECIMAL},
+      technology = #{record.technology,jdbcType=VARCHAR},
+      describe = #{record.describe,jdbcType=VARCHAR},
+      document = #{record.document,jdbcType=VARCHAR},
+      review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
+      review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
+      review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.t01.gdp.domain.Subject">
+    update subject
+    <set>
+      <if test="createTeacherId != null">
+        create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null">
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=DECIMAL},
+      </if>
+      <if test="technology != null">
+        technology = #{technology,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="document != null">
+        document = #{document,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId1 != null">
+        review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId2 != null">
+        review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTeacherId3 != null">
+        review_teacher_id3 = #{reviewTeacherId3,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.t01.gdp.domain.Subject">
+    update subject
+    set create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=VARCHAR},
+      difficulty = #{difficulty,jdbcType=DECIMAL},
+      technology = #{technology,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      document = #{document,jdbcType=VARCHAR},
+      review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
+      review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},
+      review_teacher_id3 = #{reviewTeacherId3,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
