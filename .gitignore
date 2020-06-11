@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Current Project
+/src/main/resources/application.yml
+/src/main/resources/mybatis/generator/generatorConfig.xml

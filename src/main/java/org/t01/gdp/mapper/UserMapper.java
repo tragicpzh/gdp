@@ -23,6 +23,8 @@ public interface UserMapper {
 
     User selectByPrimaryKey(String id);
 
+    List<User> selectByRole(String role);
+
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
