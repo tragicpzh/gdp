@@ -11,7 +11,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
     <!--  Icon  -->
-    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}" />
+    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -40,7 +43,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="#" class="brand-link">
             <img th:src="@{/Rendering/img/Logo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">GDP</span>
@@ -51,7 +54,8 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
+                         alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><span th:text="${session.USER_INFO.getName()}"></span></a>
@@ -59,10 +63,10 @@
             </div>
 
 
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
@@ -121,13 +125,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link"
+                                   onclick="$mainContent.load('/administrator/manageTeachers')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>教师账号管理</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link"
+                                   onclick="$mainContent.load('/administrator/manageStudents')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>学生账号管理</p>
                                 </a>
@@ -171,7 +177,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-<!--                            <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+                            <!--                            <li class="breadcrumb-item"><a href="#">Home</a></li>-->
                             <li class="breadcrumb-item active">首页</li>
                         </ol>
                     </div><!-- /.col -->
@@ -183,7 +189,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row" id="mainContent">
 
                 </div>
                 <!-- /.row -->
@@ -213,10 +219,23 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-<!-- jQuery -->
+<!--jQuery-->
 <script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
 <!-- Bootstrap -->
 <script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+
+<script th:src="@{/Rendering/plugins/jquery-validation/jquery.validate.min.js}"></script>
+<script th:src="@{/Rendering/plugins/jquery-validation/additional-methods.min.js}"></script>
+<script th:src="@{/Rendering/plugins/jquery-validation/localization/messages_zh.min.js}"></script>
+
 <!-- AdminLTE -->
 <script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
 
@@ -224,5 +243,10 @@
 <script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
 <script th:src="@{/Rendering/dist/js/demo.js}"></script>
 <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+
+
+<script>
+    let $mainContent = $("#mainContent");
+</script>
 </body>
 </html>

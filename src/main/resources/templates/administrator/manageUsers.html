@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <title>Templates</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div id="toolbar">
+            <button id="button_addUser" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+                添加数据
+            </button>
+            <button id="button_loadUserFile" class="btn btn-primary" data-toggle="modal">批量导入</button>
+        </div>
+        <div>
+            <table class="table table-sm table-hover" id="UsersTable"
+                   style="table-layout: fixed;word-break: break-all">
+            </table>
+        </div>
+    </div>
+</div>
+<div th:name="invisibleDiv">
+    <input type="file" id="inputFile" accept=".xlsx" style="display: none;">
+    <div class="modal fade" id="addUserModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="addUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">请填写</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            onclick="clearForm()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="inputUserForm" role="form" action="/administrator/addSingleUser" method="post">
+                        <div class="form-group row">
+                            <label for="inputId" class="col-form-label col-3">Id:</label>
+                            <input type="text" class="form-control col" id="inputId" name="id">
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-form-label col-3">Password:</label>
+                            <input type="text" class="form-control col" id="inputPassword" name="password">
+                        </div>
+                        <div class="form-group row" style="display: none;">
+                            <label for="inputRole" class="col-form-label col-3">Role:</label>
+                            <input type="text" class="form-control col" id="inputRole" name="role">
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputName" class="ol-form-label col-3">Name</label>
+                            <input type="text" class="form-control col" id="inputName" name="name">
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPhoneNumber" class="ol-form-label col-3">PhoneNum</label>
+                            <input type="text" class="form-control col" id="inputPhoneNumber" name="phoneNumber">
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail" class="ol-form-label col-3">Email</label>
+                            <input type="text" class="form-control col" id="inputEmail" name="email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer form-group">
+                    <button id="submitInputUserForm" type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearForm()">
+                        取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editUserModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="editUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">请填写</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            onclick="clearForm()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm" role="form" action="/administrator/updateUser" method="post">
+                        <div class="form-group row">
+                            <label for="newId" class="col-form-label col-3">Id:</label>
+                            <input type="text" class="form-control col" id="newId" name="Id" readonly="readonly">
+                        </div>
+                        <div class="form-group row">
+                            <label for="newPassword" class="col-form-label col-3">Password:</label>
+                            <input type="text" class="form-control col" id="newPassword" name="password">
+                        </div>
+                        <div class="form-group row" style="display: none;">
+                            <label for="newRole" class="col-form-label col-3">Role:</label>
+                            <input type="text" class="form-control col" id="newRole" name="role">
+                        </div>
+                        <div class="form-group row">
+                            <label for="newName" class="ol-form-label col-3">Name</label>
+                            <input type="text" class="form-control col" id="newName" name="name">
+                        </div>
+                        <div class="form-group row">
+                            <label for="newPhoneNumber" class="ol-form-label col-3">PhoneNum</label>
+                            <input type="text" class="form-control col" id="newPhoneNumber" name="phoneNumber">
+                        </div>
+                        <div class="form-group row">
+                            <label for="newEmail" class="ol-form-label col-3">Email</label>
+                            <input type="text" class="form-control col" id="newEmail" name="email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer form-group">
+                    <button type="button" id="submitEditUserForm" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearForm()">
+                        取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="loadUserModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="loadUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loadUserModalLabel">要导入的数据</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="loadedUserTable" class="table">
+                        <thead>
+                        <tr>
+                            <th data-field="学号" scope="row">学号</th>
+                            <th data-field="密码" scope="row">密码</th>
+                            <th data-field="用户类型" scope="row">用户类型</th>
+                            <th data-field="姓名" scope="row">姓名</th>
+                            <th data-field="手机号码" scope="row">手机号码</th>
+                            <th data-field="Email" scope="row">Email</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer form-group">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            onclick="sendTableData()">确认
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script th:inline="javascript">
+    role = [[${role}]];
+    $UsersTable = $('#UsersTable');
+    $addUserModal = $('#addUserModal');
+    $editUserModal = $('#editUserModal');
+
+    $loadedUserTable = $('#loadedUserTable');
+    $loadUserModal = $('#loadUserModal');
+
+    $inputUserForm = $('#inputUserForm');
+    $editUserForm = $('#editUserForm');
+
+    $UsersTable.bootstrapTable('destroy');
+    $UsersTable.bootstrapTable({
+        url: '/administrator/getUsersByRole',        //请求的url
+        method: 'post',                              //请求方式
+        queryParams: {role: role},                          //传递参数
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8", //参数类型
+        toolbar: '#toolbar',                         //工具按钮用哪个容器
+        striped: true,                               //是否显示行间隔色
+        cache: false,                                //是否使用缓存，默认为true
+        pagination: true,                            //是否显示分页
+        sortable: true,                              //是否启用排序
+        sortOrder: "desc",                           //排序方式
+        sidePagination: "client",                    //分页方式：client客户端分页，server服务端分页
+        pageNumber: 1,                               //初始化加载第一页，默认第一页
+        pageSize: 10,                                //每页的记录行数
+        pageList: [10, 20, 40, 60],                  //可供选择的每页的行数
+        search: true,                               //是否显示表格搜索，此搜索是客户端搜索，不会进服务端
+        showColumns: true,                           //是否显示所有的列
+        showRefresh: false,                          //是否显示刷新按钮
+        minimumCountColumns: 2,                      //最少允许的列数
+        clickToSelect: true,                         //是否启用点击选中行
+        //height: 600,                                 //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+        uniqueId: "自定义",                           //每一行的唯一标识，一般为主键列
+        showToggle: false,                           //是否显示详细视图和列表视图的切换按钮
+        cardView: false,                             //是否显示详细视图
+        detailView: false,                           //是否显示父子表
+
+        onLoadSuccess: function (data) {  //加载成功时执行
+            console.info("用户数据加载成功");
+            //console.log(data);
+            //$("#tb_ajxx").bootstrapTable('hideLoading');
+        },
+        onLoadError: function (status, result) {  //加载失败时执行
+            console.info("用户数据加载失败");
+            console.log(result);
+        },
+        onDblClickRow: function (row) {
+            //双击行事件
+        },
+        columns: [
+            {
+                checkbox: true,
+            },
+            {
+                field: 'id',
+                title: 'Id',
+                align: 'center',
+            },
+            {
+                field: 'password',
+                title: '密码',
+                align: 'center',
+            },
+            //{field: 'role', title: '用户类型'},
+            {
+                field: 'name',
+                title: '姓名',
+                align: 'center',
+            },
+            {
+                field: 'phoneNumber',
+                title: '电话号码',
+                align: 'center',
+            },
+            {
+                field: 'email',
+                title: '邮箱',
+                align: 'center',
+            },
+            {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return ['<button type="button" class="btn btn-primary btn-sm RoleOfEdit" style="margin-right: 10px">修改</button>',
+                        '<button type="button" class="btn btn-danger btn-sm RoleOfDelete" style="margin-right: 10px">删除</button>'
+                    ].join('');
+                },
+                events: {
+                    'click .RoleOfEdit': function (e, value, row, index) {
+                        $('#newId').val(row['id']);
+                        $('#newPassword').val(row['password']);
+                        $('#newName').val(row['name']);
+                        $('#newPhoneNumber').val(row['phoneNumber']);
+                        $('#newEmail').val(row['email']);
+                        $editUserModal.modal('show');
+                    },
+                    'click .RoleOfDelete': function (e, value, row, index) {
+                        bootbox.confirm({
+                            size: "small",
+                            title: '提示',
+                            message: '确认删除该账号？',
+                            buttons: {
+                                confirm: {
+                                    label: "确认",
+                                    className: "btn-danger"
+                                },
+                                cancel: {
+                                    label: "取消",
+                                    className: 'btn-default'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result) {
+                                    let id = row.id;
+                                    $.ajax({
+                                        url: "/administrator/deleteUsersById",
+                                        type: "delete",
+                                        async: "false",
+                                        data: {id: id},
+                                        dataType: "json",
+                                        success: function (result) {
+                                            $UsersTable.bootstrapTable('refresh');
+                                            if (result) {
+                                                bootbox.alert({
+                                                    title: "提示",
+                                                    message: "删除成功",
+                                                    size: 'small',
+                                                });
+                                            } else {
+                                                bootbox.alert({
+                                                    title: "提示",
+                                                    message: '"删除失败"',
+                                                    size: 'small',
+                                                });
+                                            }
+                                        },
+                                        error: function (e) {
+                                            bootbox.alert({
+                                                title: "提示",
+                                                message: '"删除失败"',
+                                                size: 'small',
+                                            });
+                                            console.log(e.status);
+                                            console.log(e.responseText);
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    },
+                },
+            }
+        ]
+    });
+
+    $(function () {
+        $(":text").each(function () {
+            if ($(this).attr('id') === 'newRole' || $(this).attr('id') === 'inputRole') {
+                $(this).val(role);
+            }
+        });
+    })
+
+    function clearForm() {
+        $(":text").each(function () {
+            if ($(this).attr('id') !== 'newRole' || $(this).attr('id') !== 'inputRole') {
+                $(this).val('');
+            }
+        });
+    }
+
+    function validateForm(form) {
+        return form.validate({
+            rules: {
+                id: {
+                    required: true,
+                },
+                password: {
+                    required: true
+                },
+                name: {
+                    required: true
+                },
+                phoneNumber: {
+                    required: true
+                },
+                email: {
+                    required: true
+                }
+            },
+            messages: {
+                id: {
+                    required: "id不能为空",
+                },
+                password: {
+                    required: "密码不能为空"
+                },
+                name: {
+                    required: "姓名不能为空"
+                },
+                phoneNumber: {
+                    required: "电话号码不能为空"
+                },
+                email: {
+                    required: "邮箱不能为空"
+                }
+            },
+            errorElement: 'span',
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error has-feedback');
+            },
+        });
+    }
+
+    $('#submitInputUserForm').on('click', function () {
+        $inputUserForm.ajaxSubmit({
+            beforeSubmit: function (data, form, option) {
+                if (!validateForm(form).form()) {
+                    return false;
+                }
+            },
+            success: function (result) {
+                if (result) {
+                    bootbox.alert({
+                        title: "成功",
+                        message: "添加账号成功",
+                        size: 'small'
+                    });
+                    $UsersTable.bootstrapTable('refresh');
+                    $addUserModal.modal('hide');
+                } else {
+                    bootbox.alert({
+                        title: "失败",
+                        message: "无法添加数据，可能与已有id重复",
+                        size: 'small'
+                    });
+                }
+
+            }
+        })
+    });
+
+    $('#submitEditUserForm').on('click', function () {
+        $editUserForm.ajaxSubmit({
+            beforeSubmit: function (data, form, option) {
+                if (!validateForm(form).form()) {
+                    return false;
+                }
+            },
+            success: function (result) {
+                if (result) {
+                    bootbox.alert({
+                        title: "成功",
+                        message: "更新账号成功",
+                        size: 'small'
+                    });
+                    $UsersTable.bootstrapTable('refresh');
+                    $editUserModal.modal('hide');
+                } else {
+                    bootbox.alert({
+                        title: "失败",
+                        message: "无法更新数据",
+                        size: 'small'
+                    });
+                }
+
+            }
+        })
+    });
+
+    $('#button_loadUserFile').on("click", function () {
+        $("#inputFile").click();
+    })
+
+    $("#inputFile").change(function () {
+        const file = this.files[0];
+        let workbook;
+        let reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function (e) {
+            let data = e.target.result;
+            workbook = XLSX.read(data, {type: "binary"});
+            let json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+            for (let i = 0; i < json.length; i++) {
+                json[i]['用户类型'] = role;
+            }
+            loadTable(json)
+        };
+        $(this).val("");
+    })
+
+    function loadTable(data) {
+        $loadedUserTable.bootstrapTable('destroy');
+        $loadedUserTable.bootstrapTable({
+            //url: "/loadUserFile",
+            //method: "post",
+            data: data,
+            pageSize: 10,
+            pagination: false
+        });
+        if ($loadedUserTable.bootstrapTable("getOptions").totalRows === 0) {
+            alert("错误，未读入任何数据！");
+        } else {
+            $loadUserModal.modal('show');
+        }
+    }
+
+    $loadUserModal.on("shown.bs.modal", function () {
+        $loadedUserTable.bootstrapTable('resetView');
+    });
+    $loadUserModal.on("hidden.bs.modal", function () {
+        //loadUserModal.removeData('bs.modal');
+    });
+
+
+    function sendTableData() {
+        let data = $loadedUserTable.bootstrapTable("getData");
+        $.ajax({
+            url: "/administrator/batchImportUsers",
+            type: "post",
+            async: "false",
+            data: JSON.stringify({data: data}),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                $UsersTable.bootstrapTable('refresh');
+                if (result.length > 0) {
+                    alert("以下Id的条目未保存，可能与数据库中的Id重复\n" + result);
+                    console.log(result);
+                    console.log(result.length);
+                }
+            },
+            error: function (e) {
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        })
+    }
+</script>
+</html>
