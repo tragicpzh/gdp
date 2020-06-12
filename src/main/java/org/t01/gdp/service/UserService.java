@@ -10,9 +10,9 @@ import org.t01.gdp.mapper.UserMapper;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
-    private final UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     public UserInfo getUserInfo(String user_id) {
         User user = userMapper.selectByPrimaryKey(user_id);

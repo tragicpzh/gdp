@@ -42,15 +42,22 @@ public class HomeController {
     @PostMapping("/timeAxis")
     @ResponseBody
     public String changeTimeAxis(TimePoint timePoint, String dateTimeString) throws ParseException {
-        String DATE_FORMAT_YMDHMS_WITH_T="yyyy-MM-dd'T'HH:mm";
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_YMDHMS_WITH_T);
-        Date date = format.parse(dateTimeString);
+        Date date = TimeAxis.getFormat().parse(dateTimeString);
         timePoint.setDateTime(date);
 
         System.out.println(timePoint);
 
-        TimeAxis.setTimePoint(timePoint.getIndex(),timePoint);
+        int result = TimeAxis.setTimePoint(timePoint.getIndex(), timePoint);
+        switch (result){
+            case 0:
+                return "保存成功";
+            case -1:
+                return "时间应在前一事件的时间之后";
+            case 1:
+                return "时间应在后一事件的时间之前";
+            default:
+                return "发生未知错误";
+        }
 
-        return timePoint.toString();
     }
 }

@@ -3,6 +3,7 @@ package org.t01.gdp.controller.administration;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,9 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/administrator")
-@RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/manageTeachers")
     public String ToTeachersPage(Model model) {

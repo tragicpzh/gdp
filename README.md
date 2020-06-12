@@ -6,3 +6,5 @@
     下载服务类DownloadService，网页通过post /download/**请求可以下载**对应的文件，**为文件相对file文件夹的路径包括文件名
 # 3 上传服务
     上传服务类UploadService，MultipartFile file为上传的文件，String subPath为上传文件相对于file文件夹的相对路径，不包括文件名
+# 4 时间轴对象
+    对象名为TimeAxis，其中的所有参数和方法都是静态的，具体使用方法可以查看TimeAxis中的注释
