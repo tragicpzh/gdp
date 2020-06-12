@@ -42,6 +42,7 @@
         <!--<table tableName="subject"  domainObjectName="Subject"></table>-->
         <!--table tableName="teacher" domainObjectName="Teacher"></table>-->
         <!--<table tableName="college" domainObjectName="College"></table>-->
+        <table tableName="student" domainObjectName="Student"></table>
 
     </context>
 </generatorConfiguration>
