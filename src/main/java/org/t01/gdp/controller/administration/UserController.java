@@ -1,12 +1,15 @@
 package org.t01.gdp.controller.administration;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.var;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.t01.gdp.domain.Student;
+import org.t01.gdp.domain.Teacher;
 import org.t01.gdp.domain.User;
 import org.t01.gdp.service.UserService;
 
@@ -14,38 +17,34 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/administrator")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @RequestMapping("/manageTeachers")
-    public String ToTeachersPage(Model model) {
+    public String showTeachersPage(Model model) {
+        model.addAttribute("position", "userManagement");
         model.addAttribute("role", "TEA");
-        return "/administrator/manageUsers";
+        return "/administrator/mainPage";
     }
 
     @RequestMapping("/manageStudents")
-    public String ToStudentsPage(Model model) {
+    public String showStudentsPage(Model model) {
+        model.addAttribute("position", "userManagement");
         model.addAttribute("role", "STU");
-        return "/administrator/manageUsers";
+        return "/administrator/mainPage";
     }
 
     @ResponseBody
     @RequestMapping(value = "/addSingleUser", method = RequestMethod.POST)
-    public boolean addSingleUser(User user) {
-        /*System.out.println("Id: " + user.getId() + ", Password: " + user.getPassword() + ", Role: "
-                + user.getRole() + ", Name: " + user.getName() + ", PhoneNum: "
-                + user.getPhoneNumber() + ", Email: " + user.getEmail());*/
-        return userService.addUser(user) == 1;
+    public boolean addSingleUser(User user, @RequestParam(name = "otherInfo") String otherInfo) {
+        return userService.addUser(user, otherInfo);
     }
 
     @ResponseBody
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    public boolean updateUser(User user) {
-        /*System.out.println("Id: " + user.getId() + ", Password: " + user.getPassword() + ", Role: "
-                + user.getRole() + ", Name: " + user.getName() + ", PhoneNum: "
-                + user.getPhoneNumber() + ", Email: " + user.getEmail());*/
-        return userService.updateUser(user) == 1;
+    public boolean updateUser(User user, @RequestParam(name = "otherInfo") String otherInfo) {
+        return userService.updateUser(user, otherInfo);
     }
 
     @ResponseBody
@@ -53,14 +52,19 @@ public class UserController {
     public List<String> batchImportUsers(@RequestBody JSONObject inputJsonObject) {
         JSONArray jsonArray = inputJsonObject.getJSONArray("data");
         List<String> duplicateIds = new ArrayList<>();
-        for (Object object : jsonArray) {
-            JSONObject jsonObject = (JSONObject) object;
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
             User user = new User();
-            Set<String> hashSet = jsonObject.keySet();
-            for (String key : hashSet) {
+            String otherInfo = "";
+            for (String key : jsonObject.keySet()) {
                 String value = jsonObject.getString(key);
+                //System.out.println(key + ": " + value);
+                if (key.equals("学院Id") || key.equals("专业Id")) {
+                    otherInfo = value;
+                    continue;
+                }
                 switch (key) {
-                    case "学号":
+                    case "Id":
                         user.setId(value);
                         break;
                     case "密码":
@@ -80,7 +84,7 @@ public class UserController {
                         break;
                 }
             }
-            if (userService.addUser(user) == 0) {
+            if (!userService.addUser(user, otherInfo)) {
                 duplicateIds.add(user.getId());
             }
         }
@@ -89,14 +93,25 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/getUsersByRole", method = RequestMethod.POST)
-    public List<User> getUsersByRole(@RequestParam(name = "role") String role) {
+    public List<HashMap<String, Object>> getUsersByRole(@RequestParam(name = "role") String role) {
         return userService.getUserByRole(role);
     }
 
     @ResponseBody
+    @RequestMapping(value = "/deleteUserById", method = RequestMethod.DELETE)
+    public boolean deleteUserById(@RequestParam(name = "id") String id) {
+        return userService.deleteUserById(id);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/deleteUsersById", method = RequestMethod.DELETE)
-    public boolean deleteUsersById(@RequestParam(name = "id") String id) {
-        //System.out.println(id);
-        return userService.deleteUserById(id) == 1;
+    public boolean deleteUsersById(@RequestBody List<Integer> ids) {
+        int count = ids.size();
+        for (int id : ids) {
+            if (userService.deleteUserById(String.valueOf(id))) {
+                count--;
+            }
+        }
+        return count == 0;
     }
 }

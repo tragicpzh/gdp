@@ -11,10 +11,11 @@
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
     <!--  Icon  -->
-    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}" />
+    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
 
     <!--  include timeAxis head  -->
-    <meta th:if="${position} == timeAxis" th:include="/administrator/timeAxis::head">
+    <meta th:if="${position} == 'timeAxis'" th:include="/administrator/timeAxis::head">
+    <meta th:if="${position} == 'userManagement'" th:include="/administrator/userManagement/userManagement::head">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -26,7 +27,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a  th:href="@{/administrator/home}" class="nav-link" th:method="get">首页</a>
+                <a th:href="@{/administrator/home}" class="nav-link" th:method="get">首页</a>
             </li>
         </ul>
 
@@ -54,18 +55,20 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
+                         alt="User Image">
                 </div>
                 <div class="info">
-                    <a th:href="@{/administrator/accountManagement/accountInfo}" class="d-block" th:method="get"><span th:text="${session.USER_INFO.getName()}"></span></a>
+                    <a th:href="@{/administrator/accountManagement/accountInfo}" class="d-block" th:method="get"><span
+                            th:text="${session.USER_INFO.getName()}"></span></a>
                 </div>
             </div>
 
 
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
@@ -86,7 +89,8 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/administrator/accountManagement/accountInfo}" class="nav-link" th:method="get">
+                                <a th:href="@{/administrator/accountManagement/accountInfo}" class="nav-link"
+                                   th:method="get">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>账号信息</p>
                                 </a>
@@ -124,13 +128,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/administrator/manageTeachers}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>教师账号管理</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/administrator/manageStudents}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>学生账号管理</p>
                                 </a>
@@ -188,9 +192,13 @@
             <div class="container-fluid" th:switch="${position}">
                 <div class="row" th:case="'home'" th:include="/administrator/home::content">
                 </div>
-                <div class="row" th:case="'accountManagement/accountInfo'" th:include="/administrator/accountManagement/accountInfo::content">
+                <div class="row" th:case="'accountManagement/accountInfo'"
+                     th:include="/administrator/accountManagement/accountInfo::content">
                 </div>
                 <div class="row" th:case="'timeAxis'" th:include="/administrator/timeAxis::content">
+                </div>
+                <div class="row" th:case="'userManagement'"
+                     th:include="/administrator/userManagement/userManagement::content">
                 </div>
                 <!-- /.row -->
             </div>
@@ -232,8 +240,7 @@
 <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
 <script th:src="@{/Rendering/timeAxis/js/jquery.form.js}"></script>
 
-<div th:if="${position} == 'timeAxis'" th:include="/administrator/timeAxis::script">
-</div>
-
+<div th:if="${position} == 'timeAxis'" th:include="/administrator/timeAxis::script"></div>
+<div th:if="${position} == 'userManagement'" th:include="/administrator/userManagement/userManagement::script"></div>
 </body>
 </html>

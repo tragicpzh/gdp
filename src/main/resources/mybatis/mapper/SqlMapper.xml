@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.t01.gdp.mapper.SqlMapper">
+    <select id="getUserByRole" parameterType="String" resultType="java.util.HashMap">
+        select u.id,
+               u.password,
+               u.role,
+               u.name,
+               u.email,
+               u.phone_number                                                          as phoneNumber,
+               u.create_time                                                           as createTime,
+               case u.role when 'TEA' then t.college_id when 'STU' then s.major_id end as otherInfo
+        from user u
+                 left join teacher t on t.id = u.id
+                 left join student s on s.id = u.id
+        where u.role = #{role}
+    </select>
+</mapper>

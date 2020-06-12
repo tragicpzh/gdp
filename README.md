@@ -8,3 +8,5 @@
     上传服务类UploadService，MultipartFile file为上传的文件，String subPath为上传文件相对于file文件夹的相对路径，不包括文件名
 # 4 时间轴对象
     对象名为TimeAxis，其中的所有参数和方法都是静态的，具体使用方法可以查看TimeAxis中的注释
+# 5 管理员用户管理
+    测试数据已上传，注意输入的学院Id以及专业Id必须存在数据库内（college和major两张表），否则无法录入数据
