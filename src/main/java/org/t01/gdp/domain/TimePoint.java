@@ -1,11 +1,24 @@
 package org.t01.gdp.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class TimePoint {
+    @JSONField(name = "INDEX")
     private int index;
+
+    @JSONField(name = "NAME")
     private String name;
+
+    @JSONField(name = "DATE_TIME")
     private Date dateTime;
+
+    @JSONField(name = "HOME_PAGE_NOTICE")
+    private String homePageNotice;
+
+    @JSONField(name = "MESSAGE_NOTICE")
+    private String messageNotice;
 
     public int getIndex() {
         return index;
@@ -31,12 +44,30 @@ public class TimePoint {
         this.dateTime = date;
     }
 
+    public String getHomePageNotice() {
+        return homePageNotice;
+    }
+
+    public void setHomePageNotice(String homePageNotice) {
+        this.homePageNotice = homePageNotice;
+    }
+
+    public String getMessageNotice() {
+        return messageNotice;
+    }
+
+    public void setMessageNotice(String messageNotice) {
+        this.messageNotice = messageNotice;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "TimePoint{" +
                 "index=" + index +
                 ", name='" + name + '\'' +
-                ", date=" + dateTime +
+                ", dateTime=" + dateTime +
+                ", homePageNotice='" + homePageNotice + '\'' +
+                ", messageNotice='" + messageNotice + '\'' +
                 '}';
     }
 }

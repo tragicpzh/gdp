@@ -8,20 +8,33 @@ import java.io.IOException;
 
 @Service
 public class UploadService {
-    public String uploadFile(MultipartFile file, String subPath){
+    public int uploadFile(MultipartFile file, String subPath){
         if (file.isEmpty()) {
-            return "上传失败，请选择文件";
+            return 1;
         }
 
         String fileName = file.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + subPath;
-        File dest = new File(filePath + fileName);
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + subPath + fileName;
+        File dest = new File(filePath);
+
+        if(!dest.getParentFile().exists()){
+            dest.getParentFile().mkdirs();
+        }
+        if(!dest.exists()){
+            try {
+                dest.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 2;
+            }
+        }
+
         try {
             file.transferTo(dest);
-            return "上传成功";
+            return 0;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "上传失败！";
+        return 3;
     }
 }

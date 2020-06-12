@@ -8,7 +8,7 @@ import java.io.*;
 
 @Service
 public class DownloadService {
-    public String downloadFile(HttpServletRequest request, HttpServletResponse response){
+    public boolean downloadFile(HttpServletRequest request, HttpServletResponse response){
         String requestURI = request.getRequestURI();
 
         String uri = requestURI.substring(requestURI.indexOf("/download")+"/download".length()).replace('/','\\');
@@ -37,7 +37,7 @@ public class DownloadService {
                     i = bis.read(buffer);
                 }
 
-                System.out.println("success");
+                return true;
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -61,6 +61,6 @@ public class DownloadService {
             }
         }
 
-        return null;
+        return false;
     }
 }
