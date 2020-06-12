@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GDP-教师</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" th:href="@{/Rendering/plugins/fontawesome-free/css/all.min.css}">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.css}">
+    <!--  Icon  -->
+    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}">
+    <!-- bootstrap table -->
+    <link rel="stylesheet" th:href="@{/Rendering/plugins/bootstraptable/bootstrap.css}">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">开题评审</a>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
+                        class="fas fa-th-large"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside th:replace="~{teacher/home :: mainSidebarContainer}">
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                评审列表
+            </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="box-body">
+                <table id="table-main" class="table table-bordered table-hover">
+
+                </table>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer" th:replace="~{teacher/home :: mainFooter}">
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE -->
+<script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
+<script th:src="@{/Rendering/dist/js/demo.js}"></script>
+<script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+<script th:src="@{/Rendering/plugins/layer/layer.js}"></script>
+
+<!--bootstrap table-->
+<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstraptable/bootstrap-table.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstraptable/locale/bootstrap-table-zh-CN.js}"></script>
+</body>
+</html>
+
+
+<script>
+    $(function () {
+/*        window.operateEvents  = {
+            // 更改操作的方法
+            'click .btn_update': function (e, value, row, index) {
+                alert('更改');
+            },
+            //删除 单行/
+            'click .btn_del': function (e, value, row, index) {
+                var id = row.id;
+                layer.confirm("确认删除: "+row.name+ "  ?", {icon: 3, title:'删除操作'}, function(index){
+                    //do something
+                    $.ajax({
+                        type: "delete",
+                        url: "/deleteBook",
+                        contentType:"application/json",
+                        data:JSON.stringify({"id":id }),
+                        success: function(msg){
+                            if(msg["success"]){
+                                $('#table1').bootstrapTable('remove', {
+                                    field: 'id',
+                                    values: [id]
+                                });
+                                layer.msg("操作成功",{time:700});
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        };*/
+
+        $('#table-main').bootstrapTable('destroy').bootstrapTable({
+            method: 'get',
+            url: "/teacher/openingReview/getList",
+            striped: true,
+            dataField: "list",
+            totalField: "total",
+            pageNumber: 1,
+            pageSize: 10,
+            pagination: true,
+            queryParamsType: 'limit',
+            // search: true,
+            queryParams: function (params) {
+                return {
+                    pageSize: params.limit,
+                    pageNo: params.offset / params.limit + 1
+                }
+            },
+            sidePagination: 'server',
+            pageList: "[10, 25, 50, 100, all]",
+            showRefresh: true,
+            clickToSelect: true,
+            toolbarAlign: 'left',
+            buttonsAlign: 'right',
+            toolbar: '#toolbar',
+            showColumns: false,
+            paginationLoop: false,
+            columns: [
+                {
+                    title: 'SubjectId',
+                    field: 'id',
+                    visible: false,
+                    width: 160
+                },
+                /*{
+                    //  title: '全选/反选',
+                    checkbox: true
+                }
+                ,*/
+                {
+                    title: '学生学号',
+                    field: 'studentId',
+                    visible: true,
+                    width: 160
+                },
+                {
+                    title: '题目标题',
+                    field: 'subjectName',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: '所属专业编号',
+                    field: 'name',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: '题目方向',
+                    field: 'direction',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: '操作',
+                    width: 80,
+                    align: 'center',
+                    formatter:function (value, row, index) {
+                        return [
+                            '<button  type="button" class="btn btn-danger btn-xs btn_down">',
+                            '下载报告' ,
+                            '</button>',
+                            ' <button  type="button" class="btn btn-primary btn-xs btn_review">',
+                            '评分评阅' ,
+                            '</button>',
+                        ].join('')
+                    },
+                    events:window.operateEvents
+                }
+            ],
+            locale: 'zh-CN',
+            responseHandler: function (data) {
+                return data['data'];
+            }
+        });
+    })
+</script>

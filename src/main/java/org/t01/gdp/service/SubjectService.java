@@ -1,12 +1,12 @@
 package org.t01.gdp.service;
 
-import lombok.val;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +33,40 @@ public class SubjectService {
         return subjectMapper.updateByPrimaryKey(subject);
     }
 
-    public String selectIdAfterInsert(Subject subject){
-        Subject subjectInDB;
-        SubjectExample subjectExample = new SubjectExample();
-        subjectExample.createCriteria().andCreateTeacherIdEqualTo(subject.getCreateTeacherId()).andCreateTimeEqualTo(subject.getCreateTime());
-        List<Subject> subjectList= subjectMapper.selectByExample(subjectExample);
-        if(subjectList.size()>0){
-            return subjectList.get(0).getId().toString();
+    public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, String reviewTeacherId){
+        PageHelper.startPage(pageNo,pageSize);
+        //查询reviewTeacherId中有一个与传入的id相同的subject
+        SubjectExample subjectExample1 = new SubjectExample();
+        subjectExample1.createCriteria().andReviewTeacherId1EqualTo(reviewTeacherId);
+        List<Subject> subjects1 = subjectMapper.selectByExample(subjectExample1);
+        SubjectExample subjectExample2 = new SubjectExample();
+        subjectExample2.createCriteria().andReviewTeacherId2EqualTo(reviewTeacherId);
+        List<Subject> subjects2 = subjectMapper.selectByExample(subjectExample2);
+        SubjectExample subjectExample3 = new SubjectExample();
+        subjectExample3.createCriteria().andReviewTeacherId2EqualTo(reviewTeacherId);
+        List<Subject> subjects3 = subjectMapper.selectByExample(subjectExample3);
+        //所有subject存入一条链表
+        List<Subject> allSubjects = new ArrayList<>();
+        allSubjects.addAll(subjects1);
+        allSubjects.addAll(subjects2);
+        allSubjects.addAll(subjects3);
+        //生成一个学生与选题的list
+        List<StudentAndSubject> studentAndSubjectList = new ArrayList<>();
+        for (Subject allSubject : allSubjects) {
+            StudentExample studentExample = new StudentExample();
+            studentExample.createCriteria().andSubjectIdEqualTo(allSubject.getId());
+            List<Student> students = studentMapper.selectByExample(studentExample);
+            if(students.size()>0){
+                for (Student student : students) {
+                    studentAndSubjectList.add(new StudentAndSubject(student.getId(), allSubject.getId(),
+                            allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
+                }
+            }
         }
-        return null;
+        PageInfo<StudentAndSubject> subjectPageInfo = new PageInfo<>(studentAndSubjectList);
+        return subjectPageInfo;
     }
+
 
     public void chooseSubjectBystudent(String student_id, String subject_id){
         Student student=new Student();

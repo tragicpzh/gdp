@@ -1,14 +1,10 @@
 package org.t01.gdp.controller.teacher;
 
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.MajorService;
 import org.t01.gdp.service.SubjectService;
@@ -63,5 +59,17 @@ public class TeacherController {
             subjectService.updateWithSubject(subject);
         }
 
+    }
+
+    @GetMapping("/openingReview")
+    public String getOpeningReview(){
+        return "teacher/openingReview";
+    }
+
+    @RequestMapping("/openingReview/getList")
+    @ResponseBody
+    public Object getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo,  @RequestParam(defaultValue = "10")int pageSize, HttpServletRequest request){
+        String teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize,teacherId), "分页查询评审列表");
     }
 }
