@@ -14,7 +14,7 @@ public class DownloadService {
         String uri = requestURI.substring(requestURI.indexOf("/download")+"/download".length()).replace('/','\\');
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file" + uri;
 
-        System.out.println(filePath);
+//        System.out.println(filePath);
 
         File file = new File(filePath);
 

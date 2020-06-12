@@ -38,10 +38,8 @@ public class TimeAxis {
             }
             index = timePoints.get(i).getIndex();
         }
-
         timeAxisState = index;
-
-        System.out.println(timeAxisState);
+//        System.out.println(timeAxisState);
     }
 
     public static SimpleDateFormat getFormat(){
