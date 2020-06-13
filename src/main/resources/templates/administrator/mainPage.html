@@ -22,6 +22,24 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
+    <script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
+    <script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
+    <script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/Rendering/dist/js/demo.js}"></script>
+    <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+    <script th:src="@{/Rendering/plugins/jquery-validation/jquery.validate.min.js}"></script>
+    <script th:src="@{/Rendering/plugins/jquery-validation/additional-methods.min.js}"></script>
+    <script th:src="@{/Rendering/plugins/jquery-validation/localization/messages_zh.min.js}"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -224,26 +242,6 @@
 </div>
 <!-- ./wrapper -->
 
-</body>
-
-<script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
-<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
-<script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
-<script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
-<script th:src="@{/Rendering/dist/js/demo.js}"></script>
-<script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
-<script th:src="@{/Rendering/plugins/jquery-validation/jquery.validate.min.js}"></script>
-<script th:src="@{/Rendering/plugins/jquery-validation/additional-methods.min.js}"></script>
-<script th:src="@{/Rendering/plugins/jquery-validation/localization/messages_zh.min.js}"></script>
-
-<script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
-
 <script>
     function loadFragment(fragment, e) {
         fragment = fragment + "Fragment";
@@ -273,4 +271,5 @@
     });
 </script>
 <script id="fragmentScript"></script>
+</body>
 </html>
