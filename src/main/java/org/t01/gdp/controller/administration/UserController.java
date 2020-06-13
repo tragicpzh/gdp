@@ -21,20 +21,6 @@ import java.util.*;
 public class UserController {
     private final UserService userService;
 
-    @RequestMapping("/manageTeachers")
-    public String showTeachersPage(Model model) {
-        model.addAttribute("position", "userManagement");
-        model.addAttribute("role", "TEA");
-        return "/administrator/mainPage";
-    }
-
-    @RequestMapping("/manageStudents")
-    public String showStudentsPage(Model model) {
-        model.addAttribute("position", "userManagement");
-        model.addAttribute("role", "STU");
-        return "/administrator/mainPage";
-    }
-
     @ResponseBody
     @RequestMapping(value = "/addSingleUser", method = RequestMethod.POST)
     public boolean addSingleUser(User user, @RequestParam(name = "otherInfo") String otherInfo) {

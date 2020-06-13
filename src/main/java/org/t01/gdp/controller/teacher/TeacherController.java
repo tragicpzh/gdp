@@ -26,11 +26,6 @@ public class TeacherController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/accountInfo")
-    public String getAccountInfo() {
-        return "/accountInfo";
-    }
-
     @GetMapping("/addSubject")
     public String addSubjectGet() {
         return "teacher/addSubject";

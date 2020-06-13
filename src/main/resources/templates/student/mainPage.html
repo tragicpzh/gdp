@@ -9,22 +9,17 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>GDP-管理员</title>
+    <title>GDP-学生</title>
 
     <link rel="stylesheet" th:href="@{/Rendering/plugins/fontawesome-free/css/all.min.css}">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
     <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
-    <link th:href="@{/Rendering/timeAxis/css/style.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/Rendering/timeAxis/css/style.css}" type="text/css" />
 
-    <script src="/jquery.js"></script>
-    <script type="text/javascript" th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
-    <script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
-    <script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
-    <script th:src="@{/Rendering/dist/js/demo.js}"></script>
-    <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
-    <script id="fragmentScript"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -100,7 +95,8 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" type="button" id="accountInfo" onclick="loadFragment('accountManagement/accountInfo',this)">
+                                <a class="nav-link" type="button" id="accountInfo"
+                                   onclick="loadFragment('../common/accountInfo',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>账号信息</p>
                                 </a>
@@ -115,7 +111,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" id="selectSubject" type="button" onclick="loadFragment('selectSubject',this)">
+                        <a class="nav-link" id="selectSubject" type="button"
+                           onclick="loadFragment('selectSubject',this)">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>选题</p>
                         </a>
@@ -129,7 +126,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" id="subjectProcess" type="button" onclick="loadFragment('subjectProcess',this)">
+                        <a class="nav-link" id="subjectProcess" type="button"
+                           onclick="loadFragment('subjectProcess',this)">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>项目进程</p>
                         </a>
@@ -149,7 +147,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark" id = "position"></h1>
+                        <h1 class="m-0 text-dark" id="position"></h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -193,11 +191,31 @@
 <!-- jQuery -->
 <!--<script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>-->
 
+</body>
+
+<script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
+<script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
+<script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
+<script th:src="@{/Rendering/dist/js/demo.js}"></script>
+<script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+<script th:src="@{/Rendering/plugins/jquery-validation/jquery.validate.min.js}"></script>
+<script th:src="@{/Rendering/plugins/jquery-validation/additional-methods.min.js}"></script>
+<script th:src="@{/Rendering/plugins/jquery-validation/localization/messages_zh.min.js}"></script>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+
 <script>
-    function loadFragment(fragment,e) {
+    function loadFragment(fragment, e) {
         fragment = fragment + "Fragment";
 
-        $.get(fragment,function (data) {
+        $.get(fragment, function (data) {
             $("#mainBody").html(data);
         })
 
@@ -209,19 +227,17 @@
 
         $("#position").text($(e).children("p").text());
         sessionStorage["position"] = $(e).attr("id");
-    };
-</script>
-<script>
+    }
+
     $(document).ready(function () {
-        if(sessionStorage["position"]=="" || sessionStorage["position"]==null){
+        if (sessionStorage["position"] === "" || sessionStorage["position"] == null) {
             sessionStorage["position"] = "home";
         }
 
         var position = sessionStorage["position"];
 
-        $("#"+position).click();
+        $("#" + position).click();
     });
 </script>
 
-</body>
 </html>

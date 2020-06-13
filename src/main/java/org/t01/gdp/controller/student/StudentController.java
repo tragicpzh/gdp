@@ -7,8 +7,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/student")
 public class StudentController {
 
-    @RequestMapping("/accountInfo")
-    public String getAccountInfo() {
-        return "/accountInfo";
-    }
 }
