@@ -123,7 +123,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a class="nav-link" type="button" id="subjectManagement" onclick="loadFragment('subjectManagement',this)">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>题目管理</p>
                         </a>
@@ -139,13 +139,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/administrator/manageTeachers}" class="nav-link">
+                                <a class="nav-link" type="button" id="teacherAccountManagement" onclick="loadFragment('userManagement/teacherAccountManagement',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>教师账号管理</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/administrator/manageStudents}" class="nav-link">
+                                <a class="nav-link" type="button" id="studentAccountManagement" onclick="loadFragment('userManagement/studentAccountManagement',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>学生账号管理</p>
                                 </a>
@@ -163,7 +163,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a class="nav-link" type="button" id="platformMonitor" onclick="loadFragment('other/platformMonitor',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>平台状况监控</p>
                                 </a>
