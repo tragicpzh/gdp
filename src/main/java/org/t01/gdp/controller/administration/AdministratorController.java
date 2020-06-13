@@ -29,13 +29,6 @@ public class AdministratorController {
         return TimeAxis.getTimePoints();
     }
 
-    @GetMapping("/accountManagement/accountInfo")
-    public String getAccountInfo(ModelMap map){
-        map.addAttribute("position","accountManagement/accountInfo");
-
-        return "administrator/mainPage";
-    }
-
     @PostMapping("/timeAxis")
     @ResponseBody
     public String setTimeAxis(TimePoint timePoint, String dateTimeString) throws ParseException {
