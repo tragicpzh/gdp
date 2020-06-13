@@ -53,7 +53,7 @@
         <!-- Main content -->
         <section class="content">
                 <div>
-                    <form role="form" action="/teacher/addSubject" method="post" enctype="multipart/form-data" onsubmit="submit_form()">
+                    <form role="form" action="/teacher/addSubject" method="post" enctype="multipart/form-data" onsubmit="return submit_form()">
                         <!-- text input -->
                         <div class="form-group">
                             <label>题目标题</label>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label>题目难度</label>
-                            <input type="text" name="difficulty" class="form-control" placeholder="请输入题目难度（百分制）">
+                            <input type="text" name="difficulty" class="form-control" placeholder="请输入题目难度（0到1）">
                         </div>
                         <div class="form-group">
                             <label>所需技术</label>

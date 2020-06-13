@@ -26,7 +26,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">开题评审</a>
+                <a href="#" class="nav-link">中期评审</a>
             </li>
         </ul>
 
@@ -101,13 +101,13 @@
                 var index = layer.open({
                     type: 1,
                     skin: "layui-layer-rim",
-                    area: ["300px", "200px"],
+                    area: ["200px", "200px"],
                     title: "开题评分(百分制）",
                     content: '<input type="text" id="score">',
                     btn: ['确定', '取消'],
                     yes: function (index, layero) {
                         $.ajax({
-                            url: "/teacher/openingReview",
+                            url: "/teacher/middleReview",
                             method: "POST",
                             data: {"score":$('#score').val(), "studentId":row.studentId, "subjectId":row.subjectId},
                             success: function () {
@@ -118,7 +118,7 @@
                                 layer.close(index);
                                 parent.location.reload();
                             },
-                    });
+                        });
                     },
                     btn2: function (index, layero) {
                         layer.close(index);

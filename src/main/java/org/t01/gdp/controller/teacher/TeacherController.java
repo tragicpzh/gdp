@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
-import org.t01.gdp.service.MajorService;
-import org.t01.gdp.service.SubjectService;
-import org.t01.gdp.service.TeacherService;
-import org.t01.gdp.service.UploadService;
+import org.t01.gdp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -26,6 +23,8 @@ public class TeacherController {
     UploadService uploadService;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    StudentService studentService;
 
     @RequestMapping("/accountInfo")
     public String getAccountInfo() {
@@ -76,4 +75,31 @@ public class TeacherController {
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
         return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId), "分页查询评审列表");
     }
+
+    @PostMapping("/openingReview")
+    public void openingReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        Integer openingReviewScore = Integer.valueOf(score);
+        studentService.updateStudentOpeningScore(teacherId, studentId, Long.valueOf(subjectId), openingReviewScore);
+    }
+
+    @GetMapping("/middleReview")
+    public String getMiddleReview(){
+        return "teacher/middleReview";
+    }
+
+    @RequestMapping("/middleReview/getList")
+    @ResponseBody
+    public Object getMiddleList(@RequestParam(defaultValue = "1") int pageNo,  @RequestParam(defaultValue = "10")int pageSize, HttpServletRequest request){
+        String teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize,teacherId), "分页查询评审列表");
+    }
+
+    @PostMapping("/middleReview")
+    public void middleReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        Integer middleReviewScore = Integer.valueOf(score);
+        studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), middleReviewScore);
+    }
+
 }
