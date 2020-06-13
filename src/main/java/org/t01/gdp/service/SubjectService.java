@@ -58,15 +58,13 @@ public class SubjectService {
             List<Student> students = studentMapper.selectByExample(studentExample);
             if(students.size()>0){
                 for (Student student : students) {
-                    studentAndSubjectList.add(new StudentAndSubject(student.getId(), allSubject.getId(),
+                    studentAndSubjectList.add(new StudentAndSubject(student.getId(), allSubject.getId().toString(),
                             allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
                 }
             }
         }
-        PageInfo<StudentAndSubject> subjectPageInfo = new PageInfo<>(studentAndSubjectList);
-        return subjectPageInfo;
+        return new PageInfo<>(studentAndSubjectList);
     }
-
 
     public void chooseSubjectBystudent(String student_id, String subject_id){
         Student student=new Student();

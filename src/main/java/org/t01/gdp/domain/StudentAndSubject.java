@@ -2,7 +2,7 @@ package org.t01.gdp.domain;
 
 public class StudentAndSubject {
     private String studentId;
-    private Long subjectId;
+    private String subjectId;
     private String subjectName;
     private String majorId;
     private String direction;
@@ -10,7 +10,7 @@ public class StudentAndSubject {
     public StudentAndSubject() {
     }
 
-    public StudentAndSubject(String studentId, Long subjectId, String subjectName, String majorId, String direction) {
+    public StudentAndSubject(String studentId, String subjectId, String subjectName, String majorId, String direction) {
         this.studentId = studentId;
         this.subjectId = subjectId;
         this.subjectName = subjectName;
@@ -26,11 +26,11 @@ public class StudentAndSubject {
         this.studentId = studentId;
     }
 
-    public Long getSubjectId() {
+    public String getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(Long subjectId) {
+    public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
 
