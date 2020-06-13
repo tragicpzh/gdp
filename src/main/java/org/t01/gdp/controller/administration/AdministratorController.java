@@ -6,30 +6,24 @@ import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.domain.TimePoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Controller
 @RequestMapping("/administrator")
-public class HomeController {
-    @GetMapping("/home")
-    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
-        map.addAttribute("position","home");
-
-        return "administrator/mainPage";
-    }
+public class AdministratorController {
+//    @GetMapping("/home")
+//    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
+//        map.addAttribute("position","home");
+//
+//        return "administrator/home";
+//    }
 
     @GetMapping("/timeAxis")
-    public String getTimeAxis(ModelMap map){
-        map.addAttribute("TimePoints",TimeAxis.getTimePoints());
-
-        map.addAttribute("position","timeAxis");
-
-        return "administrator/mainPage";
+    @ResponseBody
+    public ArrayList<TimePoint> getTimeAxis(ModelMap map){
+        return TimeAxis.getTimePoints();
     }
 
     @GetMapping("/accountManagement/accountInfo")
@@ -41,7 +35,7 @@ public class HomeController {
 
     @PostMapping("/timeAxis")
     @ResponseBody
-    public String changeTimeAxis(TimePoint timePoint, String dateTimeString) throws ParseException {
+    public String setTimeAxis(TimePoint timePoint, String dateTimeString) throws ParseException {
         Date date = TimeAxis.getFormat().parse(dateTimeString);
         timePoint.setDateTime(date);
 

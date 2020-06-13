@@ -1,7 +1,6 @@
 package org.t01.gdp.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,10 +14,6 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/index").setViewName("login");
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/login").setViewName("login");
-//        registry.addViewController("/administrator/home").setViewName("administrator/home");
-        registry.addViewController("/teacher/home").setViewName("teacher/home");
-        registry.addViewController("/student/home").setViewName("student/home");
-//        registry.addViewController("/test").setViewName("test");
     }
 
 }

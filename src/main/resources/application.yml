@@ -10,7 +10,8 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   jackson:
-    date-format: yyyy-MM-dd
+    date-format: yyyy-MM-dd'T'HH:mm
+#    date-format: yyyy-MM-dd HH:mm
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   type-aliases-package: org.t01.gdp.domain

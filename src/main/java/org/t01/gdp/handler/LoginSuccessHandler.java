@@ -31,13 +31,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         String basePath = httpServletRequest.getScheme()+"://"+httpServletRequest.getServerName()+":"+httpServletRequest.getServerPort()+"/";
         if (roles.contains("ROLE_ADM")){
-            httpServletResponse.sendRedirect(basePath+"administrator/home");
+            httpServletResponse.sendRedirect(basePath+"administrator/mainPage");
             return;
         }else if(roles.contains("ROLE_TEA")){
-            httpServletResponse.sendRedirect(basePath+"teacher/home");
+            httpServletResponse.sendRedirect(basePath+"teacher/mainPage");
             return;
         }else if(roles.contains("ROLE_STU")){
-            httpServletResponse.sendRedirect(basePath+"student/home");
+            httpServletResponse.sendRedirect(basePath+"student/mainPage");
             return;
         }else{
             httpServletResponse.sendRedirect(basePath+"error");

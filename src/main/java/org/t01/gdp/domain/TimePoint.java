@@ -11,7 +11,7 @@ public class TimePoint {
     @JSONField(name = "NAME")
     private String name;
 
-    @JSONField(name = "DATE_TIME")
+    @JSONField(name = "DATE_TIME", format = "yyyy-MM-dd'T'HH:mm")
     private Date dateTime;
 
     @JSONField(name = "HOME_PAGE_NOTICE")
@@ -62,12 +62,12 @@ public class TimePoint {
 
     @Override
     public String toString() {
-        return "TimePoint{" +
-                "index=" + index +
-                ", name='" + name + '\'' +
-                ", dateTime=" + dateTime +
-                ", homePageNotice='" + homePageNotice + '\'' +
-                ", messageNotice='" + messageNotice + '\'' +
+        return "{" +
+                "\"index\":\"" + index +
+                "\",\"name\":\"" + name +
+                "\",\"dateTime\":\"" + dateTime +
+                "\",\"homePageNotice\":\"" + homePageNotice + '\"' +
+                "\",\"messageNotice\":\"" + messageNotice + '\"' +
                 '}';
     }
 }
