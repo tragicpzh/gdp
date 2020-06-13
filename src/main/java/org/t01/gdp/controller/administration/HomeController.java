@@ -17,24 +17,24 @@ import java.util.Date;
 @RequestMapping("/administrator")
 public class HomeController {
     @GetMapping("/home")
-    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
-        map.addAttribute("position","home");
+    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
+        map.addAttribute("position", "home");
 
         return "administrator/mainPage";
     }
 
     @GetMapping("/timeAxis")
-    public String getTimeAxis(ModelMap map){
-        map.addAttribute("TimePoints",TimeAxis.getTimePoints());
+    public String getTimeAxis(ModelMap map) {
+        map.addAttribute("TimePoints", TimeAxis.getTimePoints());
 
-        map.addAttribute("position","timeAxis");
+        map.addAttribute("position", "timeAxis");
 
         return "administrator/mainPage";
     }
 
-    @GetMapping("/accountManagement/accountInfo")
-    public String getAccountInfo(ModelMap map){
-        map.addAttribute("position","accountManagement/accountInfo");
+    @GetMapping("/accountInfo")
+    public String getAccountInfo(ModelMap map) {
+        map.addAttribute("position", "accountInfo");
 
         return "administrator/mainPage";
     }
@@ -48,7 +48,7 @@ public class HomeController {
         System.out.println(timePoint);
 
         int result = TimeAxis.setTimePoint(timePoint.getIndex(), timePoint);
-        switch (result){
+        switch (result) {
             case 0:
                 return "保存成功";
             case -1:

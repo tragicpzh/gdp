@@ -27,21 +27,25 @@ public class TeacherController {
     @Autowired
     SubjectService subjectService;
 
+    @RequestMapping("/accountInfo")
+    public String getAccountInfo() {
+        return "/accountInfo";
+    }
 
     @GetMapping("/addSubject")
-    public String addSubjectGet(){
+    public String addSubjectGet() {
         return "teacher/addSubject";
     }
 
     @PostMapping("/addSubject")
-    public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file){
+    public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
         //获取教师信息
         UserInfo userInfo = (UserInfo) request.getSession(true).getAttribute("USER_INFO");
         Teacher teacher = teacherService.selectTeacherById(userInfo.getId());
         //获取专业信息
         List<Major> majorList = majorService.selectMajorByName(major);
         //subject信息添加并插入
-        if(majorList.size() > 0){
+        if (majorList.size() > 0) {
             subject.setMajorId(majorList.get(0).getId());
         }
         subject.setCreateTeacherId(teacher.getId());
@@ -50,11 +54,11 @@ public class TeacherController {
         teacherService.addSubject(subject);
 
         //文件处理
-        if(file != null) {
+        if (file != null) {
             String path = "teacher\\";
             path = path + subject.getCreateTeacherId() + "\\subjectDocuments";
             uploadService.uploadFile(file, path);
-            String fileUrl = path+file.getOriginalFilename();
+            String fileUrl = path + file.getOriginalFilename();
             subject.setDocument(fileUrl);
             subjectService.updateWithSubject(subject);
         }
@@ -62,14 +66,14 @@ public class TeacherController {
     }
 
     @GetMapping("/openingReview")
-    public String getOpeningReview(){
+    public String getOpeningReview() {
         return "teacher/openingReview";
     }
 
     @RequestMapping("/openingReview/getList")
     @ResponseBody
-    public Object getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo,  @RequestParam(defaultValue = "10")int pageSize, HttpServletRequest request){
-        String teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize,teacherId), "分页查询评审列表");
+    public Object getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletRequest request) {
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId), "分页查询评审列表");
     }
 }

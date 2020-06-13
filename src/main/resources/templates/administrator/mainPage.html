@@ -16,6 +16,7 @@
     <!--  include timeAxis head  -->
     <meta th:if="${position} == 'timeAxis'" th:include="/administrator/timeAxis::head">
     <meta th:if="${position} == 'userManagement'" th:include="/administrator/userManagement/userManagement::head">
+    <meta th:if="${position} == 'accountInfo'" th:include="/accountInfo::head">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -59,7 +60,7 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a th:href="@{/administrator/accountManagement/accountInfo}" class="d-block" th:method="get"><span
+                    <a th:href="@{/administrator/accountInfo}" class="d-block" th:method="get"><span
                             th:text="${session.USER_INFO.getName()}"></span></a>
                 </div>
             </div>
@@ -89,7 +90,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/administrator/accountManagement/accountInfo}" class="nav-link"
+                                <a th:href="@{/administrator/accountInfo}" class="nav-link"
                                    th:method="get">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>账号信息</p>
@@ -192,8 +193,8 @@
             <div class="container-fluid" th:switch="${position}">
                 <div class="row" th:case="'home'" th:include="/administrator/home::content">
                 </div>
-                <div class="row" th:case="'accountManagement/accountInfo'"
-                     th:include="/administrator/accountManagement/accountInfo::content">
+                <div class="row" th:case="'accountInfo'"
+                     th:include="/accountInfo::content">
                 </div>
                 <div class="row" th:case="'timeAxis'" th:include="/administrator/timeAxis::content">
                 </div>
@@ -242,5 +243,6 @@
 
 <div th:if="${position} == 'timeAxis'" th:include="/administrator/timeAxis::script"></div>
 <div th:if="${position} == 'userManagement'" th:include="/administrator/userManagement/userManagement::script"></div>
+<div th:if="${position} == 'accountInfo'" th:include="/accountInfo::script"></div>
 </body>
 </html>
