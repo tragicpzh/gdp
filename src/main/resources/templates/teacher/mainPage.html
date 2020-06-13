@@ -116,14 +116,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" type="button" id="timeAxis" onclick="loadFragment('timeAxis',this)">
-                            <i class="fas fa-circle nav-icon"></i>
-                            <p>时间轴管理</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link">
+                        <a class="nav-link" type="button" id="subjectManagement" onclick="loadFragment('subjectManagement',this)">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>题目管理</p>
                         </a>
@@ -133,39 +126,33 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
                             <p>
-                                平台用户管理
+                                评审评阅
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/administrator/manageTeachers}" class="nav-link">
+                                <a class="nav-link" type="button" id="openReview" onclick="loadFragment('review/openReview',this)">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>教师账号管理</p>
+                                    <p>开题评审</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/administrator/manageStudents}" class="nav-link">
+                                <a class="nav-link" type="button" id="middleReview" onclick="loadFragment('review/middleReview',this)">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>学生账号管理</p>
+                                    <p>中期评审</p>
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
-                            <p>
-                                其他
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a class="nav-link" type="button" id="paperReview" onclick="loadFragment('review/paperReview',this)">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>平台状况监控</p>
+                                    <p>论文评阅</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" type="button" id="conclusionReview" onclick="loadFragment('review/conclusionReview',this)">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>结题评审</p>
                                 </a>
                             </li>
                         </ul>

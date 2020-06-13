@@ -115,59 +115,24 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" type="button" id="timeAxis" onclick="loadFragment('timeAxis',this)">
+                        <a class="nav-link" id="selectSubject" type="button" onclick="loadFragment('selectSubject',this)">
                             <i class="fas fa-circle nav-icon"></i>
-                            <p>时间轴管理</p>
+                            <p>选题</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a class="nav-link" id="crossReview" type="button" onclick="loadFragment('crossReview',this)">
                             <i class="fas fa-circle nav-icon"></i>
-                            <p>题目管理</p>
+                            <p>交叉评阅</p>
                         </a>
                     </li>
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
-                            <p>
-                                平台用户管理
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
+                    <li class="nav-item">
+                        <a class="nav-link" id="subjectProcess" type="button" onclick="loadFragment('subjectProcess',this)">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>项目进程</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a th:href="@{/administrator/manageTeachers}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>教师账号管理</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/administrator/manageStudents}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>学生账号管理</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-circle"></i>
-                            <p>
-                                其他
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>平台状况监控</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                 </ul>

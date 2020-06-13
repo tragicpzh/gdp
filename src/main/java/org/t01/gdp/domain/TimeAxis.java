@@ -19,13 +19,29 @@ public class TimeAxis {
     private static final String DATE_FORMAT_YMDHMS_WITH_T="yyyy-MM-dd'T'HH:mm";
     private static final String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\timeAxis.save";
 
+    private static Map<String,List<Integer>> pageConfig = new HashMap<>();
+
+    private static void initPageConfig(){
+        pageConfig.put("/teacher/subjectManagement",Arrays.asList(new Integer[]{0}));
+    }
+
+    public static boolean isAccessible(String uri){
+        if(uri.contains("/administrator/") || uri.contains("/homeFragment") || uri.contains("/accountInfoFragment")){
+            return true;
+        }
+
+        List<Integer> accessibleList = pageConfig.get(uri);
+
+        if(accessibleList == null){
+            return false;
+        }
+
+        return accessibleList.contains(timeAxisState);
+    }
+
     //获取系统时间轴状态的函数，返回值为-1~8，分别依次表示毕业设计活动开始前，以及name数组中列出的状态
     public static int getTimeAxisState() {
         return timeAxisState;
-    }
-
-    public static void setTimeAxisState(int timeAxisState) {
-        TimeAxis.timeAxisState = timeAxisState;
     }
 
     public static void checkTimeAxis(){
@@ -165,6 +181,8 @@ public class TimeAxis {
     }
 
     public static void initialTime(){
+        initPageConfig();
+
         if(loadTimeAxis()){
             return;
         }

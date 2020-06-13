@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.service.DownloadService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,12 @@ public class CommonController {
 
     @RequestMapping("/**/*Fragment")
     public String getFragment(HttpServletRequest request){
-        return request.getRequestURI();
+        String uri = request.getRequestURI();
+        if(TimeAxis.isAccessible(uri) || true){
+            return uri;
+        }else{
+            return "notAccessible";
+        }
     }
 
     @RequestMapping("/**/*Script")
