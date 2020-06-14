@@ -29,10 +29,6 @@ public class SubjectService {
             subjectMapper.updateByPrimaryKeySelective(subject);
     }
 
-    public int updateWithSubject(Subject subject){
-        return subjectMapper.updateByPrimaryKey(subject);
-    }
-
     public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, String reviewTeacherId){
         PageHelper.startPage(pageNo,pageSize);
         //查询reviewTeacherId中有一个与传入的id相同的subject

@@ -110,15 +110,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
-    insert into subject (id, create_teacher_id, major_id, 
+    insert into subject (id, create_teacher_id, major_id,
       `name`, direction, difficulty,
       technology, `describe`, document,
-      review_teacher_id1, review_teacher_id2, review_teacher_id3, 
+      review_teacher_id1, review_teacher_id2, review_teacher_id3,
       state, create_time)
-    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{difficulty,jdbcType=DECIMAL}, 
-      #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{document,jdbcType=VARCHAR}, 
-      #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, #{reviewTeacherId3,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{difficulty,jdbcType=DECIMAL},
+      #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{document,jdbcType=VARCHAR},
+      #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, #{reviewTeacherId3,jdbcType=VARCHAR},
       #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject">
@@ -271,19 +271,19 @@
   <update id="updateByExample" parameterType="map">
     update subject
     set id = #{record.id,jdbcType=BIGINT},
-      create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
-      major_id = #{record.majorId,jdbcType=VARCHAR},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      direction = #{record.direction,jdbcType=VARCHAR},
-      difficulty = #{record.difficulty,jdbcType=DECIMAL},
-      technology = #{record.technology,jdbcType=VARCHAR},
-      `describe` = #{record.describe,jdbcType=VARCHAR},
-      document = #{record.document,jdbcType=VARCHAR},
-      review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
-      review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
-      review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
+    major_id = #{record.majorId,jdbcType=VARCHAR},
+    `name` = #{record.name,jdbcType=VARCHAR},
+    direction = #{record.direction,jdbcType=VARCHAR},
+    difficulty = #{record.difficulty,jdbcType=DECIMAL},
+    technology = #{record.technology,jdbcType=VARCHAR},
+    `describe` = #{record.describe,jdbcType=VARCHAR},
+    document = #{record.document,jdbcType=VARCHAR},
+    review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
+    review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
+    review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+    state = #{record.state,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

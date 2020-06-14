@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
     <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
+    <link th:href="@{/Rendering/timeAxis/css/style.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/Rendering/plugins/bootstraptable/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/Rendering/timeAxis/css/style.css}" type="text/css"/>
 
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
@@ -29,16 +31,19 @@
     <script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
     <script th:src="@{/Rendering/dist/js/demo.js}"></script>
     <script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+    <script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.js}"></script>
+    <script th:src="@{/Rendering/plugins/bootstraptable/bootstrap-table.js}"></script>
+    <script th:src="@{/Rendering/plugins/bootstraptable/locale/bootstrap-table-zh-CN.js}"></script>
+    <script th:src="@{/Rendering/timeAxis/js/jquery.form.js}"></script>
+    <script th:src="@{/Rendering/plugins/layer/layer.js}"></script>
+    <script id="fragmentScript"></script>
     <script th:src="@{/Rendering/plugins/jquery-validation/jquery.validate.min.js}"></script>
     <script th:src="@{/Rendering/plugins/jquery-validation/additional-methods.min.js}"></script>
     <script th:src="@{/Rendering/plugins/jquery-validation/localization/messages_zh.min.js}"></script>
 
     <script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -96,6 +101,7 @@
                          with font-awesome or any other icon font library -->
 
                     <!-- 每个导航项按照以下格式书写，onclick的第一个参数为导航路径，第二个参数为this，id不需要和onclick的第一个参数一样，建议直接使用第一个参数的结尾 -->
+                    <!--首页-->
                     <li class="nav-item">
                         <a class="nav-link" id="home" type="button" onclick="loadFragment('home',this)">
                             <i class="fas fa-circle nav-icon"></i>
@@ -103,6 +109,7 @@
                         </a>
                     </li>
 
+                    <!--账号管理-->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
@@ -128,12 +135,22 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" type="button" id="subjectManagement"
-                           onclick="loadFragment('subjectManagement',this)">
-                            <i class="fas fa-circle nav-icon"></i>
-                            <p>题目管理</p>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                题目管理
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" type="button" id="addSubject" onclick="loadFragment('subjectManagement/addSubject',this)">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>增加题目</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item has-treeview">
@@ -262,6 +279,5 @@
         $("#" + position).click();
     });
 </script>
-<script id="fragmentScript"></script>
 </body>
 </html>
