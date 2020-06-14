@@ -18,6 +18,8 @@
     <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
     <link th:href="@{/Rendering/timeAxis/css/style.css}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" th:href="@{/Rendering/timeAxis/css/style.css}" type="text/css"/>
+    <script src="/jquery.js"></script>
+    <script type="text/javascript" th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
 
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css" rel="stylesheet">
@@ -141,7 +143,6 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
@@ -150,6 +151,14 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" id="subject" type="button" onclick="loadFragment('subject',this)">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>题目管理</p>
+                                </a>
+                            </li>
+                        </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a class="nav-link" type="button" id="addSubject" onclick="loadFragment('subjectManagement/addSubject',this)">
