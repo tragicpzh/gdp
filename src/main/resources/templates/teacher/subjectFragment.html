@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | DataTables</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../static/Rendering/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../static/Rendering/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="../../static/Rendering/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../static/Rendering/dist/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                题目列表
+            </h1>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="table-main" class="table table-bordered table-hover"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script src="../../static/Rendering/plugins/jquery/jquery.min.js"></script>
+<script src="../../static/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/Rendering/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../static/Rendering/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../static/Rendering/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../static/Rendering/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../static/Rendering/dist/js/adminlte.min.js"></script>
+<script src="../../static/Rendering/dist/js/demo.js"></script>
+<script>
+    $(function () {
+        $('#table-main').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
+<script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/Rendering/dist/js/adminlte.js}"></script>
+<script th:src="@{/Rendering/plugins/chart.js/Chart.min.js}"></script>
+<script th:src="@{/Rendering/dist/js/demo.js}"></script>
+<script th:src="@{/Rendering/dist/js/pages/dashboard3.js}"></script>
+<script th:src="@{/Rendering/plugins/layer/layer.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstraptable/bootstrap-table.js}"></script>
+<script th:src="@{/Rendering/plugins/bootstraptable/locale/bootstrap-table-zh-CN.js}"></script>
+</html>
+
+<script>
+    $(function () {
+        $('#table-main').bootstrapTable('destroy').bootstrapTable({
+            method: 'get',
+            url: "/teacher/subjectFragment/getList",
+            striped: true,
+            dataField: "list",
+            totalField: "total",
+            pageNumber: 1,
+            pageSize: 10,
+            pagination: true,
+            queryParamsType: 'limit',
+            // search: true,
+            queryParams: function (params) {
+                return {
+                    pageSize: params.limit,
+                    pageNo: params.offset / params.limit + 1
+                }
+            },
+            sidePagination: 'server',
+            pageList: "[10, 25, 50, 100, all]",
+            showRefresh: true,
+            clickToSelect: true,
+            toolbarAlign: 'left',
+            buttonsAlign: 'right',
+            toolbar: '#toolbar',
+            showColumns: false,
+            paginationLoop: false,
+            columns: [
+                {
+                    title: 'id',
+                    field: 'id',
+                    visible: true,
+                    width: 160
+                },
+                /*{
+                    //  title: '全选/反选',
+                    checkbox: true
+                }
+                ,*/
+                {
+                    title: 'name',
+                    field: 'name',
+                    visible: true,
+                    width: 160
+                },
+                {
+                    title: 'teacher',
+                    field: 'teacher',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: 'major',
+                    field: 'major',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: 'direction',
+                    field: 'direction',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: 'state',
+                    field: 'state',
+                    width: 160,
+                    align: 'left'
+                },
+                {
+                    title: 'operation',
+                    width: 80,
+                    align: 'center',
+                    // formatter: function (value, row, index) {
+                    //     return [
+                    //         '<button  type="button" class="btn btn-danger btn-xs btn_down">',
+                    //         '下载报告',
+                    //         '</button>',
+                    //         ' <button  type="button" class="btn btn-primary btn-xs btn_review">',
+                    //         '评分评阅',
+                    //         '</button>',
+                    //     ].join('')
+                    // },
+                    events: window.operateEvents
+                }
+            ],
+            locale: 'zh-CN',
+            responseHandler: function (data) {
+                return data['data'];
+            }
+        });
+    })
+</script>

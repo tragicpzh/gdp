@@ -1,3 +1,586 @@
-<div>
-    项目进程
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div id="content" class="card border-dark" style="width: 100%;display: none;">
+            <div id="subjectName" class="card-header bg-transparent border-dark"></div>
+            <div class="card-body container-fluid">
+                <div class="list-group">
+                    <div id="currentTimeRow" class="list-group-item">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item ">
+                                <span class="label">当前阶段:</span>
+                                <span id="currentTime" class="label"></span>
+                            </div>
+                            <div class="list-group-item">
+                                <span class="label">当前状态:</span>
+                                <span id="currentState" class="label"></span>
+                            </div>
+                            <div id="subjectIdRow" class="list-group-item">
+                                <span class="label">选题ID:</span>
+                                <span id="subjectId" class="label">未选题</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="openDocumentRow" class="list-group-item" style="display: none;">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item">
+                                <span class="label">开题报告:</span>
+                                <span id="openDocument" class="label">未提交</span>
+                            </div>
+                            <div id="openScoresRow" class="list-group-item" style="display: none;">
+                                <div class="list-group list-group-horizontal">
+                                    <div class="list-group-item">
+                                        <span class="label">开题评分1:</span>
+                                        <span id="openScore1" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">开题评分2:</span>
+                                        <span id="openScore2" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">开题评分3:</span>
+                                        <span id="openScore3" class="label">未打分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="midDocumentRow" class="list-group-item" style="display: none;">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item">
+                                <span class="label">中期报告:</span>
+                                <span id="midDocument" class="label">未提交</span>
+                            </div>
+                            <div id="midScoresRow" class="list-group-item" style="display: none;">
+                                <div class="list-group list-group-horizontal">
+                                    <div class="list-group-item">
+                                        <span class="label">中期评分1:</span>
+                                        <span id="midScore1" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">中期评分2:</span>
+                                        <span id="midScore2" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">中期评分3:</span>
+                                        <span id="midScore3" class="label">未打分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="paperDocumentRow" class="list-group-item" style="display: none;">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item">
+                                <span class="label">评阅论文:</span>
+                                <span id="paperDocument" class="label">未提交</span>
+                            </div>
+                            <div id="paperScoresRow" class="list-group-item" style="display: none;">
+                                <div class="list-group list-group-horizontal">
+                                    <div class="list-group-item">
+                                        <span class="label">教师评阅评分:</span>
+                                        <span id="teacherPaperScore" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">学生评阅评分:</span>
+                                        <span id="studentPaperScore2" class="label">未打分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="concludeDocumentRow" class="list-group-item" style="display: none;">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item align-content-center">
+                                <span class="label">毕业论文:</span>
+                                <span id="concludeDocument" class="label">未提交</span>
+                            </div>
+                            <div id="concludeScoresRow" class="list-group-item" style="display: none;">
+                                <div class="list-group list-group-horizontal">
+                                    <div class="list-group-item">
+                                        <span class="label">答辩评分1:</span>
+                                        <span id="concludeScore1" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">答辩评分2:</span>
+                                        <span id="concludeScore2" class="label">未打分</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <span class="label">答辩评分3:</span>
+                                        <span id="concludeScore3" class="label">未打分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="finalScoreRow" class="list-group-item" style="display: none;">
+                        <div class="list-group list-group-horizontal">
+                            <div class="list-group-item">
+                                <span class="label">最终成绩:</span>
+                                <span id="finalScore" class="label">未打分</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script th:inline="javascript">
+    Infos = {
+        id: [[${session.USER_INFO.getId()}]],
+        name: [[${session.USER_INFO.getName()}]],
+        role: [[${session.USER_INFO.getRole()}]]
+    };
+
+    SubjectInfos = {};
+
+    TimeState = {
+        '-1': '开始前阶段',
+        '0': '出题阶段',
+        '1': '选题阶段',
+        '2': '开题答辩阶段',
+        '3': '中前期阶段',
+        '4': '中期检查阶段',
+        '5': '中后期阶段',
+        '6': '论文评阅阶段',
+        '7': '毕业答辩阶段',
+        '8': '结束阶段',
+    }
+
+    currentState = getTimeState();
+    $.ajaxSetup({
+        async: false,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            bootbox.alert({
+                title: '错误',
+                message: '请求数据出错',
+                size: 'small'
+            });
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    })
+    $(function () {
+        getStudentInfo(Infos['id']);
+        let testState = '8'
+        $('#currentTime').html(TimeState[testState]);
+        handelTimeState(currentState);
+        handelPersonState(Infos['state']);
+    });
+
+    function showElement(element) {
+        element[0].style.display = '';
+    }
+
+    function checkInfo(info) {
+        return Infos[info] !== null && Infos[info] !== '';
+
+    }
+
+    function getStudentInfo(id) {
+        $.ajax({
+            url: '/student/getStudentInfo',
+            async: false,
+            data: {id: id},
+            dataType: 'json',
+            success: function (result) {
+                if (result['id'] === Infos['id']) {
+                    for (let key in result) {
+                        if (result.hasOwnProperty(key)) {
+                            Infos[key] = result[key];
+                        }
+                    }
+                } else {
+                    bootbox.alert({
+                        title: '错误',
+                        message: '后台返回了错误的信息',
+                        size: 'small'
+                    });
+                }
+            },
+        })
+    }
+
+    function getTimeState() {
+        let state = '-1';
+        $.ajax({
+            url: '/student/getTimeState',
+            data: null,
+            async: false,
+            dataType: 'text',
+            success: function (result) {
+                state = result;
+            },
+        });
+        return state;
+    }
+
+    function updateState(state) {
+        $.ajax({
+            url: '/student/upgradeState',
+            async: false,
+            data: {'id': Infos['id'], 'state': state},
+            dataType: 'text',
+            success: function (result) {
+                if (result !== state) {
+                    bootbox.alert({
+                        title: '错误',
+                        message: '设置个人状态出错',
+                        size: 'small'
+                    });
+                }
+                Infos['state'] = state;
+            }
+        })
+    }
+
+    function setState(state) {
+        if (Infos['state'] !== state) {
+            updateState(state);
+        }
+    }
+
+    function getSubject() {
+        $.ajax({
+            url: '/student/getSubject',
+            async: false,
+            data: {id: Infos['subjectId']},
+            dataType: 'json',
+            success: function (result) {
+                if (result['id'] === Infos['subjectId']) {
+                    for (let key in result) {
+                        if (result.hasOwnProperty(key)) {
+                            SubjectInfos[key] = result[key];
+                        }
+                    }
+                } else {
+                    bootbox.alert({
+                        title: '错误',
+                        message: '后台返回了错误的信息',
+                        size: 'small'
+                    });
+                }
+            }
+        })
+    }
+
+    function handelTimeState(state) {
+        switch (state) {
+            case '-1':
+            case '0':
+                bootbox.alert({
+                    title: '提示',
+                    message: '当前为' + TimeState[state],
+                    size: 'small'
+                });
+                break;
+            case '1':
+                showState1();
+                break;
+            case '2':
+                showState2();
+                break;
+            case '3':
+                showState3();
+                break;
+            case '4':
+                showState4();
+                break;
+            case '5':
+                showState5();
+                break;
+            case '6':
+                showState6();
+                break;
+            case '7':
+                showState7();
+                break;
+            case '8':
+                showState8();
+                break;
+        }
+    }
+
+    function handelPersonState(state) {
+        let label = '';
+        switch (state) {
+            case 'NO_SELECTION':
+                label = '待选题';
+                break;
+            case 'SELECT_COMPLETE':
+                label = '选题完成';
+                break;
+            case 'NoOpenDoc':
+                label = '待上传开题报告';
+                break;
+            case 'WaitOpenScore':
+                label = '等待开题答辩评分';
+                break;
+            case 'Working':
+                label = '论文编写';
+                break;
+            case 'NoMidDoc':
+                label = '待上传中期报告';
+                break;
+            case 'WaitMidScore':
+                label = '等待中期检查评分';
+                break;
+            case 'NoPaperDoc':
+                label = '待上传评阅论文';
+                break;
+            case 'WaitPaperScore':
+                label = '等待评阅评分';
+                break;
+            case 'NoConDoc':
+                label = '待上传毕业论文';
+                break;
+            case 'WaitConScore':
+                label = '等待毕业答辩评分';
+                break;
+            case 'WaitFinalScore':
+                label = '等待最终评分';
+                break;
+            case 'Finished':
+                label = '结束';
+                break;
+        }
+        $('#currentState').html(label);
+    }
+
+    function showState1() {
+        showElement($('#content'));
+        if (!checkInfo('subjectId')) {
+            setState('NO_SELECTION');
+            $('#subjectName').html('未选题');
+            return false;
+        } else {
+            setState('SELECT_COMPLETE');
+            getSubject();
+            $('#subjectName').html(SubjectInfos['name']);
+            $('#subjectIdRow')[0].style.display = '';
+            $('#subjectId').html(SubjectInfos['id']);
+            return true;
+        }
+    }
+
+    function showState2() {
+        if (!showState1()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成选题，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+
+        showElement($('#openDocumentRow'));
+
+        if (!checkInfo('openDocument')) {
+            setState('NoOpenDoc');
+        } else {
+            setState('WaitOpenScore');
+            $('#openDocument').html('已提交');
+            showElement($('#openScoresRow'));
+            let scoreCount = 0;
+            if (checkInfo('openScore1')) {
+                $('#openScore1').html(Infos['openScore1']);
+                scoreCount++;
+            }
+            if (checkInfo('openScore2')) {
+                $('#openScore2').html(Infos['openScore2']);
+                scoreCount++;
+            }
+            if (checkInfo('openScore3')) {
+                $('#openScore3').html(Infos['openScore3']);
+                scoreCount++;
+            }
+            if (scoreCount === 3) {
+                setState('OpenComplete');
+                return true;
+            } else {
+                setState('WaitOpenScore');
+            }
+        }
+        return false;
+    }
+
+    function showState3() {
+        if (!showState2()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成开题答辩，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+        setState('Working');
+        return true;
+    }
+
+    function showState4() {
+        if (!showState3()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成开题答辩，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+        showElement($('#midDocumentRow'));
+
+        if (!checkInfo('middleDocument')) {
+            setState('NoMidDoc');
+        } else {
+            setState('WaitMidScore');
+            $('#midDocument').html('已提交');
+            showElement($('#midScoresRow'));
+            let scoreCount = 0;
+            if (checkInfo('middleScore1')) {
+                $('#midScore1').html(Infos['middleScore1']);
+                scoreCount++;
+            }
+            if (checkInfo('middleScore2')) {
+                $('#midScore2').html(Infos['middleScore2']);
+                scoreCount++;
+            }
+            if (checkInfo('middleScore3')) {
+                $('#midScore3').html(Infos['middleScore3']);
+                scoreCount++;
+            }
+            if (scoreCount === 3) {
+                setState('MidComplete');
+                return true;
+            } else {
+                setState('WaitMidScore');
+            }
+        }
+        return false;
+    }
+
+    function showState5() {
+        if (!showState4()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成中期检查，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+        setState('Working');
+        return true;
+    }
+
+    function showState6() {
+        if (!showState5()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成中期检查，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+
+        showElement($('#paperDocumentRow'));
+
+        if (!checkInfo('paperDocument')) {
+            setState('NoPaperDoc');
+        } else {
+            setState('WaitPaperScore');
+            $('#paperDocument').html('已提交');
+            showElement($('#paperScoresRow'));
+            let scoreCount = 0;
+            if (checkInfo('teacherPaperScore')) {
+                $('#teacherPaperScore').html(Infos['teacherPaperScore']);
+                scoreCount++;
+            }
+            if (checkInfo('studentPaperScore')) {
+                $('#studentPaperScore2').html(Infos['studentPaperScore']);
+                scoreCount++;
+            }
+            if (scoreCount === 2) {
+                setState('PaperComplete');
+                return true;
+            } else {
+                setState('WaitPaperScore');
+            }
+        }
+        return false;
+    }
+
+    function showState7() {
+        if (!showState6()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完成论文评阅，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+        showElement($('#concludeDocumentRow'));
+
+        if (!checkInfo('conclusionDocument')) {
+            setState('NoConDoc');
+        } else {
+            setState('WaitConScore');
+            $('#concludeDocument').html('已提交');
+            showElement($('#concludeScoresRow'));
+            let scoreCount = 0;
+            if (checkInfo('conclusionScore1')) {
+                $('#concludeScore1').html(Infos['conclusionScore1']);
+                scoreCount++;
+            }
+            if (checkInfo('conclusionScore2')) {
+                $('#concludeScore2').html(Infos['conclusionScore2']);
+                scoreCount++;
+            }
+            if (checkInfo('conclusionScore3')) {
+                $('#concludeScore3').html(Infos['conclusionScore3']);
+                scoreCount++;
+            }
+            if (scoreCount === 3) {
+                setState('ConComplete');
+                return true;
+            } else {
+                setState('WaitConScore');
+            }
+        }
+        return false;
+    }
+
+    function showState8() {
+        if (!showState7()) {
+            bootbox.alert({
+                title: '提示',
+                message: '未完毕业答辩，无法进入现阶段',
+                size: 'small'
+            });
+            return false;
+        }
+
+        showElement($('#finalScoreRow'));
+        if (!checkInfo('finalScore')) {
+            setState('WaitFinalScore');
+        } else {
+            setState('Finished');
+            $('#finalScore').html(Infos['finalScore']);
+            return true;
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
