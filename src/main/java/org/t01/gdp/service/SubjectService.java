@@ -28,6 +28,9 @@ public class SubjectService {
     @Autowired
     SqlMapper sqlMapper;
 
+    @Autowired
+    ReviewMapper reviewMapper;
+
     public void updateById(Subject subject, String examine_flag) {
             subject.setState(examine_flag);
             subjectMapper.updateByPrimaryKeySelective(subject);
@@ -66,7 +69,15 @@ public class SubjectService {
         return new PageInfo<>(studentAndSubjectList);
     }
 
-    public boolean chooseSubjectBystudent(String student_id, String subject_id){
+    public PageInfo<PaperReviewInfo> getSubjectsToPaperReview(int pageNo, int pageSize, String reviewTeacherId){
+        PageHelper.startPage(pageNo,pageSize);
+
+        List<PaperReviewInfo> paperReviewInfoForTeacher = reviewMapper.getPaperReviewInfoForTeacher(reviewTeacherId);
+
+        return new PageInfo<>(paperReviewInfoForTeacher);
+    }
+
+    public boolean chooseSubjectByStudent(String student_id, String subject_id){
         Student student=new Student();
         student.setSubjectId(Long.valueOf(subject_id));
         student.setId(student_id);
@@ -74,13 +85,13 @@ public class SubjectService {
         return true;
     }
 
-    public SubjectInfo selectSubjectBystudent(String subject_id){
+    public SubjectInfo selectSubjectByStudent(String subject_id){
         SubjectInfo subjectInfo;
         subjectInfo=sqlMapper.selectSubjectByPrimaryKey(Long.valueOf(subject_id));
         return subjectInfo;
     }
 
-    public PageInfo<SubjectInfo> listSubjectBystudent(int pageNo,
+    public PageInfo<SubjectInfo> listSubjectByStudent(int pageNo,
                                                       int pageSize,
                                                       String subject_name,
                                                       String subject_teacher,

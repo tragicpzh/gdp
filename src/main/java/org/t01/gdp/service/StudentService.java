@@ -3,6 +3,7 @@ package org.t01.gdp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.Student;
+import org.t01.gdp.domain.StudentExample;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
@@ -58,6 +59,21 @@ public class StudentService {
         }else if(subject.getReviewTeacherId3().equals(teacherId)){
             student.setConclusionScore3(score);
             return studentMapper.updateByPrimaryKey(student);
+        }
+        return -1;
+    }
+
+    public int updateStudentTeacherPaperScore(String teacherId, String studentId, Long subjectId,Integer score){
+        Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
+        if(subject.getCreateTeacherId().equals(teacherId)){
+            Student student = new Student();
+            student.setTeacherPaperScore(score);
+
+            StudentExample studentExample = new StudentExample();
+            StudentExample.Criteria criteria = studentExample.createCriteria();
+            criteria.andIdEqualTo(studentId);
+
+            return studentMapper.updateByExampleSelective(student,studentExample);
         }
         return -1;
     }

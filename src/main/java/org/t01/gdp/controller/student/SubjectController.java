@@ -23,14 +23,14 @@ public class SubjectController {
     @ResponseBody
     public Object Subject_Choose(HttpServletRequest request, String subject_id){
         String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        return Result.success(subjectService.chooseSubjectBystudent(student_id,subject_id),"选择课题成功");
+        return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id),"选择课题成功");
 
     }
 
     @GetMapping("/subject/select")
     @ResponseBody
     public Object subject_select( String subject_id){
-        return Result.success(subjectService.selectSubjectBystudent(subject_id),"详细信息");
+        return Result.success(subjectService.selectSubjectByStudent(subject_id),"详细信息");
     }
 
     @GetMapping("/subject/list")
@@ -45,7 +45,7 @@ public class SubjectController {
                                String difficult_min,
                                String difficult_max
                                ){
-        return Result.success(subjectService.listSubjectBystudent(pageNo,
+        return Result.success(subjectService.listSubjectByStudent(pageNo,
                 pageSize,
                 subject_name,
                 subject_teacher,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.t01.gdp.mapper.ReviewMapper">
+    <resultMap id="BaseResultMap" type="org.t01.gdp.domain.PaperReviewInfo">
+        <result column="studentId" property="studentId"/>
+        <result column="subjectId" property="subjectId"/>
+        <result column="subjectName" property="subjectName"/>
+        <result column="majorId" property="majorId"/>
+        <result column="direction" property="direction"/>
+        <result column="paperDocument" property="paperDocument"/>
+    </resultMap>
+
+    <select id="getPaperReviewInfoForTeacher" parameterType="String" resultMap="BaseResultMap">
+       select student.id as studentId,subject.id as subjectId,subject.name as subjectName,subject.major_id as majorId,subject.direction as direction,student.paper_document as paperDocument
+       from student join subject on student.subject_id = subject.id
+       where subject.create_teacher_id = #{reviewTeacherId} and student.paper_document is not null and teacher_paper_score is null;
+    </select>
+
+</mapper>

@@ -18,6 +18,3 @@ mybatis:
 
 time:
   cron-for-time-axis: 0 */1 * * * *
-logging:
-  level:
-    org.t01.gdp.mapper: debug

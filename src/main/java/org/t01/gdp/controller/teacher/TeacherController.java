@@ -55,6 +55,26 @@ public class TeacherController {
         teacherService.addSubject(subject);
     }
 
+    @RequestMapping("/paperReview/getList")
+    @ResponseBody
+    public String getPaperReviewList(int start,int length, @RequestParam("search[value]") String search, HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+
+        PageInfo<PaperReviewInfo> subjectsToPaperReview = subjectService.getSubjectsToPaperReview(start / length + 1, length, teacherId);
+        long total = subjectsToPaperReview.getTotal();
+        List<PaperReviewInfo> list = subjectsToPaperReview.getList();
+
+        return "{\"recordsTotal\": " + total + " ,\"recordsFiltered\": " + total + ",\"data\":" + list.toString() + "}";
+    }
+
+    @RequestMapping("/paperReview/score")
+    @ResponseBody
+    public void paperReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        Integer openingReviewScore = Integer.valueOf(score);
+        studentService.updateStudentTeacherPaperScore(teacherId, studentId, Long.valueOf(subjectId), openingReviewScore);
+    }
+
 //    @GetMapping("/openingReview/getListTest")
 //    @ResponseBody
 //    public String test(int start,int length){
