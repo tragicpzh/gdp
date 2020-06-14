@@ -1,5 +1,6 @@
 package org.t01.gdp.controller.teacher;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,12 +55,31 @@ public class TeacherController {
         teacherService.addSubject(subject);
     }
 
+//    @GetMapping("/openingReview/getListTest")
+//    @ResponseBody
+//    public String test(int start,int length){
+//        System.out.println("start = " + start + ", length = " + length);
+//        return "{\"recordsTotal\": 11,\"recordsFiltered\": 11,\"data\": [{\"studentId\":1,\"subjectId\":1,\"subjectName\":1,\"majorId\":1,\"direction\":1,\"openDocument\":\"timeAxis.save\"},{\"studentId\":1,\"subjectId\":1,\"subjectName\":1,\"majorId\":1,\"direction\":1,\"openDocument\":\"timeAxis.save\"},{\"studentId\":1,\"subjectId\":1,\"subjectName\":1,\"majorId\":1,\"direction\":1,\"openDocument\":\"timeAxis.save\"}]}";
+//    }
+
     @RequestMapping("/openingReview/getList")
     @ResponseBody
-    public Object getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletRequest request) {
+    public String getOpeningReviewList(int start,int length, @RequestParam("search[value]") String search, HttpServletRequest request) {
+
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId), "分页查询评审列表");
+
+        PageInfo<StudentAndSubject> subjectsByReviewTeacherId = subjectService.getSubjectsByReviewTeacherId(start / length + 1, length, teacherId);
+        long total = subjectsByReviewTeacherId.getTotal();
+        List<StudentAndSubject> list = subjectsByReviewTeacherId.getList();
+
+        return "{\"recordsTotal\": " + total + " ,\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
+
+//    @PostMapping("/openingReview/openScoringTest")
+//    @ResponseBody
+//    public void test1(String score, String studentId, String subjectId){
+//        System.out.println("score = " + score + ", studentId = " + studentId + ", subjectId = " + subjectId);
+//    }
 
     @PostMapping("/openingReview/openScoring")
     @ResponseBody

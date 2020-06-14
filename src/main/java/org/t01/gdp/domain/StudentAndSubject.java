@@ -7,6 +7,24 @@ public class StudentAndSubject {
     private String majorId;
     private String direction;
 
+    @Override
+    public String toString() {
+        return "{"
+                + "\"studentId\":\""
+                + studentId + '\"'
+                + ",\"subjectId\":\""
+                + subjectId + '\"'
+                + ",\"subjectName\":\""
+                + subjectName + '\"'
+                + ",\"majorId\":\""
+                + majorId + '\"'
+                + ",\"direction\":\""
+                + direction + '\"'
+                + ",\"openDocument\":\""
+                + "timeAxis.save" + '\"'
+                + "}";
+    }
+
     public StudentAndSubject() {
     }
 
