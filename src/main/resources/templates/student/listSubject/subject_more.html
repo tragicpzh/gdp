@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>详细信息</title>
+    <script th:src="@{/Rendering/plugins/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<div style="font-size: 15px;color: #2ba6cb">
+    <p>
+        <span>教师名称：</span>
+        <span id="create_teacher_id">1</span>
+    </p>
+    <p>
+        <span>所属专业：</span>
+        <span id="major_id">2</span>
+    </p>
+    <p>
+        <span>课题名称：</span>
+        <span id="name">3</span>
+    </p>
+    <p>
+        <span>所属方向：</span>
+        <span id="direction">4</span>
+    </p>
+    <p>
+        <span>难度系数：</span>
+        <span id="difficulty">5</span>
+    </p>
+    <p>
+        <span>所需技术：</span>
+        <span id="technology">6</span>
+    </p>
+    <p>
+        <span>具体描述：</span>
+       <span id="describe">7</span>
+    </p>
+</div>
+</body>
+<script>
+    function RequestParameter() {
+        var url = window.location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    $(function () {
+        var subject_id=RequestParameter()["subject_id"];
+        $.ajax({
+            type:'get',
+            url:'/subject/select',
+            contentType:"application/json",
+            data:{"subject_id":subject_id},
+            success:function (msg) {
+                $("#create_teacher_id").text(msg['data']['createTeacher']);
+                $("#major_id").text(msg['data']['major']);
+                $("#name").text(msg['data']['name']);
+                $("#direction").text(msg['data']['direction']);
+                $("#difficulty").text(msg['data']['difficulty']);
+                $("#technology").text(msg['data']['technology']);
+                $("#describe").text(msg['data']['describe']);
+            },
+            error:function () {
+                alert("失败")
+            }
+        });
+    });
+</script>
+</html>

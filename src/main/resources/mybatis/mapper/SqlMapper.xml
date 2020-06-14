@@ -15,4 +15,54 @@
                  left join student s on s.id = u.id
         where u.role = #{role}
     </select>
+    <select id="selectSubjectByPrimaryKey" parameterType="java.lang.Long" resultType="org.t01.gdp.domain.SubjectInfo">
+        select  s.id as id,
+                s.name as `name`,
+                s.direction as direction,
+                s.difficulty as difficulty,
+                s.technology as technology,
+                s.describe as `describe`,
+                u.name as createTeacher,
+                m.name as major
+        from subject s
+                left join `user` u on u.id=s.create_teacher_id
+                left join major m on m.id=s.major_id
+        where s.id = #{id}
+    </select>
+    <select id="selectBycondition" resultType="org.t01.gdp.domain.SubjectInfo">
+        select  s.id as id,
+                s.name as `name`,
+                s.direction as direction,
+                s.difficulty as difficulty,
+                s.technology as technology,
+                s.describe as `describe`,
+                u.name as createTeacher,
+                m.name as major
+        from subject s
+                left join `user` u on u.id=s.create_teacher_id
+                left join major m on m.id=s.major_id
+        <where>
+            <if test="subject_id!=null">
+                s.id = #{subject_id}
+            </if>
+            <if test="subject_name!=''">
+                and s.name like CONCAT('%',#{subject_name},'%')
+            </if>
+            <if test="subject_direction!=''">
+                and s.direction=#{subject_direction}
+            </if>
+            <if test="difficult_min!=null">
+                and s.difficulty &gt;= #{difficult_min}
+            </if>
+            <if test="difficult_max!=null">
+                and s.difficulty &lt;= #{difficult_max}
+            </if>
+            <if test="subject_major!=''">
+                and m.name=#{subject_major}
+            </if>
+            <if test="subject_teacher!=''">
+                and s.name=#{subject_teacher}
+            </if>
+        </where>
+    </select>
 </mapper>

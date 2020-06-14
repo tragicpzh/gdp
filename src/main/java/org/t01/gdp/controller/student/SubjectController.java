@@ -1,36 +1,58 @@
 package org.t01.gdp.controller.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.Listsubject;
 import org.t01.gdp.domain.Subject;
+import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.service.SubjectService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
     @PutMapping("/subject/choose")
-    public String Subject_Choose(String student_id,String subject_id){
-        subjectService.chooseSubjectBystudent(student_id,subject_id);
-        return "index";
+    @ResponseBody
+    public Object Subject_Choose(HttpServletRequest request, String subject_id){
+        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.chooseSubjectBystudent(student_id,subject_id),"选择课题成功");
+
     }
 
-    @PostMapping("/subject/select")
-    public String subject_select(String subject_id){
-        subjectService.selectSubjectBystudent(subject_id);
-        return "index";
+    @GetMapping("/subject/select")
+    @ResponseBody
+    public Object subject_select( String subject_id){
+        return Result.success(subjectService.selectSubjectBystudent(subject_id),"详细信息");
     }
 
-    @PostMapping("/subject/list")
-    public String subject_list(Listsubject listsubject){
-        List<Subject> list=subjectService.listSubjectBystudent(listsubject);
-        return "index";
+    @GetMapping("/subject/list")
+    @ResponseBody
+    public Object subject_list(@RequestParam(defaultValue = "1") int pageNo,
+                               @RequestParam(defaultValue = "10")int pageSize,
+                               String subject_name,
+                               String subject_teacher,
+                               String subject_major,
+                               String subject_id,
+                               String subject_direction,
+                               String difficult_min,
+                               String difficult_max
+                               ){
+        return Result.success(subjectService.listSubjectBystudent(pageNo,
+                pageSize,
+                subject_name,
+                subject_teacher,
+                subject_major,
+                subject_id,
+                subject_direction,
+                difficult_min,
+                difficult_max),"课题查询");
     }
 }
