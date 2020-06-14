@@ -45,4 +45,20 @@ public class StudentService {
         }
         return -1;
     }
+
+    public int updateStudentConclusionScore(String teacherId, String studentId, Long subjectId,Integer score){
+        Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        if(subject.getReviewTeacherId1().equals(teacherId)){
+            student.setConclusionScore1(score);
+            return studentMapper.updateByPrimaryKey(student);
+        }else if(subject.getReviewTeacherId2().equals(teacherId)){
+            student.setConclusionScore2(score);
+            return studentMapper.updateByPrimaryKey(student);
+        }else if(subject.getReviewTeacherId3().equals(teacherId)){
+            student.setConclusionScore3(score);
+            return studentMapper.updateByPrimaryKey(student);
+        }
+        return -1;
+    }
 }
