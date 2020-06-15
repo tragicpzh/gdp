@@ -27,16 +27,6 @@ public class TeacherController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/accountInfo")
-    public String getAccountInfo() {
-        return "/accountInfo";
-    }
-
-    @GetMapping("/addSubject")
-    public String addSubjectGet() {
-        return "teacher/addSubject";
-    }
-
     @PostMapping("/addSubject")
     @ResponseBody
     public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
@@ -65,11 +55,6 @@ public class TeacherController {
         }
 
         teacherService.addSubject(subject);
-    }
-
-    @GetMapping("/openingReview")
-    public String getOpeningReview() {
-        return "teacher/openingReview";
     }
 
     @RequestMapping("/paperReview/getList")
@@ -110,16 +95,12 @@ public class TeacherController {
         return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
 
-    @PostMapping("/openingReview")
+    @PostMapping("/openingReview/openScoring")
+    @ResponseBody
     public void openingReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
         Integer openingReviewScore = Integer.valueOf(score);
         studentService.updateStudentOpeningScore(teacherId, studentId, Long.valueOf(subjectId), openingReviewScore);
-    }
-
-    @GetMapping("/middleReview")
-    public String getMiddleReview(){
-        return "teacher/middleReview";
     }
 
     @RequestMapping("/middleReview/getList")
@@ -129,17 +110,27 @@ public class TeacherController {
         return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize,teacherId), "分页查询评审列表");
     }
 
-    @PostMapping("/middleReview")
+    @PostMapping("/middleReview/middleScoring")
     public void middleReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
         Integer middleReviewScore = Integer.valueOf(score);
         studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), middleReviewScore);
     }
+
+    @PostMapping("/conclusionReview/conclusionScoring")
+    @ResponseBody
+    public void conclusionReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        Integer conclusionReviewScore = Integer.valueOf(score);
+        studentService.updateStudentConclusionScore(teacherId, studentId, Long.valueOf(subjectId), conclusionReviewScore);
+    }
+
     @GetMapping("/subjectFragment")
     public String getSubjectFragment(){
         System.out.println("@GetMapping(\"/subjectFragment\")");
         return "teacher/subjectFragment";
     }
+
     @PostMapping("/subjectFragment")
     public void setSubjectFragment(String score, String studentId, String subjectId, HttpServletRequest request){
         System.out.println("@PostMapping(\"/subjectFragment\")");
@@ -156,6 +147,4 @@ public class TeacherController {
         System.out.println(teacherId);
         return Result.success(subjectService.getSubjectsByTeacherId(pageNo, pageSize, teacherId), "分页查询项目列表");
     }
-
-
 }

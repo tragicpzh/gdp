@@ -2,17 +2,23 @@ package org.t01.gdp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.t01.gdp.domain.Student;
-import org.t01.gdp.domain.StudentExample;
-import org.t01.gdp.domain.Subject;
+import org.t01.gdp.domain.*;
+import org.t01.gdp.mapper.MajorMapper;
 import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    private final StudentMapper studentMapper;
-    private final SubjectMapper subjectMapper;
+    @Autowired
+    StudentMapper studentMapper;
+    @Autowired
+    SubjectMapper subjectMapper;
 
     public Student getStudentInfoById(String id) {
         return studentMapper.selectByPrimaryKey(id);
@@ -89,5 +95,33 @@ public class StudentService {
             return studentMapper.updateByExampleSelective(student,studentExample);
         }
         return -1;
+    }
+
+    public boolean cross_review_create(List<Student> list){
+        if(list.size()<=1)return false;
+        Collections.sort(list, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return Integer.valueOf(o1.getMajorId())-Integer.valueOf(o2.getMajorId());
+            }
+        });
+        int start_id=-1;
+        Random random=new Random();
+        for (int i=0;i<list.size();i++){
+            Student student=list.get(i);
+            if(i>0){
+                Student student1=list.get(i-1);
+                if(student.getMajorId().equals(student1.getMajorId())){
+                    student.setCrossStudentId(list.get(random.nextInt(i-start_id)+start_id).getId());
+                }
+                else{
+                    start_id=i;
+                }
+            }
+            else {
+                start_id=0;
+            }
+        }
+        return true;
     }
 }
