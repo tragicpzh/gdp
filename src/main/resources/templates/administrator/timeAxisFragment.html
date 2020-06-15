@@ -1,14 +1,14 @@
 <div class="ui-timeLine">
-    <a v-for="item in timeAxis" class="item" type="button" data-toggle="modal" data-target="#modal-default" onclick="onEdit(this)">
+    <a v-for="(item,i) in timeAxis" class="item" type="button" data-toggle="modal" data-target="#modal-default" onclick="onEdit(this)">
         <div class="line"></div>
         <div class="dot"></div>
         <div class="box">
             <div class="cbox">
-                <div id="timeAxis-index">编号：{{item.index}}</div>
-                <div id="timeAxis-name">名称：{{item.name}}</div>
-                <div id="timeAxis-dateTime">时间：{{item.dateTime}}</div>
-                <div id="timeAxis-homePageNotice">首页通知：{{item.homePageNotice}}</div>
-                <div id="timeAxis-messageNotice">消息通知：{{item.messageNotice}}</div>
+                <div class="timeAxis-index">编号：{{item.index}}</div>
+                <div class="timeAxis-name">名称：{{item.name}}</div>
+                <div class="timeAxis-dateTime">时间：{{item.dateTime}}</div>
+                <div class="timeAxis-homePageNotice">首页通知：{{item.homePageNotice}}</div>
+                <div class="timeAxis-messageNotice">消息通知：{{item.messageNotice}}</div>
             </div>
         </div>
     </a>

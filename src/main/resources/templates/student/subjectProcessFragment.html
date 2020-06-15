@@ -9,33 +9,40 @@
     <div class="row justify-content-center">
         <div id="content" class="card border-dark" style="width: 100%;display: none;">
             <div id="subjectName" class="card-header bg-transparent border-dark"></div>
-            <div class="card-body container-fluid">
-                <div class="list-group">
-                    <div id="currentTimeRow" class="list-group-item">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item ">
+            <div class="card-body">
+                <div class="row">
+                    <div id="currentTimeRow" class="col-3">
+                        <div class="card border-dark">
+                            <div class="card-header bg-transparent border-dark">
                                 <span class="label">当前阶段:</span>
                                 <span id="currentTime" class="label"></span>
                             </div>
-                            <div class="list-group-item">
-                                <span class="label">当前状态:</span>
-                                <span id="currentState" class="label"></span>
-                            </div>
-                            <div id="subjectIdRow" class="list-group-item">
-                                <span class="label">选题ID:</span>
-                                <span id="subjectId" class="label">未选题</span>
+                            <div class="card-body">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item">
+                                        <span class="label">当前状态:</span>
+                                        <span id="currentState" class="label"></span>
+                                    </div>
+                                    <div id="subjectIdRow" class="list-group-item">
+                                        <span class="label">选题ID:</span>
+                                        <span id="subjectId" class="label">未选题</span>
+                                    </div>
+                                    <div id="finalScoreRow" class="list-group-item" style="display: none">
+                                        <span class="label">最终成绩:</span>
+                                        <span id="finalScore" class="label">未打分</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-                    <div id="openDocumentRow" class="list-group-item" style="display: none;">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item">
+                    <div id="openDocumentRow" class="col-3" style="display: none;">
+                        <div class="card border-dark">
+                            <div class="card-header bg-transparent border-dark">
                                 <span class="label">开题报告:</span>
-                                <span id="openDocument" class="label">未提交</span>
+                                <span id="openDocument" class="label"></span>
                             </div>
-                            <div id="openScoresRow" class="list-group-item" style="display: none;">
-                                <div class="list-group list-group-horizontal">
+                            <div class="card-body">
+                                <div id="openScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">开题评分1:</span>
                                         <span id="openScore1" class="label">未打分</span>
@@ -52,15 +59,14 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="midDocumentRow" class="list-group-item" style="display: none;">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item">
+                    <div id="midDocumentRow" class="col-3" style="display: none;">
+                        <div class="card border-dark">
+                            <div class="card-header bg-transparent border-dark">
                                 <span class="label">中期报告:</span>
                                 <span id="midDocument" class="label">未提交</span>
                             </div>
-                            <div id="midScoresRow" class="list-group-item" style="display: none;">
-                                <div class="list-group list-group-horizontal">
+                            <div class="card-body">
+                                <div id="midScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">中期评分1:</span>
                                         <span id="midScore1" class="label">未打分</span>
@@ -77,16 +83,14 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div id="paperDocumentRow" class="list-group-item" style="display: none;">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item">
+                    <div id="paperDocumentRow" class="col-3" style="display: none;">
+                        <div class="card border-dark">
+                            <div class="card-header bg-transparent border-dark">
                                 <span class="label">评阅论文:</span>
                                 <span id="paperDocument" class="label">未提交</span>
                             </div>
-                            <div id="paperScoresRow" class="list-group-item" style="display: none;">
-                                <div class="list-group list-group-horizontal">
+                            <div class="card-body">
+                                <div id="paperScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">教师评阅评分:</span>
                                         <span id="teacherPaperScore" class="label">未打分</span>
@@ -99,15 +103,16 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="concludeDocumentRow" class="list-group-item" style="display: none;">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item align-content-center">
+                </div>
+                <div class="row">
+                    <div id="concludeDocumentRow" class="col-3" style="display: none;">
+                        <div class="card border-dark">
+                            <div class="card-header bg-transparent border-dark">
                                 <span class="label">毕业论文:</span>
                                 <span id="concludeDocument" class="label">未提交</span>
                             </div>
-                            <div id="concludeScoresRow" class="list-group-item" style="display: none;">
-                                <div class="list-group list-group-horizontal">
+                            <div class="card-body">
+                                <div id="concludeScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">答辩评分1:</span>
                                         <span id="concludeScore1" class="label">未打分</span>
@@ -121,15 +126,6 @@
                                         <span id="concludeScore3" class="label">未打分</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="finalScoreRow" class="list-group-item" style="display: none;">
-                        <div class="list-group list-group-horizontal">
-                            <div class="list-group-item">
-                                <span class="label">最终成绩:</span>
-                                <span id="finalScore" class="label">未打分</span>
                             </div>
                         </div>
                     </div>
@@ -176,9 +172,9 @@
     })
     $(function () {
         getStudentInfo(Infos['id']);
-        let testState = '8'
+        let testState = '7'
         $('#currentTime').html(TimeState[testState]);
-        handelTimeState(currentState);
+        handelTimeState(testState);
         handelPersonState(Infos['state']);
     });
 
@@ -330,6 +326,9 @@
             case 'WaitOpenScore':
                 label = '等待开题答辩评分';
                 break;
+            case 'OpenComplete':
+                label = '开题答辩完成';
+                break;
             case 'Working':
                 label = '论文编写';
                 break;
@@ -339,17 +338,26 @@
             case 'WaitMidScore':
                 label = '等待中期检查评分';
                 break;
+            case 'MidComplete':
+                label = '中期检查完成';
+                break;
             case 'NoPaperDoc':
                 label = '待上传评阅论文';
                 break;
             case 'WaitPaperScore':
                 label = '等待评阅评分';
                 break;
+            case 'PaperComplete':
+                label = '论文评阅完成';
+                break;
             case 'NoConDoc':
                 label = '待上传毕业论文';
                 break;
             case 'WaitConScore':
                 label = '等待毕业答辩评分';
+                break;
+            case 'ConComplete':
+                label = '毕业答辩完成';
                 break;
             case 'WaitFinalScore':
                 label = '等待最终评分';

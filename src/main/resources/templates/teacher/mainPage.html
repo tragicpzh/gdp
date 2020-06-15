@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" th:href="@{/Rendering/dist/css/adminlte.min.css}">
     <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
-    <link th:href="@{/Rendering/timeAxis/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/Rendering/timeAxis/css/style.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/Rendering/timeAxis/css/style.css}" type="text/css"/>
     <script src="/jquery.js"></script>
     <script type="text/javascript" th:src="@{/Rendering/timeAxis/js/vue.min.js}"></script>
@@ -53,6 +53,7 @@
     <script src="/Rendering/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="/Rendering/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="/Rendering/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -161,7 +162,8 @@
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" type="button" id="addSubject" onclick="loadFragment('subjectManagement/addSubject',this)">
+                                <a class="nav-link" type="button" id="addSubject"
+                                   onclick="loadFragment('subjectManagement/addSubject',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>增加题目</p>
                                 </a>
@@ -295,5 +297,38 @@
         $("#" + position).click();
     });
 </script>
+<script>
+    function loadFragment2(fragment, e, id) {
+        console.log('__loadFragment2')
+        console.log('id = ', id)
+
+        fragment = fragment + "Fragment" + "?id=" + id;
+
+        $.get(fragment, function (data) {
+            $("#mainBody").html(data);
+        })
+
+        document.getElementById("fragmentScript").remove();
+        var script = document.createElement('script');
+        script.id = 'fragmentScript';
+        script.src = fragment + ".js";
+        document.getElementsByTagName('head')[0].appendChild(script);
+
+        $("#position").text($(e).children("p").text());
+        sessionStorage["position"] = $(e).attr("id");
+    }
+
+    $(document).ready(function () {
+        if (sessionStorage["position"] === "" || sessionStorage["position"] == null) {
+            sessionStorage["position"] = "home";
+        }
+
+        var position = sessionStorage["position"];
+        console.log("#" + position)
+
+        $("#" + position).click();
+    });
+</script>
+
 </body>
 </html>

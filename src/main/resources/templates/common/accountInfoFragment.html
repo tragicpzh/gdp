@@ -38,28 +38,72 @@
     </div>
 </div>
 
+<div th:name="invisibleDiv">
+    <div class="modal fade" id="verifyModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="verifyModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verifyModalLabel">验证</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="verifyForm" role="form" action="#" method="get">
+                        <div class="form-group row">
+                            <label for="newPhoneNumber" class="col-form-label ml-2 mr-3">新电话号码: </label>
+                            <span id="newPhoneNumber" class="col-form-label"></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="code" class="col-form-label ml-2 mr-3">验证码: </label>
+                            <input type="text" class="form-control col-sm-5 mr-3" id="code">
+                            <input type="button" id="btnSendCode" class="btn btn-primary col-sm-3" value="发送">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCheckCode" type="button" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script th:inline="javascript">
     Infos = {
         id: [[${session.USER_INFO.getId()}]],
         name: [[${session.USER_INFO.getName()}]],
         role: [[${session.USER_INFO.getRole()}]]
     };
+    $verifyModal = $('#verifyModal');
+    $.ajaxSetup({
+        async: false,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            bootbox.alert({
+                title: '错误',
+                message: '请求数据出错',
+                size: 'small'
+            });
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    })
+
     $(function () {
         let id = Infos['id'];
         $.ajax({
             url: '/getAccountInfo',
             type: 'get',
-            async: "false",
+            async: false,
             data: {id: id},
             dataType: "json",
             success: function (result) {
-                //console.log(result);
                 if (result['length'] === '2') {
-                    /*bootbox.alert({
-                        title: "成功",
-                        message: '读取账户信息成功',
-                        size: 'small'
-                    });*/
                     Infos['phoneNumber'] = result['phoneNumber'];
                     Infos['email'] = result['email'];
                     $('#name').html(Infos['name']);
@@ -80,57 +124,100 @@
                     });
                 }
             },
-            error: function (e) {
-                bootbox.alert({
-                    title: "错误",
-                    message: '读取账户信息出错',
-                    size: 'small'
-                });
-                console.log(e.status);
-                console.log(e.responseText);
-            }
         })
     })
     $('#btn_save').on('click', function () {
+        let phoneNumber = $('#phoneNumber').val();
+        if (phoneNumber === '' || phoneNumber === null) {
+            bootbox.alert({
+                title: '提示',
+                message: '电话号码不能为空',
+                size: 'small'
+            });
+            return;
+        }
+        $('#newPhoneNumber').html(phoneNumber);
+        $verifyModal.modal('show');
+
+    })
+
+    function setCoolDown(button, wait) {
+        if (wait === 0) {
+            button.attr('disabled', false);
+            button.val('发送');
+        } else {
+            if (button.attr('disabled') !== true) {
+                button.attr('disabled', true);
+            }
+            let newWait = wait - 1;
+            button.val(newWait + 's');
+            setTimeout(function () {
+                setCoolDown(button, newWait);
+            }, 1000);
+        }
+    }
+
+    $('#btnSendCode').on('click', function () {
+        let phoneNumber = $('#phoneNumber').val();
         $.ajax({
-            url: '/updateAccountInfo',
-            type: 'post',
-            data: JSON.stringify({
-                id: Infos['id'],
-                role: Infos['role'],
-                phoneNumber: $('#phoneNumber').val(),
-                email: $('#email').val()
-            }),
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
+            url: '/sendCode',
+            async: 'false',
+            data: {phoneNumber: phoneNumber},
+            dataType: 'text',
             success: function (result) {
-                console.log(result);
-                if (result['length'] === '1') {
-                    bootbox.alert({
-                        title: "成功",
-                        message: '保存账户信息成功',
-                        size: 'small'
-                    });
+                if (result !== 'success') {
+                    alert('发送验证码失败!');
                 } else {
-                    bootbox.alert({
-                        title: "失败",
-                        message: '保存账户信息失败，后台未返回数据',
-                        size: 'small'
-                    });
+                    setCoolDown($('#btnSendCode'), 60);
                 }
-            },
-            error: function (e) {
-                bootbox.alert({
-                    title: "错误",
-                    message: '保存账户信息出错',
-                    size: 'small'
-                });
-                console.log(e.status);
-                console.log(e.responseText);
             }
         })
     })
 
+    $('#btnCheckCode').on('click', function () {
+        let phoneNumber = $('#phoneNumber').val();
+        let email = $('#email').val();
+        $.ajax({
+            url: '/checkCode',
+            async: false,
+            data: {phoneNumber: phoneNumber, code: $('#code').val()},
+            dataType: 'text',
+            success: function (result) {
+                if (result === 'true') {
+                    $.ajax({
+                        url: '/updateAccountInfo',
+                        type: 'post',
+                        data: JSON.stringify({
+                            id: Infos['id'],
+                            role: Infos['role'],
+                            phoneNumber: phoneNumber,
+                            email: email
+                        }),
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        success: function (result) {
+                            if (result['length'] === '1') {
+                                bootbox.alert({
+                                    title: "成功",
+                                    message: '保存账户信息成功',
+                                    size: 'small'
+                                });
+                                $verifyModal.modal('hide');
+                            } else {
+                                bootbox.alert({
+                                    title: "失败",
+                                    message: '保存账户信息失败，后台未返回数据',
+                                    size: 'small'
+                                });
+                            }
+                        },
+                    })
+                } else {
+                    alert('验证码错误！');
+                }
+            }
+        })
+    })
 
     $('#btn_reset').on('click', function () {
         $('#phoneNumber').val(Infos['phoneNumber']);

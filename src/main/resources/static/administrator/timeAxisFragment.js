@@ -38,9 +38,7 @@ function onSubmit() {
                 timeAxis[index].homePageNotice = $("#homePageNoticeInput").val();
                 timeAxis[index].messageNotice = $("#messageNoticeInput").val();
 
-                $("#timeAxis-dateTime").text("时间：" + timeAxis[index].dateTime);
-                $("#timeAxis-homePageNotice").text("首页通知：" + timeAxis[index].homePageNotice);
-                $("#timeAxis-messageNotice").text("消息通知：" + timeAxis[index].messageNotice);
+                window.location.reload();
 
                 $("#submit").attr("data-dismiss","modal");
                 $("#submit").attr("onclick","");

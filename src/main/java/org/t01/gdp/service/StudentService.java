@@ -3,8 +3,11 @@ package org.t01.gdp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.*;
+import org.t01.gdp.mapper.StudentMapper;
+import org.t01.gdp.mapper.SubjectMapper;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,14 +17,8 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    @Autowired
-    StudentMapper studentMapper;
-    @Autowired
-    SubjectMapper subjectMapper;
-    @Autowired
-    SqlMapper sqlMapper;
-    @Autowired
-    UserMapper userMapper;
+    private final StudentMapper studentMapper;
+    private final SubjectMapper subjectMapper;
 
     public Student getStudentInfoById(String id) {
         return studentMapper.selectByPrimaryKey(id);
@@ -143,4 +140,23 @@ public class StudentService {
         crossreview.setStuName(name);
         return  crossreview;
     }
+
+    public void updateStudentOpenReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setOpenDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
+    public void updateStudentMiddleReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setMiddleDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
+    public void updateStudentConclusionReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setConclusionDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
 }
