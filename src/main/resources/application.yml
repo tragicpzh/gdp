@@ -32,6 +32,7 @@ mybatis:
 
 time:
   cron-for-time-axis: 0 */1 * * * *
+  cron-for-clear-verifivation-code: 0 */6 * * * *
 
 mail:
   from: ${spring.mail.username}
