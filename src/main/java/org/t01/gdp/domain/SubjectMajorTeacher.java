@@ -4,7 +4,7 @@ package org.t01.gdp.domain;
 public class SubjectMajorTeacher {
     private Long id;
 
-    private String Teacher;
+    private String teacher;
 
     private String major;
 
@@ -14,12 +14,24 @@ public class SubjectMajorTeacher {
 
     private String state;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", teacher='" + teacher + '\'' +
+                ", major='" + major + '\'' +
+                ", name='" + name + '\'' +
+                ", direction='" + direction + '\'' +
+                ", state='" + state + '\'' +
+                '}';
+    }
+
     public SubjectMajorTeacher() {
     }
 
     public SubjectMajorTeacher(Long id, String teacher, String major, String name, String direction, String state) {
         this.id = id;
-        Teacher = teacher;
+        this.teacher = teacher;
         this.major = major;
         this.name = name;
         this.direction = direction;
@@ -27,11 +39,11 @@ public class SubjectMajorTeacher {
     }
 
     public String getTeacher() {
-        return Teacher;
+        return teacher;
     }
 
     public void setTeacher(String teacher) {
-        Teacher = teacher;
+        this.teacher = teacher;
     }
 
     public String getMajor() {

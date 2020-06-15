@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.*;
-import org.t01.gdp.mapper.MajorMapper;
 import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
 
