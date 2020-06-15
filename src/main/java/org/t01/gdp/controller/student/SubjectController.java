@@ -24,13 +24,11 @@ public class SubjectController {
     public Object Subject_Choose(HttpServletRequest request, String subject_id2){
         String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id2),"选择课题成功");
-
     }
 
     @GetMapping("/subject/select")
     @ResponseBody
     public Object subject_select( String subject_id){
-        System.out.println("yes");
         return Result.success(subjectService.selectSubjectByStudent(subject_id),"详细信息");
     }
 

@@ -49,6 +49,28 @@ public class Student {
 
     private BigDecimal finalScore;
 
+    private String openEvaluation1;
+
+    private String openEvaluation2;
+
+    private String openEvaluation3;
+
+    private String middleEvaluation1;
+
+    private String middleEvaluation2;
+
+    private String middleEvaluation3;
+
+    private String teacherPaperEvaluation;
+
+    private String crossPaperEvaluation;
+
+    private String conclusionEvaluation1;
+
+    private String conclusionEvaluation2;
+
+    private String conclusionEvaluation3;
+
     public String getId() {
         return id;
     }
@@ -231,5 +253,93 @@ public class Student {
 
     public void setFinalScore(BigDecimal finalScore) {
         this.finalScore = finalScore;
+    }
+
+    public String getOpenEvaluation1() {
+        return openEvaluation1;
+    }
+
+    public void setOpenEvaluation1(String openEvaluation1) {
+        this.openEvaluation1 = openEvaluation1 == null ? null : openEvaluation1.trim();
+    }
+
+    public String getOpenEvaluation2() {
+        return openEvaluation2;
+    }
+
+    public void setOpenEvaluation2(String openEvaluation2) {
+        this.openEvaluation2 = openEvaluation2 == null ? null : openEvaluation2.trim();
+    }
+
+    public String getOpenEvaluation3() {
+        return openEvaluation3;
+    }
+
+    public void setOpenEvaluation3(String openEvaluation3) {
+        this.openEvaluation3 = openEvaluation3 == null ? null : openEvaluation3.trim();
+    }
+
+    public String getMiddleEvaluation1() {
+        return middleEvaluation1;
+    }
+
+    public void setMiddleEvaluation1(String middleEvaluation1) {
+        this.middleEvaluation1 = middleEvaluation1 == null ? null : middleEvaluation1.trim();
+    }
+
+    public String getMiddleEvaluation2() {
+        return middleEvaluation2;
+    }
+
+    public void setMiddleEvaluation2(String middleEvaluation2) {
+        this.middleEvaluation2 = middleEvaluation2 == null ? null : middleEvaluation2.trim();
+    }
+
+    public String getMiddleEvaluation3() {
+        return middleEvaluation3;
+    }
+
+    public void setMiddleEvaluation3(String middleEvaluation3) {
+        this.middleEvaluation3 = middleEvaluation3 == null ? null : middleEvaluation3.trim();
+    }
+
+    public String getTeacherPaperEvaluation() {
+        return teacherPaperEvaluation;
+    }
+
+    public void setTeacherPaperEvaluation(String teacherPaperEvaluation) {
+        this.teacherPaperEvaluation = teacherPaperEvaluation == null ? null : teacherPaperEvaluation.trim();
+    }
+
+    public String getCrossPaperEvaluation() {
+        return crossPaperEvaluation;
+    }
+
+    public void setCrossPaperEvaluation(String crossPaperEvaluation) {
+        this.crossPaperEvaluation = crossPaperEvaluation == null ? null : crossPaperEvaluation.trim();
+    }
+
+    public String getConclusionEvaluation1() {
+        return conclusionEvaluation1;
+    }
+
+    public void setConclusionEvaluation1(String conclusionEvaluation1) {
+        this.conclusionEvaluation1 = conclusionEvaluation1 == null ? null : conclusionEvaluation1.trim();
+    }
+
+    public String getConclusionEvaluation2() {
+        return conclusionEvaluation2;
+    }
+
+    public void setConclusionEvaluation2(String conclusionEvaluation2) {
+        this.conclusionEvaluation2 = conclusionEvaluation2 == null ? null : conclusionEvaluation2.trim();
+    }
+
+    public String getConclusionEvaluation3() {
+        return conclusionEvaluation3;
+    }
+
+    public void setConclusionEvaluation3(String conclusionEvaluation3) {
+        this.conclusionEvaluation3 = conclusionEvaluation3 == null ? null : conclusionEvaluation3.trim();
     }
 }
