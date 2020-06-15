@@ -35,8 +35,6 @@ public class AdministratorController {
         Date date = TimeAxis.getFormat().parse(dateTimeString);
         timePoint.setDateTime(date);
 
-        System.out.println(timePoint);
-
         int result = TimeAxis.setTimePoint(timePoint.getIndex(), timePoint);
         switch (result){
             case 0:
