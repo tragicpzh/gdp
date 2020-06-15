@@ -1,130 +1,143 @@
-<div>
-    <h2>
-        评审列表
-    </h2>
-    <div>
-        <table id="MR" class="table table-bordered table-hover">
-
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">中期评审待评列表</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>学生学号</th>
+                <th>项目编号</th>
+                <th>项目名称</th>
+                <th>专业编号</th>
+                <th>项目方向</th>
+                <th>资料</th>
+                <th>评审</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>学生学号</th>
+                <th>项目编号</th>
+                <th>项目名称</th>
+                <th>专业编号</th>
+                <th>项目方向</th>
+                <th>资料</th>
+                <th>评审</th>
+            </tr>
+            </tfoot>
         </table>
     </div>
+    <!-- /.card-body -->
 </div>
+<!-- /.card -->
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">中期评审评分</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>学号：<span id="studentId"></span></p>
+                <p>编号：<span id="subjectId"></span></p>
+                <p>分数：<input type="number" max="100" min="0" id="score"></p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="onSubmit()">保存</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <script>
     $(function () {
-        window.operateEvents  = {
-            'click .btn_review': function (e, value, row, index) {
-                var index = layer.open({
-                    type: 1,
-                    skin: "layui-layer-rim",
-                    area: ["250px", "150px"],
-                    title: "开题评分(百分制）",
-                    content: '<input type="text" id="score" width="250px">',
-                    btn: ['确定', '取消'],
-                    yes: function (index, layero) {
-                        $.ajax({
-                            url: "/teacher/middleReview/middleScoring",
-                            method: "POST",
-                            data: {"score":$('#score').val(), "studentId":row.studentId, "subjectId":row.subjectId},
-                            success: function () {
-                                layer.msg("评分成功",{time:1000});
-                                layer.close(index);
-                            },
-                            fail: function () {
-                                layer.close(index);
-                                layer.msg("评分失败请稍后重试",{time:1000});
-                            },
-                        });
-                    },
-                    btn2: function (index, layero) {
-                        layer.close(index);
-                    },
-                });
+        $("#table").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/teacher/Review/getList",
+            "columns":[
+                {"data":"studentId"},
+                {"data":"subjectId"},
+                {"data":"subjectName"},
+                {"data":"majorId"},
+                {"data":"direction"}
+            ],
+            "columnDefs":[
+                {
+                    "targets": [5],
+                    "data": "middleDocument",
+                    "render": function(data, type, full) {
+                        return "<a type='button' class='btn btn-danger' href='/download/" + data + "'>下载</a>";
+                    }
+                },
+                {
+                    "targets": [6],
+                    "data": "studentId",
+                    "render": function(data, type, full) {
+                        return "<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-default\" onclick='onReview(" + full.studentId + ',' + full.subjectId + ")' >评分</button>";
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+<script>
+    function onReview(studentId,subjectId) {
+        $("#studentId").text(studentId);
+        $("#subjectId").text(subjectId);
+        $("#score").val(0);
+    }
+</script>
+
+<script>
+    function onSubmit() {
+        var studentId = $("#studentId").text();
+        var subjectId = $("#subjectId").text();
+        var score = $("#score").val();
+
+        if(score > 100 || score < 0 || score == ""){
+            alert("请输入0~100之间的整数");
+            return;
+        }
+
+        var option = {
+            url: "/teacher/middleReview/middleScoring",
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: {
+                "studentId": studentId,
+                "subjectId": subjectId,
+                "score": score
+            },
+            success: function () {
+                alert("保存成功");
+
+                $("#submit").attr("data-dismiss","modal");
+                $("#submit").attr("onclick","");
+                $("#submit").click();
+                $("#submit").attr("data-dismiss","");
+                $("#submit").attr("onclick","onSubmit()");
+
+                $("#table").dataTable().fnDraw(false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
             }
         };
 
-        $('#MR').bootstrapTable('destroy').bootstrapTable({
-            method: 'get',
-            url: "/teacher/openingReview/getList",
-            striped: true,
-            dataField: "list",
-            totalField: "total",
-            pageNumber: 1,
-            pageSize: 10,
-            pagination: true,
-            queryParamsType: 'limit',
-            // search: true,
-            queryParams: function (params) {
-                return {
-                    pageSize: params.limit,
-                    pageNo: params.offset / params.limit + 1
-                }
-            },
-            sidePagination: 'server',
-            pageList: "[10, 25, 50, 100, all]",
-            showRefresh: true,
-            clickToSelect: true,
-            toolbarAlign: 'left',
-            buttonsAlign: 'right',
-            toolbar: '#toolbar',
-            showColumns: false,
-            paginationLoop: false,
-            columns: [
-                {
-                    title: 'SubjectId',
-                    field: 'subjectId',
-                    visible: true,
-                    width: 160
-                },
-                /*{
-                    //  title: '全选/反选',
-                    checkbox: true
-                }
-                ,*/
-                {
-                    title: '学生学号',
-                    field: 'studentId',
-                    visible: true,
-                    width: 160
-                },
-                {
-                    title: '题目标题',
-                    field: 'subjectName',
-                    width: 160,
-                    align: 'left'
-                },
-                {
-                    title: '所属专业编号',
-                    field: 'subjectName',
-                    width: 160,
-                    align: 'left'
-                },
-                {
-                    title: '题目方向',
-                    field: 'direction',
-                    width: 160,
-                    align: 'left'
-                },
-                {
-                    title: '操作',
-                    width: 80,
-                    align: 'center',
-                    formatter:function (value, row, index) {
-                        return [
-                            '<button  type="button" class="btn btn-danger btn-xs btn_down">',
-                            '下载报告' ,
-                            '</button>',
-                            ' <button  type="button" class="btn btn-primary btn-xs btn_review">',
-                            '评分评阅' ,
-                            '</button>',
-                        ].join('')
-                    },
-                    events:window.operateEvents
-                }
-            ],
-            locale: 'zh-CN',
-            responseHandler: function (data) {
-                return data['data'];
-            }
-        });
-    })
+        $.ajax(option);
+    }
 </script>
