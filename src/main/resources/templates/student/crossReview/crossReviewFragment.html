@@ -1,72 +1,99 @@
 
 <div class="card">
-        <!-- Content Header (Page header) -->
-        <section class="card-header">
-            <h3>评阅信息</h3>
-        </section>
-        <div class="card card-warning">
-            <!-- /.box-header -->
-            <div class="card-body">
-                <form role="form">
-                    <!-- text input -->
-                    <div class="form-group">
-                        <label>评阅学生</label>
-                        <input  id="stuName" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>学生邮箱</label>
-                        <input  id="email" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>课题编号</label>
-                        <input id="subject_id" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>课题名称</label>
-                        <input id="name" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>方向</label>
-                        <input id="direction" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>技术</label>
-                        <input id="technology" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>创建老师</label>
-                        <input  id="createTeacher" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>所属专业</label>
-                        <input  id="major" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>难度</label>
-                        <input  id="difficulty" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>具体描述</label>
-                        <textarea id="describe" class="form-control" rows="3" style="background-color:transparent" readonly="readonly"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <a type="button" class="btn btn-primary" href="/download/">课题相关资料</a>
-                        <a type="button" class="btn btn-primary" href="/download/">开题资料</a>
-                        <a type="button" class="btn btn-primary" href="/download/">中期资料</a>
-                        <a type="button" class="btn btn-primary" href="/download/">结题资料</a>
-                        <a type="button" class="btn btn-primary" href="/download/">论文资料</a>
-                    </div>
-                </form>
-            </div>
-            <!-- /.box-body -->
+    <!-- Content Header (Page header) -->
+    <section class="card-header">
+        <h3>评阅信息</h3>
+    </section>
+    <div class="card card-warning">
+        <!-- /.box-header -->
+        <div class="card-body">
+            <form role="form">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>评阅学生</label>
+                    <input id="stuName" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>学生邮箱</label>
+                    <input id="email" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>课题编号</label>
+                    <input id="subject_id" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>课题名称</label>
+                    <input id="name" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>方向</label>
+                    <input id="direction" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>技术</label>
+                    <input id="technology" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>创建老师</label>
+                    <input id="createTeacher" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>所属专业</label>
+                    <input id="major" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>难度</label>
+                    <input id="difficulty" type="text" class="form-control" style="background-color:transparent" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>具体描述</label>
+                    <textarea id="describe" class="form-control" rows="3" style="background-color:transparent" readonly="readonly"></textarea>
+                </div>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary" href="/download/">课题相关资料</a>
+                    <a type="button" class="btn btn-primary" href="/download/">开题资料</a>
+                    <a type="button" class="btn btn-primary" href="/download/">中期资料</a>
+                    <a type="button" class="btn btn-primary" href="/download/">结题资料</a>
+                    <a type="button" class="btn btn-primary" href="/download/">论文资料</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default" onclick="">评阅论文</button>
+                </div>
+            </form>
         </div>
-        <!-- Main content -->
-        <!-- /.content -->
+        <!-- /.box-body -->
     </div>
+    <!-- Main content -->
+    <!-- /.content -->
+</div>
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">论文交叉评阅</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>学号：<span id="studentId"></span></p>
+                <p>编号：<span id="subjectId"></span></p>
+                <p>分数：<input type="number" max="100" min="0" id="score"></p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="onSubmit()">保存</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <script>
     $(function () {
         $.ajax({
-            type:'post',
+            type:'get',
             url:'/student/crossReview/select',
             contentType:"application/json",
             success:function (msg) {
@@ -85,4 +112,42 @@
             }
         });
     })
+</script>
+
+<script>
+    function onSubmit() {
+        var studentId = $("#studentId").text();
+        var subjectId = $("#subjectId").text();
+        var score = $("#score").val();
+
+        if(score > 100 || score < 0 || score == ""){
+            alert("请输入0~100之间的整数");
+            return;
+        }
+
+        var option = {
+            url: "/student/crossReview/score",
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: {
+                "studentId": studentId,
+                "score": score
+            },
+            success: function () {
+                alert("保存成功");
+
+                $("#submit").attr("data-dismiss","modal");
+                $("#submit").attr("onclick","");
+                $("#submit").click();
+                $("#submit").attr("data-dismiss","");
+                $("#submit").attr("onclick","onSubmit()");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        };
+
+        $.ajax(option);
+    }
 </script>

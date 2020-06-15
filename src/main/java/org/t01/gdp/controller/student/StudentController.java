@@ -1,6 +1,7 @@
 package org.t01.gdp.controller.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.common.Result;
@@ -84,10 +85,18 @@ public class StudentController {
     }
 
     @ResponseBody
-    @PostMapping("/crossReview/select")//交叉评阅信息查找
+    @GetMapping("/crossReview/select")//交叉评阅信息查找
     public Object select_cross_review(HttpServletRequest request){
         String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         Crossreview crossreview=studentService.selectCrossReview(student_id);
         return Result.success(crossreview,"success");
     }
+
+    @ResponseBody
+    @PostMapping("/crossReview/score")
+    public void crossScore(String studentId,int score,HttpServletRequest request){
+        String reviewStudentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        studentService.updateStudentCrossPaperScore(reviewStudentId,studentId,score);
+    }
+
 }

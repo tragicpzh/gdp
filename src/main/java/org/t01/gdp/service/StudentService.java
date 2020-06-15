@@ -85,9 +85,25 @@ public class StudentService {
 
     public int updateStudentTeacherPaperScore(String teacherId, String studentId, Long subjectId,Integer score){
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
-        if(subject.getCreateTeacherId().equals(teacherId)){
-            Student student = new Student();
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        if(subject.getCreateTeacherId().equals(teacherId) && student.getSubjectId().equals(subjectId)){
+            student = new Student();
             student.setTeacherPaperScore(score);
+
+            StudentExample studentExample = new StudentExample();
+            StudentExample.Criteria criteria = studentExample.createCriteria();
+            criteria.andIdEqualTo(studentId);
+
+            return studentMapper.updateByExampleSelective(student,studentExample);
+        }
+        return -1;
+    }
+
+    public int updateStudentCrossPaperScore(String reviewStudentId, String studentId, Integer score){
+        Student student = studentMapper.selectByPrimaryKey(reviewStudentId);
+        if(student.getCrossStudentId().equals(studentId)){
+            student = new Student();
+            student.setStudentPaperScore(score);
 
             StudentExample studentExample = new StudentExample();
             StudentExample.Criteria criteria = studentExample.createCriteria();
