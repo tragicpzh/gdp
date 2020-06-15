@@ -141,6 +141,22 @@
 
     })
 
+    function setCoolDown(button, wait) {
+        if (wait === 0) {
+            button.attr('disabled', false);
+            button.val('发送');
+        } else {
+            if (button.attr('disabled') !== true) {
+                button.attr('disabled', true);
+            }
+            let newWait = wait - 1;
+            button.val(newWait + 's');
+            setTimeout(function () {
+                setCoolDown(button, newWait);
+            }, 1000);
+        }
+    }
+
     $('#btnSendCode').on('click', function () {
         let phoneNumber = $('#phoneNumber').val();
         $.ajax({
@@ -151,6 +167,8 @@
             success: function (result) {
                 if (result !== 'success') {
                     alert('发送验证码失败!');
+                } else {
+                    setCoolDown($('#btnSendCode'), 60);
                 }
             }
         })
