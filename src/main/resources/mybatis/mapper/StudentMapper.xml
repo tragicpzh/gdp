@@ -25,6 +25,17 @@
     <result column="teacher_paper_score" jdbcType="INTEGER" property="teacherPaperScore" />
     <result column="student_paper_score" jdbcType="INTEGER" property="studentPaperScore" />
     <result column="final_score" jdbcType="DECIMAL" property="finalScore" />
+    <result column="open_evaluation1" jdbcType="VARCHAR" property="openEvaluation1" />
+    <result column="open_evaluation2" jdbcType="VARCHAR" property="openEvaluation2" />
+    <result column="open_evaluation3" jdbcType="VARCHAR" property="openEvaluation3" />
+    <result column="middle_evaluation1" jdbcType="VARCHAR" property="middleEvaluation1" />
+    <result column="middle_evaluation2" jdbcType="VARCHAR" property="middleEvaluation2" />
+    <result column="middle_evaluation3" jdbcType="VARCHAR" property="middleEvaluation3" />
+    <result column="teacher_paper_evaluation" jdbcType="VARCHAR" property="teacherPaperEvaluation" />
+    <result column="cross_paper_evaluation" jdbcType="VARCHAR" property="crossPaperEvaluation" />
+    <result column="conclusion_evaluation1" jdbcType="VARCHAR" property="conclusionEvaluation1" />
+    <result column="conclusion_evaluation2" jdbcType="VARCHAR" property="conclusionEvaluation2" />
+    <result column="conclusion_evaluation3" jdbcType="VARCHAR" property="conclusionEvaluation3" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -88,7 +99,10 @@
     id, major_id, state, email, phone_number, subject_id, cross_student_id, open_document, 
     middle_document, conclusion_document, paper_document, open_score1, open_score2, open_score3, 
     middle_score1, middle_score2, middle_score3, conclusion_score1, conclusion_score2, 
-    conclusion_score3, teacher_paper_score, student_paper_score, final_score
+    conclusion_score3, teacher_paper_score, student_paper_score, final_score, open_evaluation1, 
+    open_evaluation2, open_evaluation3, middle_evaluation1, middle_evaluation2, middle_evaluation3, 
+    teacher_paper_evaluation, cross_paper_evaluation, conclusion_evaluation1, conclusion_evaluation2, 
+    conclusion_evaluation3
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.StudentExample" resultMap="BaseResultMap">
     select
@@ -128,7 +142,12 @@
       open_score2, open_score3, middle_score1, 
       middle_score2, middle_score3, conclusion_score1, 
       conclusion_score2, conclusion_score3, teacher_paper_score, 
-      student_paper_score, final_score)
+      student_paper_score, final_score, open_evaluation1, 
+      open_evaluation2, open_evaluation3, middle_evaluation1, 
+      middle_evaluation2, middle_evaluation3, teacher_paper_evaluation, 
+      cross_paper_evaluation, conclusion_evaluation1, 
+      conclusion_evaluation2, conclusion_evaluation3
+      )
     values (#{id,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{subjectId,jdbcType=BIGINT}, 
       #{crossStudentId,jdbcType=VARCHAR}, #{openDocument,jdbcType=VARCHAR}, #{middleDocument,jdbcType=VARCHAR}, 
@@ -136,7 +155,12 @@
       #{openScore2,jdbcType=INTEGER}, #{openScore3,jdbcType=INTEGER}, #{middleScore1,jdbcType=INTEGER}, 
       #{middleScore2,jdbcType=INTEGER}, #{middleScore3,jdbcType=INTEGER}, #{conclusionScore1,jdbcType=INTEGER}, 
       #{conclusionScore2,jdbcType=INTEGER}, #{conclusionScore3,jdbcType=INTEGER}, #{teacherPaperScore,jdbcType=INTEGER}, 
-      #{studentPaperScore,jdbcType=INTEGER}, #{finalScore,jdbcType=DECIMAL})
+      #{studentPaperScore,jdbcType=INTEGER}, #{finalScore,jdbcType=DECIMAL}, #{openEvaluation1,jdbcType=VARCHAR}, 
+      #{openEvaluation2,jdbcType=VARCHAR}, #{openEvaluation3,jdbcType=VARCHAR}, #{middleEvaluation1,jdbcType=VARCHAR}, 
+      #{middleEvaluation2,jdbcType=VARCHAR}, #{middleEvaluation3,jdbcType=VARCHAR}, #{teacherPaperEvaluation,jdbcType=VARCHAR}, 
+      #{crossPaperEvaluation,jdbcType=VARCHAR}, #{conclusionEvaluation1,jdbcType=VARCHAR}, 
+      #{conclusionEvaluation2,jdbcType=VARCHAR}, #{conclusionEvaluation3,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.t01.gdp.domain.Student">
     insert into student
@@ -210,6 +234,39 @@
       <if test="finalScore != null">
         final_score,
       </if>
+      <if test="openEvaluation1 != null">
+        open_evaluation1,
+      </if>
+      <if test="openEvaluation2 != null">
+        open_evaluation2,
+      </if>
+      <if test="openEvaluation3 != null">
+        open_evaluation3,
+      </if>
+      <if test="middleEvaluation1 != null">
+        middle_evaluation1,
+      </if>
+      <if test="middleEvaluation2 != null">
+        middle_evaluation2,
+      </if>
+      <if test="middleEvaluation3 != null">
+        middle_evaluation3,
+      </if>
+      <if test="teacherPaperEvaluation != null">
+        teacher_paper_evaluation,
+      </if>
+      <if test="crossPaperEvaluation != null">
+        cross_paper_evaluation,
+      </if>
+      <if test="conclusionEvaluation1 != null">
+        conclusion_evaluation1,
+      </if>
+      <if test="conclusionEvaluation2 != null">
+        conclusion_evaluation2,
+      </if>
+      <if test="conclusionEvaluation3 != null">
+        conclusion_evaluation3,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -280,6 +337,39 @@
       </if>
       <if test="finalScore != null">
         #{finalScore,jdbcType=DECIMAL},
+      </if>
+      <if test="openEvaluation1 != null">
+        #{openEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="openEvaluation2 != null">
+        #{openEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="openEvaluation3 != null">
+        #{openEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation1 != null">
+        #{middleEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation2 != null">
+        #{middleEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation3 != null">
+        #{middleEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPaperEvaluation != null">
+        #{teacherPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="crossPaperEvaluation != null">
+        #{crossPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation1 != null">
+        #{conclusionEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation2 != null">
+        #{conclusionEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation3 != null">
+        #{conclusionEvaluation3,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -361,6 +451,39 @@
       <if test="record.finalScore != null">
         final_score = #{record.finalScore,jdbcType=DECIMAL},
       </if>
+      <if test="record.openEvaluation1 != null">
+        open_evaluation1 = #{record.openEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openEvaluation2 != null">
+        open_evaluation2 = #{record.openEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openEvaluation3 != null">
+        open_evaluation3 = #{record.openEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.middleEvaluation1 != null">
+        middle_evaluation1 = #{record.middleEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.middleEvaluation2 != null">
+        middle_evaluation2 = #{record.middleEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.middleEvaluation3 != null">
+        middle_evaluation3 = #{record.middleEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherPaperEvaluation != null">
+        teacher_paper_evaluation = #{record.teacherPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crossPaperEvaluation != null">
+        cross_paper_evaluation = #{record.crossPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conclusionEvaluation1 != null">
+        conclusion_evaluation1 = #{record.conclusionEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conclusionEvaluation2 != null">
+        conclusion_evaluation2 = #{record.conclusionEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conclusionEvaluation3 != null">
+        conclusion_evaluation3 = #{record.conclusionEvaluation3,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -390,7 +513,18 @@
       conclusion_score3 = #{record.conclusionScore3,jdbcType=INTEGER},
       teacher_paper_score = #{record.teacherPaperScore,jdbcType=INTEGER},
       student_paper_score = #{record.studentPaperScore,jdbcType=INTEGER},
-      final_score = #{record.finalScore,jdbcType=DECIMAL}
+      final_score = #{record.finalScore,jdbcType=DECIMAL},
+      open_evaluation1 = #{record.openEvaluation1,jdbcType=VARCHAR},
+      open_evaluation2 = #{record.openEvaluation2,jdbcType=VARCHAR},
+      open_evaluation3 = #{record.openEvaluation3,jdbcType=VARCHAR},
+      middle_evaluation1 = #{record.middleEvaluation1,jdbcType=VARCHAR},
+      middle_evaluation2 = #{record.middleEvaluation2,jdbcType=VARCHAR},
+      middle_evaluation3 = #{record.middleEvaluation3,jdbcType=VARCHAR},
+      teacher_paper_evaluation = #{record.teacherPaperEvaluation,jdbcType=VARCHAR},
+      cross_paper_evaluation = #{record.crossPaperEvaluation,jdbcType=VARCHAR},
+      conclusion_evaluation1 = #{record.conclusionEvaluation1,jdbcType=VARCHAR},
+      conclusion_evaluation2 = #{record.conclusionEvaluation2,jdbcType=VARCHAR},
+      conclusion_evaluation3 = #{record.conclusionEvaluation3,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -464,6 +598,39 @@
       <if test="finalScore != null">
         final_score = #{finalScore,jdbcType=DECIMAL},
       </if>
+      <if test="openEvaluation1 != null">
+        open_evaluation1 = #{openEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="openEvaluation2 != null">
+        open_evaluation2 = #{openEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="openEvaluation3 != null">
+        open_evaluation3 = #{openEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation1 != null">
+        middle_evaluation1 = #{middleEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation2 != null">
+        middle_evaluation2 = #{middleEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="middleEvaluation3 != null">
+        middle_evaluation3 = #{middleEvaluation3,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPaperEvaluation != null">
+        teacher_paper_evaluation = #{teacherPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="crossPaperEvaluation != null">
+        cross_paper_evaluation = #{crossPaperEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation1 != null">
+        conclusion_evaluation1 = #{conclusionEvaluation1,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation2 != null">
+        conclusion_evaluation2 = #{conclusionEvaluation2,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusionEvaluation3 != null">
+        conclusion_evaluation3 = #{conclusionEvaluation3,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -490,7 +657,18 @@
       conclusion_score3 = #{conclusionScore3,jdbcType=INTEGER},
       teacher_paper_score = #{teacherPaperScore,jdbcType=INTEGER},
       student_paper_score = #{studentPaperScore,jdbcType=INTEGER},
-      final_score = #{finalScore,jdbcType=DECIMAL}
+      final_score = #{finalScore,jdbcType=DECIMAL},
+      open_evaluation1 = #{openEvaluation1,jdbcType=VARCHAR},
+      open_evaluation2 = #{openEvaluation2,jdbcType=VARCHAR},
+      open_evaluation3 = #{openEvaluation3,jdbcType=VARCHAR},
+      middle_evaluation1 = #{middleEvaluation1,jdbcType=VARCHAR},
+      middle_evaluation2 = #{middleEvaluation2,jdbcType=VARCHAR},
+      middle_evaluation3 = #{middleEvaluation3,jdbcType=VARCHAR},
+      teacher_paper_evaluation = #{teacherPaperEvaluation,jdbcType=VARCHAR},
+      cross_paper_evaluation = #{crossPaperEvaluation,jdbcType=VARCHAR},
+      conclusion_evaluation1 = #{conclusionEvaluation1,jdbcType=VARCHAR},
+      conclusion_evaluation2 = #{conclusionEvaluation2,jdbcType=VARCHAR},
+      conclusion_evaluation3 = #{conclusionEvaluation3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

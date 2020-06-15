@@ -1584,6 +1584,776 @@ public class StudentExample {
             addCriterion("final_score not between", value1, value2, "finalScore");
             return (Criteria) this;
         }
+
+        public Criteria andOpenEvaluation1IsNull() {
+            addCriterion("open_evaluation1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1IsNotNull() {
+            addCriterion("open_evaluation1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1EqualTo(String value) {
+            addCriterion("open_evaluation1 =", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1NotEqualTo(String value) {
+            addCriterion("open_evaluation1 <>", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1GreaterThan(String value) {
+            addCriterion("open_evaluation1 >", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1GreaterThanOrEqualTo(String value) {
+            addCriterion("open_evaluation1 >=", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1LessThan(String value) {
+            addCriterion("open_evaluation1 <", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1LessThanOrEqualTo(String value) {
+            addCriterion("open_evaluation1 <=", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1Like(String value) {
+            addCriterion("open_evaluation1 like", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1NotLike(String value) {
+            addCriterion("open_evaluation1 not like", value, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1In(List<String> values) {
+            addCriterion("open_evaluation1 in", values, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1NotIn(List<String> values) {
+            addCriterion("open_evaluation1 not in", values, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1Between(String value1, String value2) {
+            addCriterion("open_evaluation1 between", value1, value2, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation1NotBetween(String value1, String value2) {
+            addCriterion("open_evaluation1 not between", value1, value2, "openEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2IsNull() {
+            addCriterion("open_evaluation2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2IsNotNull() {
+            addCriterion("open_evaluation2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2EqualTo(String value) {
+            addCriterion("open_evaluation2 =", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2NotEqualTo(String value) {
+            addCriterion("open_evaluation2 <>", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2GreaterThan(String value) {
+            addCriterion("open_evaluation2 >", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2GreaterThanOrEqualTo(String value) {
+            addCriterion("open_evaluation2 >=", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2LessThan(String value) {
+            addCriterion("open_evaluation2 <", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2LessThanOrEqualTo(String value) {
+            addCriterion("open_evaluation2 <=", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2Like(String value) {
+            addCriterion("open_evaluation2 like", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2NotLike(String value) {
+            addCriterion("open_evaluation2 not like", value, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2In(List<String> values) {
+            addCriterion("open_evaluation2 in", values, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2NotIn(List<String> values) {
+            addCriterion("open_evaluation2 not in", values, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2Between(String value1, String value2) {
+            addCriterion("open_evaluation2 between", value1, value2, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation2NotBetween(String value1, String value2) {
+            addCriterion("open_evaluation2 not between", value1, value2, "openEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3IsNull() {
+            addCriterion("open_evaluation3 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3IsNotNull() {
+            addCriterion("open_evaluation3 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3EqualTo(String value) {
+            addCriterion("open_evaluation3 =", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3NotEqualTo(String value) {
+            addCriterion("open_evaluation3 <>", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3GreaterThan(String value) {
+            addCriterion("open_evaluation3 >", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3GreaterThanOrEqualTo(String value) {
+            addCriterion("open_evaluation3 >=", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3LessThan(String value) {
+            addCriterion("open_evaluation3 <", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3LessThanOrEqualTo(String value) {
+            addCriterion("open_evaluation3 <=", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3Like(String value) {
+            addCriterion("open_evaluation3 like", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3NotLike(String value) {
+            addCriterion("open_evaluation3 not like", value, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3In(List<String> values) {
+            addCriterion("open_evaluation3 in", values, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3NotIn(List<String> values) {
+            addCriterion("open_evaluation3 not in", values, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3Between(String value1, String value2) {
+            addCriterion("open_evaluation3 between", value1, value2, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenEvaluation3NotBetween(String value1, String value2) {
+            addCriterion("open_evaluation3 not between", value1, value2, "openEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1IsNull() {
+            addCriterion("middle_evaluation1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1IsNotNull() {
+            addCriterion("middle_evaluation1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1EqualTo(String value) {
+            addCriterion("middle_evaluation1 =", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1NotEqualTo(String value) {
+            addCriterion("middle_evaluation1 <>", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1GreaterThan(String value) {
+            addCriterion("middle_evaluation1 >", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1GreaterThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation1 >=", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1LessThan(String value) {
+            addCriterion("middle_evaluation1 <", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1LessThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation1 <=", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1Like(String value) {
+            addCriterion("middle_evaluation1 like", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1NotLike(String value) {
+            addCriterion("middle_evaluation1 not like", value, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1In(List<String> values) {
+            addCriterion("middle_evaluation1 in", values, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1NotIn(List<String> values) {
+            addCriterion("middle_evaluation1 not in", values, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1Between(String value1, String value2) {
+            addCriterion("middle_evaluation1 between", value1, value2, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation1NotBetween(String value1, String value2) {
+            addCriterion("middle_evaluation1 not between", value1, value2, "middleEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2IsNull() {
+            addCriterion("middle_evaluation2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2IsNotNull() {
+            addCriterion("middle_evaluation2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2EqualTo(String value) {
+            addCriterion("middle_evaluation2 =", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2NotEqualTo(String value) {
+            addCriterion("middle_evaluation2 <>", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2GreaterThan(String value) {
+            addCriterion("middle_evaluation2 >", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2GreaterThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation2 >=", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2LessThan(String value) {
+            addCriterion("middle_evaluation2 <", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2LessThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation2 <=", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2Like(String value) {
+            addCriterion("middle_evaluation2 like", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2NotLike(String value) {
+            addCriterion("middle_evaluation2 not like", value, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2In(List<String> values) {
+            addCriterion("middle_evaluation2 in", values, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2NotIn(List<String> values) {
+            addCriterion("middle_evaluation2 not in", values, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2Between(String value1, String value2) {
+            addCriterion("middle_evaluation2 between", value1, value2, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation2NotBetween(String value1, String value2) {
+            addCriterion("middle_evaluation2 not between", value1, value2, "middleEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3IsNull() {
+            addCriterion("middle_evaluation3 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3IsNotNull() {
+            addCriterion("middle_evaluation3 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3EqualTo(String value) {
+            addCriterion("middle_evaluation3 =", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3NotEqualTo(String value) {
+            addCriterion("middle_evaluation3 <>", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3GreaterThan(String value) {
+            addCriterion("middle_evaluation3 >", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3GreaterThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation3 >=", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3LessThan(String value) {
+            addCriterion("middle_evaluation3 <", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3LessThanOrEqualTo(String value) {
+            addCriterion("middle_evaluation3 <=", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3Like(String value) {
+            addCriterion("middle_evaluation3 like", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3NotLike(String value) {
+            addCriterion("middle_evaluation3 not like", value, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3In(List<String> values) {
+            addCriterion("middle_evaluation3 in", values, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3NotIn(List<String> values) {
+            addCriterion("middle_evaluation3 not in", values, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3Between(String value1, String value2) {
+            addCriterion("middle_evaluation3 between", value1, value2, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleEvaluation3NotBetween(String value1, String value2) {
+            addCriterion("middle_evaluation3 not between", value1, value2, "middleEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationIsNull() {
+            addCriterion("teacher_paper_evaluation is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationIsNotNull() {
+            addCriterion("teacher_paper_evaluation is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationEqualTo(String value) {
+            addCriterion("teacher_paper_evaluation =", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationNotEqualTo(String value) {
+            addCriterion("teacher_paper_evaluation <>", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationGreaterThan(String value) {
+            addCriterion("teacher_paper_evaluation >", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationGreaterThanOrEqualTo(String value) {
+            addCriterion("teacher_paper_evaluation >=", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationLessThan(String value) {
+            addCriterion("teacher_paper_evaluation <", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationLessThanOrEqualTo(String value) {
+            addCriterion("teacher_paper_evaluation <=", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationLike(String value) {
+            addCriterion("teacher_paper_evaluation like", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationNotLike(String value) {
+            addCriterion("teacher_paper_evaluation not like", value, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationIn(List<String> values) {
+            addCriterion("teacher_paper_evaluation in", values, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationNotIn(List<String> values) {
+            addCriterion("teacher_paper_evaluation not in", values, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationBetween(String value1, String value2) {
+            addCriterion("teacher_paper_evaluation between", value1, value2, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeacherPaperEvaluationNotBetween(String value1, String value2) {
+            addCriterion("teacher_paper_evaluation not between", value1, value2, "teacherPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationIsNull() {
+            addCriterion("cross_paper_evaluation is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationIsNotNull() {
+            addCriterion("cross_paper_evaluation is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationEqualTo(String value) {
+            addCriterion("cross_paper_evaluation =", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationNotEqualTo(String value) {
+            addCriterion("cross_paper_evaluation <>", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationGreaterThan(String value) {
+            addCriterion("cross_paper_evaluation >", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationGreaterThanOrEqualTo(String value) {
+            addCriterion("cross_paper_evaluation >=", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationLessThan(String value) {
+            addCriterion("cross_paper_evaluation <", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationLessThanOrEqualTo(String value) {
+            addCriterion("cross_paper_evaluation <=", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationLike(String value) {
+            addCriterion("cross_paper_evaluation like", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationNotLike(String value) {
+            addCriterion("cross_paper_evaluation not like", value, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationIn(List<String> values) {
+            addCriterion("cross_paper_evaluation in", values, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationNotIn(List<String> values) {
+            addCriterion("cross_paper_evaluation not in", values, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationBetween(String value1, String value2) {
+            addCriterion("cross_paper_evaluation between", value1, value2, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossPaperEvaluationNotBetween(String value1, String value2) {
+            addCriterion("cross_paper_evaluation not between", value1, value2, "crossPaperEvaluation");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1IsNull() {
+            addCriterion("conclusion_evaluation1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1IsNotNull() {
+            addCriterion("conclusion_evaluation1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1EqualTo(String value) {
+            addCriterion("conclusion_evaluation1 =", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1NotEqualTo(String value) {
+            addCriterion("conclusion_evaluation1 <>", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1GreaterThan(String value) {
+            addCriterion("conclusion_evaluation1 >", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1GreaterThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation1 >=", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1LessThan(String value) {
+            addCriterion("conclusion_evaluation1 <", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1LessThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation1 <=", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1Like(String value) {
+            addCriterion("conclusion_evaluation1 like", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1NotLike(String value) {
+            addCriterion("conclusion_evaluation1 not like", value, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1In(List<String> values) {
+            addCriterion("conclusion_evaluation1 in", values, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1NotIn(List<String> values) {
+            addCriterion("conclusion_evaluation1 not in", values, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1Between(String value1, String value2) {
+            addCriterion("conclusion_evaluation1 between", value1, value2, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation1NotBetween(String value1, String value2) {
+            addCriterion("conclusion_evaluation1 not between", value1, value2, "conclusionEvaluation1");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2IsNull() {
+            addCriterion("conclusion_evaluation2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2IsNotNull() {
+            addCriterion("conclusion_evaluation2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2EqualTo(String value) {
+            addCriterion("conclusion_evaluation2 =", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2NotEqualTo(String value) {
+            addCriterion("conclusion_evaluation2 <>", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2GreaterThan(String value) {
+            addCriterion("conclusion_evaluation2 >", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2GreaterThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation2 >=", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2LessThan(String value) {
+            addCriterion("conclusion_evaluation2 <", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2LessThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation2 <=", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2Like(String value) {
+            addCriterion("conclusion_evaluation2 like", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2NotLike(String value) {
+            addCriterion("conclusion_evaluation2 not like", value, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2In(List<String> values) {
+            addCriterion("conclusion_evaluation2 in", values, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2NotIn(List<String> values) {
+            addCriterion("conclusion_evaluation2 not in", values, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2Between(String value1, String value2) {
+            addCriterion("conclusion_evaluation2 between", value1, value2, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation2NotBetween(String value1, String value2) {
+            addCriterion("conclusion_evaluation2 not between", value1, value2, "conclusionEvaluation2");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3IsNull() {
+            addCriterion("conclusion_evaluation3 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3IsNotNull() {
+            addCriterion("conclusion_evaluation3 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3EqualTo(String value) {
+            addCriterion("conclusion_evaluation3 =", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3NotEqualTo(String value) {
+            addCriterion("conclusion_evaluation3 <>", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3GreaterThan(String value) {
+            addCriterion("conclusion_evaluation3 >", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3GreaterThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation3 >=", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3LessThan(String value) {
+            addCriterion("conclusion_evaluation3 <", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3LessThanOrEqualTo(String value) {
+            addCriterion("conclusion_evaluation3 <=", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3Like(String value) {
+            addCriterion("conclusion_evaluation3 like", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3NotLike(String value) {
+            addCriterion("conclusion_evaluation3 not like", value, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3In(List<String> values) {
+            addCriterion("conclusion_evaluation3 in", values, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3NotIn(List<String> values) {
+            addCriterion("conclusion_evaluation3 not in", values, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3Between(String value1, String value2) {
+            addCriterion("conclusion_evaluation3 between", value1, value2, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
+
+        public Criteria andConclusionEvaluation3NotBetween(String value1, String value2) {
+            addCriterion("conclusion_evaluation3 not between", value1, value2, "conclusionEvaluation3");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,11 +1,10 @@
 package org.t01.gdp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.*;
-import org.t01.gdp.mapper.MajorMapper;
-import org.t01.gdp.mapper.StudentMapper;
-import org.t01.gdp.mapper.SubjectMapper;
+import org.t01.gdp.mapper.*;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +18,10 @@ public class StudentService {
     StudentMapper studentMapper;
     @Autowired
     SubjectMapper subjectMapper;
+    @Autowired
+    SqlMapper sqlMapper;
+    @Autowired
+    UserMapper userMapper;
 
     public Student getStudentInfoById(String id) {
         return studentMapper.selectByPrimaryKey(id);
@@ -123,5 +126,21 @@ public class StudentService {
             }
         }
         return true;
+    }
+
+    public Crossreview selectCrossReview(String student_id){
+        StudentExample studentExample=new StudentExample();//取得评阅对象id
+        studentExample.createCriteria().andIdEqualTo(student_id);
+        List<Student> list=studentMapper.selectByExample(studentExample);
+        Student student= (list.size()>0?list.get(0):null);
+
+        UserExample userExample=new UserExample();//取得评阅对象姓名
+        userExample.createCriteria().andIdEqualTo(student.getCrossStudentId());
+        List<User> list1=userMapper.selectByExample(userExample);
+        String name=(list1.size()>0?list1.get(0):null).getName();
+
+        Crossreview crossreview=sqlMapper.selectCrossReview(student.getCrossStudentId());
+        crossreview.setStuName(name);
+        return  crossreview;
     }
 }
