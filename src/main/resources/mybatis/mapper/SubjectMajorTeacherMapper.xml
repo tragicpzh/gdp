@@ -3,7 +3,7 @@
 <mapper namespace="org.t01.gdp.mapper.SubjectMajorTeacherMapper">
     <resultMap id="BaseResultMap" type="org.t01.gdp.domain.SubjectMajorTeacher">
         <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="teacher" jdbcType="VARCHAR" property="Teacher" />
+        <result column="teacher" jdbcType="VARCHAR" property="teacher" />
         <result column="major" jdbcType="VARCHAR" property="major" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="direction" jdbcType="VARCHAR" property="direction" />
