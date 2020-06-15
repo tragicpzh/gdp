@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.t01.gdp.mapper.SubjectMajorTeacherMapper">
-    <resultMap id="BaseResultMap" type="org.t01.gdp.domain.SubjectMajorTeacher">
+<mapper namespace="org.t01.gdp.mapper.SubjectForTeacher">
+    <resultMap id="BaseResultMap" type="org.t01.gdp.domain.SubjectBrief">
         <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="teacher" jdbcType="VARCHAR" property="teacher" />
-        <result column="major" jdbcType="VARCHAR" property="major" />
         <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+        <result column="major_id" jdbcType="VARCHAR" property="majorId" />
         <result column="direction" jdbcType="VARCHAR" property="direction" />
         <result column="state" jdbcType="VARCHAR" property="state" />
     </resultMap>
 
     <select id="selectByTeacherId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT subject.id, subject.name, user.name teacher, major.name major, direction , state
-        FROM ((SUBJECT JOIN USER ON create_teacher_id = user.id) JOIN major ON major_id = major.id)
-        where user.id = #{id,jdbcType=VARCHAR}
+        SELECT id,`name`,difficulty,major_id,direction,state
+        FROM SUBJECT
+        where create_teacher_id = #{teacherId};
     </select>
 </mapper>

@@ -124,40 +124,27 @@ public class TeacherController {
         studentService.updateStudentConclusionScore(teacherId, studentId, Long.valueOf(subjectId), conclusionReviewScore);
     }
 
-    @GetMapping("/subjectFragment")
-    public String getSubjectFragment() {
-        System.out.println("@GetMapping(\"/subjectFragment\")");
-        return "teacher/subjectFragment";
-    }
-
-    @PostMapping("/subjectFragment")
-    public void setSubjectFragment(String score, String studentId, String subjectId, HttpServletRequest request) {
-        System.out.println("@PostMapping(\"/subjectFragment\")");
-        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        Integer middleReviewScore = Integer.valueOf(score);
-        studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), middleReviewScore);
-    }
-
-    @RequestMapping("/subjectFragment/getList")
+    @RequestMapping("/searchSubject/getList")
     @ResponseBody
-    public Object getSubjectList(@RequestParam(defaultValue = "1") int pageNo,  @RequestParam(defaultValue = "10")int pageSize, HttpServletRequest request){
-        System.out.println("@RequestMapping(\"/subjectFragment/getList\")");
+    public String getSubjectList(int start,int length, HttpServletRequest request){
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        System.out.println(teacherId);
-        return Result.success(subjectService.getSubjectsByTeacherId(pageNo, pageSize, teacherId), "分页查询项目列表");
+        PageInfo<SubjectBrief> subjectsByTeacherId = subjectService.getSubjectsByTeacherId(start / length + 1, length, teacherId);
+        long total = subjectsByTeacherId.getTotal();
+        List<SubjectBrief> list = subjectsByTeacherId.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
 
-    @GetMapping("/subjectDetailFragment")
-    public String getSubjectDetailFragment(){
-        System.out.println("@GetMapping(\"/subjectDetailFragment\")");
-        return "teacher/subjectDetailFragment";
-    }
-    @RequestMapping("/subjectFragment/getSubject")
+    @GetMapping("/searchSubject/detail")
     @ResponseBody
-    public Object getSubject(String subjectId){
-        System.out.println("@RequestMapping(\"/subjectFragment/getSubject\")");
-        return Result.success(subjectService.getSubjectsByTeacherId(0, 0, subjectId), "分页查询项目列表");
+    public Subject getSubjectDetail(long subjectId){
+        return subjectService.getSubjectById(subjectId);
     }
 
+    @PostMapping("/searchSubject/modify")
+    @ResponseBody
+    public void modifySubject(long id, String name, String majorId, String direction, String difficulty, String technology, String file){
+        System.out.println("id = " + id + ", name = " + name + ", majorId = " + majorId + ", direction = " + direction + ", difficulty = " + difficulty + ", technology = " + technology + ", file = " + file);
+    }
 
 }

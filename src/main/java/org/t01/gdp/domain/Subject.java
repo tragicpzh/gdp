@@ -32,6 +32,41 @@ public class Subject {
 
     private Date createTime;
 
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":"
+                + id
+                + ",\"createTeacherId\":\""
+                + createTeacherId + '\"'
+                + ",\"majorId\":\""
+                + majorId + '\"'
+                + ",\"name\":\""
+                + name + '\"'
+                + ",\"direction\":\""
+                + direction + '\"'
+                + ",\"difficulty\":"
+                + difficulty
+                + ",\"technology\":\""
+                + technology + '\"'
+                + ",\"describe\":\""
+                + describe + '\"'
+                + ",\"document\":\""
+                + document + '\"'
+                + ",\"reviewTeacherId1\":\""
+                + reviewTeacherId1 + '\"'
+                + ",\"reviewTeacherId2\":\""
+                + reviewTeacherId2 + '\"'
+                + ",\"reviewTeacherId3\":\""
+                + reviewTeacherId3 + '\"'
+                + ",\"state\":\""
+                + state + '\"'
+                + ",\"createTime\":\""
+                + createTime + '\"'
+                + "}";
+
+    }
+
     public Long getId() {
         return id;
     }
