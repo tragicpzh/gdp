@@ -3,11 +3,15 @@ package org.t01.gdp.controller.student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.TimeAxis;
+import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.service.StudentService;
+import org.t01.gdp.service.UploadService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -15,6 +19,8 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+    @Autowired
+    UploadService uploadService;
 
     @ResponseBody
     @RequestMapping("/getTimeState")
@@ -43,5 +49,32 @@ public class StudentController {
     public boolean cross_review_create(List<Student> list){
         studentService.cross_review_create(list);
         return true;
+    }
+
+    @ResponseBody
+    @RequestMapping("/uploadOpenReport")
+    public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "Student\\" + studentId + "\\openReport\\";
+        uploadService.uploadFile(multipartFile, path);
+        studentService.updateStudentOpenReport(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @ResponseBody
+    @RequestMapping("/uploadMiddleReport")
+    public void uploadMiddleReport(HttpServletRequest request, MultipartFile multipartFile){
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "Student\\" + studentId + "\\openReport\\";
+        uploadService.uploadFile(multipartFile, path);
+        studentService.updateStudentMiddleReport(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @ResponseBody
+    @RequestMapping("/uploadConclusionReport")
+    public void uploadConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "Student\\" + studentId + "\\openReport\\";
+        uploadService.uploadFile(multipartFile, path);
+        studentService.updateStudentConclusionReport(studentId, path, multipartFile.getOriginalFilename());
     }
 }

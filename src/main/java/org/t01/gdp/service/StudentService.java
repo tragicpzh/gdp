@@ -1,7 +1,9 @@
 package org.t01.gdp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.MajorMapper;
 import org.t01.gdp.mapper.StudentMapper;
@@ -124,4 +126,23 @@ public class StudentService {
         }
         return true;
     }
+
+    public void updateStudentOpenReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setOpenDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
+    public void updateStudentMiddleReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setMiddleDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
+    public void updateStudentConclusionReport(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setConclusionDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
 }
