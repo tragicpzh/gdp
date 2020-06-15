@@ -103,7 +103,7 @@ public class SubjectService {
         return subjectInfo;
     }
 
-    public PageInfo<SubjectInfo> listSubjectBystudent(int pageNo,
+    public PageInfo<SubjectInfo> listSubjectByStudent(int pageNo,
                                                       int pageSize,
                                                       String subject_name,
                                                       String subject_teacher,

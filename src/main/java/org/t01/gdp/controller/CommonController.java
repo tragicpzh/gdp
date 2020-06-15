@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.service.DownloadService;
+import org.t01.gdp.service.SMSService;
 import org.t01.gdp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,18 @@ import java.util.Map;
 public class CommonController {
     private final DownloadService downloadService;
     private final UserService userService;
+
+//    @Autowired
+//    SMSService smsService;
+//
+//    @RequestMapping("/test")
+//    public String test(){
+//        String result = smsService.sendVerificationCode("1234", "17361040193");
+//        String result = smsService.sendBatchSMS();
+//        System.out.println(result);
+//
+//        return "test";
+//    }
 
     @GetMapping("/download/**")
     @ResponseBody

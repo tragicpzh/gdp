@@ -101,9 +101,13 @@ public class TeacherController {
 
     @RequestMapping("/openingReview/getList")
     @ResponseBody
-    public Object getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletRequest request) {
+    public String getOpeningReviewList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletRequest request) {
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId), "分页查询评审列表");
+        PageInfo<StudentAndSubject> subjectsByReviewTeacherId = subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId);
+        long total = subjectsByReviewTeacherId.getTotal();
+        List<StudentAndSubject> list = subjectsByReviewTeacherId.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
 
     @PostMapping("/openingReview")

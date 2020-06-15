@@ -1,7 +1,6 @@
 package org.t01.gdp.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.StudentExample;
