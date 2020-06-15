@@ -11,10 +11,27 @@ spring:
     suffix: .html
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm
-#    date-format: yyyy-MM-dd HH:mm
+    #    date-format: yyyy-MM-dd HH:mm
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 1600677562@qq.com
+    password: bzlbyskdmadkidjf
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   type-aliases-package: org.t01.gdp.domain
 
 time:
   cron-for-time-axis: 0 */1 * * * *
+
+mail:
+  from: ${spring.mail.username}

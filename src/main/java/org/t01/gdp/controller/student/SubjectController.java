@@ -46,7 +46,7 @@ public class SubjectController {
                                String difficult_min,
                                String difficult_max
                                ){
-        return Result.success(subjectService.listSubjectBystudent(pageNo,
+        return Result.success(subjectService.listSubjectByStudent(pageNo,
                 pageSize,
                 subject_name,
                 subject_teacher,
