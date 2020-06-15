@@ -46,8 +46,7 @@ public class TeacherController {
 
         //文件处理
         if (file != null) {
-            String path = "teacher\\";
-            path = path + subject.getCreateTeacherId() + "\\subjectDocuments";
+            String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
             uploadService.uploadFile(file, path);
             String fileUrl = path + file.getOriginalFilename();
             subject.setDocument(fileUrl);

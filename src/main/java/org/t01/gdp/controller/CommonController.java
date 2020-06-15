@@ -18,7 +18,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommonController {
     private final DownloadService downloadService;
-    private final UserService userService;
 
 //    @Autowired
 //    SMSService smsService;
@@ -56,22 +55,5 @@ public class CommonController {
     @RequestMapping("/*/mainPage")
     public String getMainPage(HttpServletRequest request) {
         return request.getRequestURI();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/getAccountInfo", method = RequestMethod.GET)
-    public Map<String, String> getAccountInfo(@RequestParam(name = "id") String id) {
-        return userService.getAccountInfoById(id);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/updateAccountInfo", method = RequestMethod.POST)
-    public Map<String, String> updateAccountInfo(@RequestBody JSONObject jsonObject) {
-        return userService.updateAccountInfo(
-                jsonObject.getString("id"),
-                jsonObject.getString("role"),
-                jsonObject.getString("phoneNumber"),
-                jsonObject.getString("email"
-                ));
     }
 }
