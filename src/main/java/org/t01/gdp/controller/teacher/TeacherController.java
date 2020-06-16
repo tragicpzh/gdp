@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -143,8 +145,32 @@ public class TeacherController {
 
     @PostMapping("/searchSubject/modify")
     @ResponseBody
-    public void modifySubject(long id, String name, String majorId, String direction, String difficulty, String technology, String file){
-        System.out.println("id = " + id + ", name = " + name + ", majorId = " + majorId + ", direction = " + direction + ", difficulty = " + difficulty + ", technology = " + technology + ", file = " + file);
+    public void modifySubject(long id,HttpServletRequest request){
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+
+        Subject subject = new Subject();
+        subject.setId(id);
+        subject.setName(request.getParameter("name"));
+        subject.setMajorId(request.getParameter("majorId"));
+        subject.setDirection(request.getParameter("direction"));
+        subject.setDescribe(request.getParameter("describe"));
+        subject.setDifficulty(new BigDecimal("0." + request.getParameter("difficulty")));
+        subject.setTechnology(request.getParameter("technology"));
+
+        MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
+        String subPath = null,filePath = null;
+        if(file != null){
+            subPath = teacherId + "\\" + id + "\\";
+            filePath = subPath + file.getOriginalFilename();
+            subject.setDocument(filePath);
+        }
+
+        if(subjectService.updateSubjectSelective(subject,teacherId) == 1){
+            if(file != null){
+                uploadService.uploadFile(file,subPath);
+            }
+        }
+
     }
 
 }

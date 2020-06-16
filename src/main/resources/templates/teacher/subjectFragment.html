@@ -63,7 +63,7 @@
                 <p><input type="text" maxlength="255" style="width: 100%" id="technology"></p>
                 <p>题目描述：</p>
                 <p><textarea rows="10" style="width: 100%" maxlength="1023" id="describe"></textarea></p>
-                <p id="file">相关资料：<input type="file" id="document"></p>
+                <p id="file">相关资料：<input type="file" id="document"><span id = "downloadFile"></span></p>
                 <p>当前状态：<span id = "state"></span></p>
                 <p>创建时间：<span id = "createTime"></span></p>
             </div>
@@ -124,9 +124,12 @@
                 $("#direction").val(data.direction);
                 $("#difficulty").val(data.difficulty*100);
                 $("#technology").val(data.technology);
+                $("#describe").val(data.describe);
 
                 if(data.document!=null && data.document!=""){
-                    $("#file").append("<a type='button' class='btn btn-danger' href='/download/" + data.document + "'>下载</a>")
+                    $("#downloadFile").html("<a type='button' class='btn btn-danger' href='/download/" + data.document + "' >下载</a>")
+                }else{
+                    $("#downloadFile").html("")
                 }
 
                 $("#state").text(data.state);
@@ -153,20 +156,24 @@
             return;
         }
 
+        var formData = new FormData();
+        formData.append("id", $("#subjectId").text());
+        formData.append("name", $("#subjectName").val());
+        formData.append("majorId", $("#majorId").val());
+        formData.append("direction", $("#direction").val());
+        formData.append("difficulty", $("#difficulty").val());
+        formData.append("technology", $("#technology").val());
+        formData.append("describe",$("#describe").val());
+        formData.append("file", $("#document")[0].files[0]);
+
         var option = {
             url: "/teacher/searchSubject/modify",
+            contentType: false,
+            processData : false,
             method: "post",
             timeout: 6000,
             async: false,
-            data: {
-                "id": $("#subjectId").text(),
-                "name": $("#subjectName").val(),
-                "majorId": $("#majorId").val(),
-                "direction": $("#direction").val(),
-                "difficulty": $("#difficulty").val(),
-                "technology": $("#technology").val(),
-                "file": $("#document").val(),
-            },
+            data: formData,
             success: function () {
                 alert("保存成功");
 

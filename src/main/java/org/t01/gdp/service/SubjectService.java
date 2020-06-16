@@ -43,6 +43,16 @@ public class SubjectService {
         return subjectMapper.updateByPrimaryKey(subject);
     }
 
+    public int updateSubjectSelective(Subject subject, String teacherId){
+        if(subjectMapper.selectByPrimaryKey(subject.getId()).getCreateTeacherId().equals(teacherId)){
+            SubjectExample subjectExample = new SubjectExample();
+            subjectExample.createCriteria().andIdEqualTo(subject.getId());
+
+            return subjectMapper.updateByExampleSelective(subject,subjectExample);
+        }
+        return -1;
+    }
+
     public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, String reviewTeacherId){
         PageHelper.startPage(pageNo,pageSize);
         //查询reviewTeacherId中有一个与传入的id相同的subject
