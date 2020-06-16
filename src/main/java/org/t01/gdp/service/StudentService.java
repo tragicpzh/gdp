@@ -176,4 +176,10 @@ public class StudentService {
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
+    public void updatePaper(String studentId, String path, String originalFilename) {
+        Student student = studentMapper.selectByPrimaryKey(studentId);
+        student.setPaperDocument(path+originalFilename);
+        studentMapper.updateByPrimaryKeySelective(student);
+    }
+
 }
