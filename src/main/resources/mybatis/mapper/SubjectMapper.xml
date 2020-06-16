@@ -17,6 +17,14 @@
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+  <resultMap id="BriefMap" type="org.t01.gdp.domain.SubjectBrief">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="difficulty" jdbcType="DECIMAL" property="difficulty" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -81,6 +89,20 @@
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
     select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectBriefByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BriefMap">
+    select id,`name`,difficulty,major_id,direction,state
     <if test="distinct">
       distinct
     </if>

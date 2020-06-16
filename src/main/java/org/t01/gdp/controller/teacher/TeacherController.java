@@ -170,7 +170,13 @@ public class TeacherController {
                 uploadService.uploadFile(file,subPath);
             }
         }
+    }
 
+    @PostMapping("/deleteSubject")
+    @ResponseBody
+    public boolean deleteSubject(long subjectId){
+
+        return subjectService.deleteSubject(subjectId)==1;
     }
 
 }

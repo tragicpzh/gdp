@@ -1,3 +1,227 @@
-<div>
-    题目管理
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">选题列表</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>题目编号</th>
+                <th>题目名称</th>
+                <th>难度</th>
+                <th>专业</th>
+                <th>方向</th>
+                <th>状态</th>
+                <th>审批</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>题目编号</th>
+                <th>题目名称</th>
+                <th>难度</th>
+                <th>专业</th>
+                <th>方向</th>
+                <th>状态</th>
+                <th>审批</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
 </div>
+<!-- /.card -->
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">题目详情</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                题目编号：<p id = "subjectId"></p>
+                题目名称：<p id="subjectName"></p>
+                专业编号<p id="majorId"></p>
+                方向：<p id="direction"></p>
+                难度：<p id="difficulty"></p>
+                相关技术：<p id="technology"></p>
+                题目描述：<p id="describe"></p>
+                相关资料：<p id="downloadFile"></p>
+                当前状态：<p id = "state"></p>
+                创建时间：<p id = "createTime"></p>
+                <p></p>
+                <p>审批操作：
+                    <select id="operation">
+                        <option value="NEW">待审</option>
+                        <option value="PASSED">通过</option>
+                        <option value="RETURN">退回</option>
+                    </select>
+                </p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" id="cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="onSubmit()">提交</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    $(function () {
+        $("#table").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/administrator/searchSubject/getList",
+            "columns":[
+                {"data":"id"},
+                {"data":"name"},
+                {"data":"difficulty"},
+                {"data":"majorId"},
+                {"data":"direction"},
+                {"data":"state"}
+            ],
+            "columnDefs":[
+                {
+                    "targets": [6],
+                    "data": "id",
+                    "render": function(data, type, full) {
+                        return "<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-default\" onclick='onDetail(" + data + ")' >查看</button>";
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+<script>
+    function onDetail(subjectId) {
+        var setting = {
+            url: "/administrator/searchSubject/detail",
+            method: "get",
+            timeout: 6000,
+            async: false,
+            data:{
+                "subjectId": subjectId
+            },
+            success: function (data) {
+                $("#subjectId").text(data.id);
+                $("#subjectName").text(data.name);
+                $("#majorId").text(data.majorId);
+                $("#direction").text(data.direction);
+                $("#difficulty").text("0." + data.difficulty*100);
+                $("#technology").text(data.technology);
+                $("#describe").text(data.describe);
+
+                if(data.document!=null && data.document!=""){
+                    $("#downloadFile").html("<a type='button' class='btn btn-danger' href='/download/" + data.document + "' >下载</a>")
+                }else{
+                    $("#downloadFile").html("无附加文件")
+                }
+
+                $("#state").text(data.state);
+                $("#createTime").text(data.createTime);
+                $("#operation").val(data.state());
+            },
+            error: function () {
+                alert("请求页面失败");
+                $("#cancel").click();
+            }
+        }
+
+        $.ajax(setting);
+    }
+</script>
+
+<script>
+    function onSubmit() {
+        var studentId = $("#studentId").text();
+        var subjectId = $("#subjectId").text();
+        var score = $("#score").val();
+
+        if(score > 100 || score < 0 || score == ""){
+            alert("请输入0~100之间的整数");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("id", $("#subjectId").text());
+        formData.append("name", $("#subjectName").val());
+        formData.append("majorId", $("#majorId").val());
+        formData.append("direction", $("#direction").val());
+        formData.append("difficulty", $("#difficulty").val());
+        formData.append("technology", $("#technology").val());
+        formData.append("describe",$("#describe").val());
+        formData.append("file", $("#document")[0].files[0]);
+
+        var option = {
+            url: "/teacher/searchSubject/modify",
+            contentType: false,
+            processData : false,
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: formData,
+            success: function () {
+                alert("保存成功");
+
+                $("#submit").attr("data-dismiss","modal");
+                $("#submit").attr("onclick","");
+                $("#submit").click();
+                $("#submit").attr("data-dismiss","");
+                $("#submit").attr("onclick","onSubmit()");
+
+                $("#table").dataTable().fnDraw(false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        };
+
+        $.ajax(option);
+    }
+</script>
+
+<script>
+    function onSubmit() {
+        var option = {
+            url: "/administrator/subjectExamination",
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: {
+                "subjectId": $("#subjectId").text(),
+                "operation": $("#operation").val()
+            },
+            success: function (data) {
+                if(data){
+                    alert("保存成功");
+
+                    $("#submit").attr("data-dismiss","modal");
+                    $("#submit").attr("onclick","");
+                    $("#submit").click();
+                    $("#submit").attr("data-dismiss","");
+                    $("#submit").attr("onclick","onSubmit()");
+
+                    $("#table").dataTable().fnDraw(false);
+                }else{
+                    alert("保存失败");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        };
+
+        $.ajax(option);
+    }
+</script>

@@ -69,6 +69,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" id="cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="delete" onclick="onDelete()">删除</button>
                 <button type="button" class="btn btn-primary" id="submit" onclick="onSubmit()">保存</button>
             </div>
         </div>
@@ -147,12 +148,10 @@
 
 <script>
     function onSubmit() {
-        var studentId = $("#studentId").text();
-        var subjectId = $("#subjectId").text();
-        var score = $("#score").val();
+        var difficulty = $("#difficulty").val();
 
-        if(score > 100 || score < 0 || score == ""){
-            alert("请输入0~100之间的整数");
+        if(difficulty > 100 || difficulty < 0 || difficulty == ""){
+            alert("请输入0.01~0.99之间的数");
             return;
         }
 
@@ -191,5 +190,41 @@
         };
 
         $.ajax(option);
+    }
+</script>
+
+<script>
+    function onDelete() {
+        var setting = {
+            url: "/teacher/deleteSubject",
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: {
+                "subjectId": $("#subjectId").text()
+            },
+            success: function (data) {
+                if(data){
+                    alert("删除成功");
+
+                    $("#submit").attr("data-dismiss","modal");
+                    $("#submit").attr("onclick","");
+                    $("#submit").click();
+                    $("#submit").attr("data-dismiss","");
+                    $("#submit").attr("onclick","onSubmit()");
+
+                    $("#table").dataTable().fnDraw(false);
+                }else{
+                    alert("删除失败");
+                }
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        }
+
+        if(confirm("确定要删除该选题？")){
+            $.ajax(setting);
+        }
     }
 </script>

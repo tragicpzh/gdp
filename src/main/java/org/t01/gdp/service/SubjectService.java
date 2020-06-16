@@ -107,8 +107,29 @@ public class SubjectService {
         return new PageInfo<>(subjectForTeacher.selectByTeacherId(id));
     }
 
+    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+
+        SubjectExample subjectExample = new SubjectExample();
+        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
+
+        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
+    }
+
     public Subject getSubjectById(long id){
         return subjectMapper.selectByPrimaryKey(id);
+    }
+
+    public int subjectExamination(String state, long subjectId){
+        Subject subject = new Subject();
+        subject.setId(subjectId);
+        subject.setState(state);
+
+        return subjectMapper.updateByPrimaryKeySelective(subject);
+    }
+
+    public int deleteSubject(long subjectId){
+        return subjectMapper.deleteByPrimaryKey(subjectId);
     }
 
     public SubjectInfo selectSubjectByStudent(String subject_id){

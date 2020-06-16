@@ -1,10 +1,13 @@
 package org.t01.gdp.controller.administration;
 
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.t01.gdp.domain.TimeAxis;
-import org.t01.gdp.domain.TimePoint;
+import org.t01.gdp.domain.*;
+import org.t01.gdp.service.SubjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +15,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController {
+    @Autowired
+    SubjectService subjectService;
+
 //    @GetMapping("/home")
 //    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
 //        map.addAttribute("position","home");
@@ -47,5 +54,31 @@ public class AdministratorController {
                 return "发生未知错误";
         }
 
+    }
+
+    @GetMapping("/searchSubject/getList")
+    @ResponseBody
+    public String getSubjectList(int start,int length, HttpServletRequest request) {
+        PageInfo<SubjectBrief> subjects = subjectService.getSubjectsForAdministrator(start / length + 1, length);
+        long total = subjects.getTotal();
+        List<SubjectBrief> list = subjects.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
+    }
+
+    @GetMapping("/searchSubject/detail")
+    @ResponseBody
+    public Subject getSubjectList(long subjectId) {
+        return subjectService.getSubjectById(subjectId);
+    }
+
+    @PostMapping("/subjectExamination")
+    @ResponseBody
+    public boolean subjectExamination(String operation, long subjectId){
+        if(!operation.equals("PASSED") && !operation.equals("NEW") && !operation.equals("RETURN")){
+            return false;
+        }
+
+        return subjectService.subjectExamination(operation,subjectId)==1;
     }
 }
