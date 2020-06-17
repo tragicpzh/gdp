@@ -118,7 +118,14 @@ public class TeacherController {
         studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), middleReviewScore);
     }
 
-    @PostMapping("/conclusionReview/conclusionScoring")
+    @RequestMapping("/conclusionReview/getList")
+    @ResponseBody
+    public Object getConclusionReviewList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletRequest request) {
+        String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.getSubjectsByReviewTeacherId(pageNo, pageSize, teacherId), "分页查询评审列表");
+    }
+
+    @PostMapping("/conclusionReview/score")
     @ResponseBody
     public void conclusionReviewScoring(String score, String studentId, String subjectId, HttpServletRequest request) {
         String teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();

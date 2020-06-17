@@ -21,6 +21,7 @@ public class StudentService {
     private final SubjectMapper subjectMapper;
     private final UserMapper userMapper;
     private final SqlMapper sqlMapper;
+
     public Student getStudentInfoById(String id) {
         return studentMapper.selectByPrimaryKey(id);
     }

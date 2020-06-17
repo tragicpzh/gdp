@@ -1,9 +1,11 @@
 package org.t01.gdp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.domain.TimeAxis;
+import org.t01.gdp.service.DeleteService;
 import org.t01.gdp.service.DownloadService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class CommonController {
     private final DownloadService downloadService;
+    @Autowired
+    DeleteService deleteService;
 
 //    @Autowired
 //    SMSService smsService;
@@ -31,6 +35,12 @@ public class CommonController {
     public void getDownload(HttpServletRequest request, HttpServletResponse response) {
         downloadService.downloadFile(request, response);
     }
+
+//    @RequestMapping("/deleteFile/**")
+//    @ResponseBody
+//    public void deleteFile(HttpServletRequest request){
+//        deleteService.deleteFile(request);
+//    }
 
     @RequestMapping("/**/*Fragment")
     public String getFragment(HttpServletRequest request) {

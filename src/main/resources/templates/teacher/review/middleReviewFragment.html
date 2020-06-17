@@ -61,11 +61,12 @@
 <script>
     $(function () {
         $("#table").DataTable({
+            "retrieve": true,
             "responsive": true,
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "/teacher/Review/getList",
+            "ajax": "/teacher/middleReview/getList",
             "columns":[
                 {"data":"studentId"},
                 {"data":"subjectId"},
