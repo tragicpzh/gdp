@@ -56,15 +56,20 @@ public class AdministratorController {
 
     }
 
-//    @GetMapping("/searchSubject/getList")
-//    @ResponseBody
-//    public String getSubjectList(int start,int length, HttpServletRequest request) {
-//        PageInfo<SubjectBrief> subjects = subjectService.getSubjectsForAdministrator(start / length + 1, length);
-//        long total = subjects.getTotal();
-//        List<SubjectBrief> list = subjects.getList();
-//
-//        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
-//    }
+    @GetMapping("/searchSubject/getList")
+    @ResponseBody
+    public String getSubjectList(int start,int length, HttpServletRequest request) {
+        SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
+        ArrayList<String> states = new ArrayList<>();
+        states.add("NEW");
+//        states.add("RETURN");
+        subjectSearchCase.setState(states);
+        PageInfo<Subject> subjects = subjectService.searchSubjects(subjectSearchCase,start / length + 1, length);
+        long total = subjects.getTotal();
+        List<Subject> list = subjects.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
+    }
 
     @GetMapping("/searchSubject/detail")
     @ResponseBody

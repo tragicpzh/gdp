@@ -656,62 +656,52 @@ public class StudentExample {
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdEqualTo(String value) {
+        public Criteria andMajorIdEqualTo(Long value) {
             addCriterion("major_id =", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdNotEqualTo(String value) {
+        public Criteria andMajorIdNotEqualTo(Long value) {
             addCriterion("major_id <>", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdGreaterThan(String value) {
+        public Criteria andMajorIdGreaterThan(Long value) {
             addCriterion("major_id >", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdGreaterThanOrEqualTo(String value) {
+        public Criteria andMajorIdGreaterThanOrEqualTo(Long value) {
             addCriterion("major_id >=", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdLessThan(String value) {
+        public Criteria andMajorIdLessThan(Long value) {
             addCriterion("major_id <", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdLessThanOrEqualTo(String value) {
+        public Criteria andMajorIdLessThanOrEqualTo(Long value) {
             addCriterion("major_id <=", value, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdLike(String value) {
-            addCriterion("major_id like", value, "majorId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMajorIdNotLike(String value) {
-            addCriterion("major_id not like", value, "majorId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMajorIdIn(List<String> values) {
+        public Criteria andMajorIdIn(List<Long> values) {
             addCriterion("major_id in", values, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdNotIn(List<String> values) {
+        public Criteria andMajorIdNotIn(List<Long> values) {
             addCriterion("major_id not in", values, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdBetween(String value1, String value2) {
+        public Criteria andMajorIdBetween(Long value1, Long value2) {
             addCriterion("major_id between", value1, value2, "majorId");
             return (Criteria) this;
         }
 
-        public Criteria andMajorIdNotBetween(String value1, String value2) {
+        public Criteria andMajorIdNotBetween(Long value1, Long value2) {
             addCriterion("major_id not between", value1, value2, "majorId");
             return (Criteria) this;
         }

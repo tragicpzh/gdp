@@ -10,7 +10,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
-    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+    <result column="major_id" jdbcType="BIGINT" property="majorId" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="subject_id" jdbcType="BIGINT" property="subjectId" />
     <result column="open_document" jdbcType="VARCHAR" property="openDocument" />
@@ -155,7 +155,7 @@
       conclusion_evaluation3)
     values (#{id,jdbcType=BIGINT}, #{studentId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{headPortrait,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{headPortrait,jdbcType=VARCHAR}, #{majorId,jdbcType=BIGINT}, 
       #{state,jdbcType=VARCHAR}, #{subjectId,jdbcType=BIGINT}, #{openDocument,jdbcType=VARCHAR}, 
       #{middleDocument,jdbcType=VARCHAR}, #{conclusionDocument,jdbcType=VARCHAR}, #{paperDocument,jdbcType=VARCHAR}, 
       #{openScore1,jdbcType=INTEGER}, #{openScore2,jdbcType=INTEGER}, #{openScore3,jdbcType=INTEGER}, 
@@ -312,7 +312,7 @@
         #{headPortrait,jdbcType=VARCHAR},
       </if>
       <if test="majorId != null">
-        #{majorId,jdbcType=VARCHAR},
+        #{majorId,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         #{state,jdbcType=VARCHAR},
@@ -437,7 +437,7 @@
         head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
       </if>
       <if test="record.majorId != null">
-        major_id = #{record.majorId,jdbcType=VARCHAR},
+        major_id = #{record.majorId,jdbcType=BIGINT},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
@@ -541,7 +541,7 @@
       email = #{record.email,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
-      major_id = #{record.majorId,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=BIGINT},
       state = #{record.state,jdbcType=VARCHAR},
       subject_id = #{record.subjectId,jdbcType=BIGINT},
       open_document = #{record.openDocument,jdbcType=VARCHAR},
@@ -600,7 +600,7 @@
         head_portrait = #{headPortrait,jdbcType=VARCHAR},
       </if>
       <if test="majorId != null">
-        major_id = #{majorId,jdbcType=VARCHAR},
+        major_id = #{majorId,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
@@ -701,7 +701,7 @@
       email = #{email,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       head_portrait = #{headPortrait,jdbcType=VARCHAR},
-      major_id = #{majorId,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=BIGINT},
       state = #{state,jdbcType=VARCHAR},
       subject_id = #{subjectId,jdbcType=BIGINT},
       open_document = #{openDocument,jdbcType=VARCHAR},

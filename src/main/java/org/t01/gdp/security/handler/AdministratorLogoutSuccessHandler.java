@@ -1,4 +1,4 @@
-package org.t01.gdp.handler;
+package org.t01.gdp.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Service
-public class TeacherLogoutSuccessHandler implements LogoutSuccessHandler {
+public class AdministratorLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         HttpSession session = request.getSession();
         if(session != null){
             session.removeAttribute("USER_INFO");
         }
-        response.sendRedirect("/teacher/login");
+        response.sendRedirect("/administrator/login");
     }
 }

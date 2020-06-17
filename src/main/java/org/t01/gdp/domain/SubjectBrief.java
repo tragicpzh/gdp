@@ -5,7 +5,7 @@ public class SubjectBrief {
     private long id;
     private String name;
     private float difficulty;
-    private String majorId;
+    private long majorId;
     private String direction;
     private String state;
 
@@ -52,11 +52,11 @@ public class SubjectBrief {
         this.difficulty = difficulty;
     }
 
-    public String getMajorId() {
+    public long getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(String majorId) {
+    public void setMajorId(long majorId) {
         this.majorId = majorId;
     }
 

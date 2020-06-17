@@ -22,7 +22,7 @@ public class SubjectController {
     @PostMapping("/subject/choose")
     @ResponseBody
     public Object Subject_Choose(HttpServletRequest request, String subject_id2){
-        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id2),"选择课题成功");
     }
 

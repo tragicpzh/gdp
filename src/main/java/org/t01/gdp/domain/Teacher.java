@@ -19,7 +19,7 @@ public class Teacher {
 
     private Date createTime;
 
-    private String collegeId;
+    private Long collegeId;
 
     private String direction;
 
@@ -87,12 +87,12 @@ public class Teacher {
         this.createTime = createTime;
     }
 
-    public String getCollegeId() {
+    public Long getCollegeId() {
         return collegeId;
     }
 
-    public void setCollegeId(String collegeId) {
-        this.collegeId = collegeId == null ? null : collegeId.trim();
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 
     public String getDirection() {

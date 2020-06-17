@@ -60,7 +60,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/uploadOpenReport")
     public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         String path ="student\\" + studentId + "\\openReport";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentOpenReport(studentId, path, multipartFile.getOriginalFilename());
@@ -69,7 +69,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/uploadMiddleReport")
     public void uploadMiddleReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         String path ="student\\" + studentId + "\\middleReport\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentMiddleReport(studentId, path, multipartFile.getOriginalFilename());
@@ -78,7 +78,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/uploadConclusionReport")
     public void uploadConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         String path ="student\\" + studentId + "\\conclusionReport\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentConclusionReport(studentId, path, multipartFile.getOriginalFilename());
@@ -87,7 +87,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/uploadPaper")
     public void uploadPaper(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         String path ="student\\" + studentId + "\\paper\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());

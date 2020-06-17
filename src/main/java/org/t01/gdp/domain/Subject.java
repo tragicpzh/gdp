@@ -1,22 +1,21 @@
 package org.t01.gdp.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Subject {
     private Long id;
 
-    private String createTeacherId;
+    private Long createTeacherId;
 
-    private String crossReviewTeacher;
+    private Long crossReviewTeacher;
 
-    private String majorId;
+    private Long majorId;
 
     private String name;
 
     private String direction;
 
-    private BigDecimal difficulty;
+    private Integer difficulty;
 
     private String technology;
 
@@ -24,15 +23,52 @@ public class Subject {
 
     private String document;
 
-    private String reviewTeacherId1;
+    private Long reviewTeacherId1;
 
-    private String reviewTeacherId2;
+    private Long reviewTeacherId2;
 
-    private String reviewTeacherId3;
+    private Long reviewTeacherId3;
 
     private String state;
 
     private Date createTime;
+
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":"
+                + id
+                + ",\"createTeacherId\":"
+                + createTeacherId
+                + ",\"crossReviewTeacher\":"
+                + crossReviewTeacher
+                + ",\"majorId\":"
+                + majorId
+                + ",\"name\":\""
+                + name + '\"'
+                + ",\"direction\":\""
+                + direction + '\"'
+                + ",\"difficulty\":"
+                + difficulty
+                + ",\"technology\":\""
+                + technology + '\"'
+                + ",\"describe\":\""
+                + describe + '\"'
+                + ",\"document\":\""
+                + document + '\"'
+                + ",\"reviewTeacherId1\":"
+                + reviewTeacherId1
+                + ",\"reviewTeacherId2\":"
+                + reviewTeacherId2
+                + ",\"reviewTeacherId3\":"
+                + reviewTeacherId3
+                + ",\"state\":\""
+                + state + '\"'
+                + ",\"createTime\":\""
+                + createTime + '\"'
+                + "}";
+
+    }
 
     public Long getId() {
         return id;
@@ -42,28 +78,28 @@ public class Subject {
         this.id = id;
     }
 
-    public String getCreateTeacherId() {
+    public Long getCreateTeacherId() {
         return createTeacherId;
     }
 
-    public void setCreateTeacherId(String createTeacherId) {
-        this.createTeacherId = createTeacherId == null ? null : createTeacherId.trim();
+    public void setCreateTeacherId(Long createTeacherId) {
+        this.createTeacherId = createTeacherId;
     }
 
-    public String getCrossReviewTeacher() {
+    public Long getCrossReviewTeacher() {
         return crossReviewTeacher;
     }
 
-    public void setCrossReviewTeacher(String crossReviewTeacher) {
-        this.crossReviewTeacher = crossReviewTeacher == null ? null : crossReviewTeacher.trim();
+    public void setCrossReviewTeacher(Long crossReviewTeacher) {
+        this.crossReviewTeacher = crossReviewTeacher;
     }
 
-    public String getMajorId() {
+    public Long getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(String majorId) {
-        this.majorId = majorId == null ? null : majorId.trim();
+    public void setMajorId(Long majorId) {
+        this.majorId = majorId;
     }
 
     public String getName() {
@@ -82,11 +118,11 @@ public class Subject {
         this.direction = direction == null ? null : direction.trim();
     }
 
-    public BigDecimal getDifficulty() {
+    public Integer getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(BigDecimal difficulty) {
+    public void setDifficulty(Integer difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -114,28 +150,28 @@ public class Subject {
         this.document = document == null ? null : document.trim();
     }
 
-    public String getReviewTeacherId1() {
+    public Long getReviewTeacherId1() {
         return reviewTeacherId1;
     }
 
-    public void setReviewTeacherId1(String reviewTeacherId1) {
-        this.reviewTeacherId1 = reviewTeacherId1 == null ? null : reviewTeacherId1.trim();
+    public void setReviewTeacherId1(Long reviewTeacherId1) {
+        this.reviewTeacherId1 = reviewTeacherId1;
     }
 
-    public String getReviewTeacherId2() {
+    public Long getReviewTeacherId2() {
         return reviewTeacherId2;
     }
 
-    public void setReviewTeacherId2(String reviewTeacherId2) {
-        this.reviewTeacherId2 = reviewTeacherId2 == null ? null : reviewTeacherId2.trim();
+    public void setReviewTeacherId2(Long reviewTeacherId2) {
+        this.reviewTeacherId2 = reviewTeacherId2;
     }
 
-    public String getReviewTeacherId3() {
+    public Long getReviewTeacherId3() {
         return reviewTeacherId3;
     }
 
-    public void setReviewTeacherId3(String reviewTeacherId3) {
-        this.reviewTeacherId3 = reviewTeacherId3 == null ? null : reviewTeacherId3.trim();
+    public void setReviewTeacherId3(Long reviewTeacherId3) {
+        this.reviewTeacherId3 = reviewTeacherId3;
     }
 
     public String getState() {

@@ -3,7 +3,9 @@ package org.t01.gdp.domain;
 import java.util.Date;
 
 public class UserInfo {
-    private String id;
+    private long id;
+
+    private String roleId;
 
     private String name;
 
@@ -15,8 +17,9 @@ public class UserInfo {
 
     private Date createTime;
 
-    public UserInfo(String id, String name, String phoneNumber, String email, String headPortrait, Date createTime) {
+    public UserInfo(long id, String roleId, String name, String phoneNumber, String email, String headPortrait, Date createTime) {
         this.id = id;
+        this.roleId = roleId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -24,11 +27,40 @@ public class UserInfo {
         this.createTime = createTime;
     }
 
-    public String getId() {
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":\""
+                + id + '\"'
+                + ",\"roleId\":\""
+                + roleId + '\"'
+                + ",\"name\":\""
+                + name + '\"'
+                + ",\"phoneNumber\":\""
+                + phoneNumber + '\"'
+                + ",\"email\":\""
+                + email + '\"'
+                + ",\"headPortrait\":\""
+                + headPortrait + '\"'
+                + ",\"createTime\":\""
+                + createTime + '\"'
+                + "}";
+
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

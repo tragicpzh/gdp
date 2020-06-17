@@ -1,5 +1,6 @@
 package org.t01.gdp.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,40 @@ public class SubjectService {
     @Autowired
     SubjectForTeacher subjectForTeacher;
 
+    public PageInfo<Subject> searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
+        PageHelper.startPage(pageNo,pageSize);
+
+        SubjectExample subjectExample = new SubjectExample();
+        SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        if(subjectSearchCase.getId()!=null){
+            criteria.andIdEqualTo(subjectSearchCase.getId());
+        }
+        if(subjectSearchCase.getName()!=null){
+            criteria.andNameEqualTo(subjectSearchCase.getName());
+        }
+        if(subjectSearchCase.getDifficulty()!=null){
+            criteria.andDifficultyEqualTo(subjectSearchCase.getDifficulty());
+        }
+        if(subjectSearchCase.getMajorName()!=null){
+            MajorExample majorExample = new MajorExample();
+            majorExample.createCriteria().andNameEqualTo(subjectSearchCase.getMajorName());
+            List<Major> majors = majorMapper.selectByExample(majorExample);
+            if(!majors.isEmpty()){
+                criteria.andMajorIdEqualTo(majors.get(0).getId());
+            }else{
+                return new PageInfo<>(new ArrayList<>());
+            }
+        }
+        if(subjectSearchCase.getDirection()!=null){
+            criteria.andDirectionEqualTo(subjectSearchCase.getDirection());
+        }
+        if(subjectSearchCase.getState()!=null){
+            criteria.andStateIn(subjectSearchCase.getState());
+        }
+
+        return new PageInfo<>(subjectMapper.selectByExample(subjectExample));
+    }
+
     public void updateById(Subject subject, String examine_flag) {
             subject.setState(examine_flag);
             subjectMapper.updateByPrimaryKeySelective(subject);
@@ -53,7 +88,7 @@ public class SubjectService {
         return -1;
     }
 
-    public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, String reviewTeacherId){
+    public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, long reviewTeacherId){
         PageHelper.startPage(pageNo,pageSize);
         //查询reviewTeacherId中有一个与传入的id相同的subject
         SubjectExample subjectExample1 = new SubjectExample();
@@ -78,8 +113,8 @@ public class SubjectService {
             List<Student> students = studentMapper.selectByExample(studentExample);
             if(students.size()>0){
                 for (Student student : students) {
-                    studentAndSubjectList.add(new StudentAndSubject(student.getStudentId(), allSubject.getId().toString(),
-                            allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
+//                    studentAndSubjectList.add(new StudentAndSubject(student.getStudentId(), allSubject.getId().toString(),
+//                            allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
                 }
             }
         }

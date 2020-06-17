@@ -1,4 +1,4 @@
-package org.t01.gdp.service;
+package org.t01.gdp.security.detailservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.t01.gdp.GrantedAuthority.MyGrantedAuthority;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.TeacherMapper;
-import org.t01.gdp.mapper.UserMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;

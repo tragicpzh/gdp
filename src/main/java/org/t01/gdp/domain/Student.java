@@ -20,7 +20,7 @@ public class Student {
 
     private String headPortrait;
 
-    private String majorId;
+    private Long majorId;
 
     private String state;
 
@@ -144,12 +144,12 @@ public class Student {
         this.headPortrait = headPortrait == null ? null : headPortrait.trim();
     }
 
-    public String getMajorId() {
+    public Long getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(String majorId) {
-        this.majorId = majorId == null ? null : majorId.trim();
+    public void setMajorId(Long majorId) {
+        this.majorId = majorId;
     }
 
     public String getState() {

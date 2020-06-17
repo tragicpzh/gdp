@@ -1,17 +1,8 @@
 package org.t01.gdp.controller.administration;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.t01.gdp.domain.Student;
-import org.t01.gdp.domain.Teacher;
-import org.t01.gdp.domain.User;
-import org.t01.gdp.service.UserService;
 
 import java.util.*;
 
@@ -19,7 +10,7 @@ import java.util.*;
 @RequestMapping("/administrator")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+//    private final UserService userService;
 
 //    @ResponseBody
 //    @RequestMapping(value = "/addSingleUser", method = RequestMethod.POST)
@@ -77,11 +68,11 @@ public class UserController {
 //        return duplicateIds;
 //    }
 
-    @ResponseBody
-    @RequestMapping(value = "/getUsersByRole", method = RequestMethod.POST)
-    public List<HashMap<String, Object>> getUsersByRole(@RequestParam(name = "role") String role) {
-        return userService.getUserByRole(role);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/getUsersByRole", method = RequestMethod.POST)
+//    public List<HashMap<String, Object>> getUsersByRole(@RequestParam(name = "role") String role) {
+//        return userService.getUserByRole(role);
+//    }
 
 //    @ResponseBody
 //    @RequestMapping(value = "/deleteUserById", method = RequestMethod.DELETE)

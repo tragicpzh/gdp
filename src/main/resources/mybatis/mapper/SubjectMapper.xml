@@ -3,18 +3,18 @@
 <mapper namespace="org.t01.gdp.mapper.SubjectMapper">
   <resultMap id="BaseResultMap" type="org.t01.gdp.domain.Subject">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="create_teacher_id" jdbcType="VARCHAR" property="createTeacherId" />
-    <result column="cross_review_teacher" jdbcType="VARCHAR" property="crossReviewTeacher" />
-    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+    <result column="create_teacher_id" jdbcType="BIGINT" property="createTeacherId" />
+    <result column="cross_review_teacher" jdbcType="BIGINT" property="crossReviewTeacher" />
+    <result column="major_id" jdbcType="BIGINT" property="majorId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="direction" jdbcType="VARCHAR" property="direction" />
-    <result column="difficulty" jdbcType="DECIMAL" property="difficulty" />
+    <result column="difficulty" jdbcType="INTEGER" property="difficulty" />
     <result column="technology" jdbcType="VARCHAR" property="technology" />
     <result column="describe" jdbcType="VARCHAR" property="describe" />
     <result column="document" jdbcType="VARCHAR" property="document" />
-    <result column="review_teacher_id1" jdbcType="VARCHAR" property="reviewTeacherId1" />
-    <result column="review_teacher_id2" jdbcType="VARCHAR" property="reviewTeacherId2" />
-    <result column="review_teacher_id3" jdbcType="VARCHAR" property="reviewTeacherId3" />
+    <result column="review_teacher_id1" jdbcType="BIGINT" property="reviewTeacherId1" />
+    <result column="review_teacher_id2" jdbcType="BIGINT" property="reviewTeacherId2" />
+    <result column="review_teacher_id3" jdbcType="BIGINT" property="reviewTeacherId3" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -77,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_teacher_id, cross_review_teacher, major_id, name, direction, difficulty, 
-    technology, describe, document, review_teacher_id1, review_teacher_id2, review_teacher_id3, 
+    id, create_teacher_id, cross_review_teacher, major_id, `name`, direction, difficulty,
+    technology, `describe`, document, review_teacher_id1, review_teacher_id2, review_teacher_id3,
     state, create_time
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
@@ -113,16 +113,16 @@
   </delete>
   <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
     insert into subject (id, create_teacher_id, cross_review_teacher, 
-      major_id, name, direction, 
-      difficulty, technology, describe, 
+      major_id, `name`, direction,
+      difficulty, technology, `describe`,
       document, review_teacher_id1, review_teacher_id2, 
       review_teacher_id3, state, create_time
       )
-    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{crossReviewTeacher,jdbcType=VARCHAR}, 
-      #{majorId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
-      #{difficulty,jdbcType=DECIMAL}, #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
-      #{document,jdbcType=VARCHAR}, #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, 
-      #{reviewTeacherId3,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=BIGINT}, #{crossReviewTeacher,jdbcType=BIGINT}, 
+      #{majorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
+      #{difficulty,jdbcType=INTEGER}, #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+      #{document,jdbcType=VARCHAR}, #{reviewTeacherId1,jdbcType=BIGINT}, #{reviewTeacherId2,jdbcType=BIGINT}, 
+      #{reviewTeacherId3,jdbcType=BIGINT}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject">
@@ -141,7 +141,7 @@
         major_id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="direction != null">
         direction,
@@ -153,7 +153,7 @@
         technology,
       </if>
       <if test="describe != null">
-        describe,
+        `describe`,
       </if>
       <if test="document != null">
         document,
@@ -179,13 +179,13 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="createTeacherId != null">
-        #{createTeacherId,jdbcType=VARCHAR},
+        #{createTeacherId,jdbcType=BIGINT},
       </if>
       <if test="crossReviewTeacher != null">
-        #{crossReviewTeacher,jdbcType=VARCHAR},
+        #{crossReviewTeacher,jdbcType=BIGINT},
       </if>
       <if test="majorId != null">
-        #{majorId,jdbcType=VARCHAR},
+        #{majorId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -194,7 +194,7 @@
         #{direction,jdbcType=VARCHAR},
       </if>
       <if test="difficulty != null">
-        #{difficulty,jdbcType=DECIMAL},
+        #{difficulty,jdbcType=INTEGER},
       </if>
       <if test="technology != null">
         #{technology,jdbcType=VARCHAR},
@@ -206,13 +206,13 @@
         #{document,jdbcType=VARCHAR},
       </if>
       <if test="reviewTeacherId1 != null">
-        #{reviewTeacherId1,jdbcType=VARCHAR},
+        #{reviewTeacherId1,jdbcType=BIGINT},
       </if>
       <if test="reviewTeacherId2 != null">
-        #{reviewTeacherId2,jdbcType=VARCHAR},
+        #{reviewTeacherId2,jdbcType=BIGINT},
       </if>
       <if test="reviewTeacherId3 != null">
-        #{reviewTeacherId3,jdbcType=VARCHAR},
+        #{reviewTeacherId3,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         #{state,jdbcType=VARCHAR},
@@ -235,40 +235,40 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.createTeacherId != null">
-        create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
+        create_teacher_id = #{record.createTeacherId,jdbcType=BIGINT},
       </if>
       <if test="record.crossReviewTeacher != null">
-        cross_review_teacher = #{record.crossReviewTeacher,jdbcType=VARCHAR},
+        cross_review_teacher = #{record.crossReviewTeacher,jdbcType=BIGINT},
       </if>
       <if test="record.majorId != null">
-        major_id = #{record.majorId,jdbcType=VARCHAR},
+        major_id = #{record.majorId,jdbcType=BIGINT},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
       </if>
       <if test="record.difficulty != null">
-        difficulty = #{record.difficulty,jdbcType=DECIMAL},
+        difficulty = #{record.difficulty,jdbcType=INTEGER},
       </if>
       <if test="record.technology != null">
         technology = #{record.technology,jdbcType=VARCHAR},
       </if>
       <if test="record.describe != null">
-        describe = #{record.describe,jdbcType=VARCHAR},
+        `describe` = #{record.describe,jdbcType=VARCHAR},
       </if>
       <if test="record.document != null">
         document = #{record.document,jdbcType=VARCHAR},
       </if>
       <if test="record.reviewTeacherId1 != null">
-        review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
+        review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=BIGINT},
       </if>
       <if test="record.reviewTeacherId2 != null">
-        review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
+        review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=BIGINT},
       </if>
       <if test="record.reviewTeacherId3 != null">
-        review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+        review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=BIGINT},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
@@ -284,18 +284,18 @@
   <update id="updateByExample" parameterType="map">
     update subject
     set id = #{record.id,jdbcType=BIGINT},
-      create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
-      cross_review_teacher = #{record.crossReviewTeacher,jdbcType=VARCHAR},
-      major_id = #{record.majorId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      create_teacher_id = #{record.createTeacherId,jdbcType=BIGINT},
+      cross_review_teacher = #{record.crossReviewTeacher,jdbcType=BIGINT},
+      major_id = #{record.majorId,jdbcType=BIGINT},
+      `name` = #{record.name,jdbcType=VARCHAR},
       direction = #{record.direction,jdbcType=VARCHAR},
-      difficulty = #{record.difficulty,jdbcType=DECIMAL},
+      difficulty = #{record.difficulty,jdbcType=INTEGER},
       technology = #{record.technology,jdbcType=VARCHAR},
-      describe = #{record.describe,jdbcType=VARCHAR},
+      `describe` = #{record.describe,jdbcType=VARCHAR},
       document = #{record.document,jdbcType=VARCHAR},
-      review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
-      review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
-      review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+      review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=BIGINT},
+      review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=BIGINT},
+      review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=BIGINT},
       state = #{record.state,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -306,40 +306,40 @@
     update subject
     <set>
       <if test="createTeacherId != null">
-        create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
+        create_teacher_id = #{createTeacherId,jdbcType=BIGINT},
       </if>
       <if test="crossReviewTeacher != null">
-        cross_review_teacher = #{crossReviewTeacher,jdbcType=VARCHAR},
+        cross_review_teacher = #{crossReviewTeacher,jdbcType=BIGINT},
       </if>
       <if test="majorId != null">
-        major_id = #{majorId,jdbcType=VARCHAR},
+        major_id = #{majorId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="direction != null">
         direction = #{direction,jdbcType=VARCHAR},
       </if>
       <if test="difficulty != null">
-        difficulty = #{difficulty,jdbcType=DECIMAL},
+        difficulty = #{difficulty,jdbcType=INTEGER},
       </if>
       <if test="technology != null">
         technology = #{technology,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="document != null">
         document = #{document,jdbcType=VARCHAR},
       </if>
       <if test="reviewTeacherId1 != null">
-        review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
+        review_teacher_id1 = #{reviewTeacherId1,jdbcType=BIGINT},
       </if>
       <if test="reviewTeacherId2 != null">
-        review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},
+        review_teacher_id2 = #{reviewTeacherId2,jdbcType=BIGINT},
       </if>
       <if test="reviewTeacherId3 != null">
-        review_teacher_id3 = #{reviewTeacherId3,jdbcType=VARCHAR},
+        review_teacher_id3 = #{reviewTeacherId3,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
@@ -352,18 +352,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="org.t01.gdp.domain.Subject">
     update subject
-    set create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
-      cross_review_teacher = #{crossReviewTeacher,jdbcType=VARCHAR},
-      major_id = #{majorId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+    set create_teacher_id = #{createTeacherId,jdbcType=BIGINT},
+      cross_review_teacher = #{crossReviewTeacher,jdbcType=BIGINT},
+      major_id = #{majorId,jdbcType=BIGINT},
+      `name` = #{name,jdbcType=VARCHAR},
       direction = #{direction,jdbcType=VARCHAR},
-      difficulty = #{difficulty,jdbcType=DECIMAL},
+      difficulty = #{difficulty,jdbcType=INTEGER},
       technology = #{technology,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       document = #{document,jdbcType=VARCHAR},
-      review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
-      review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},
-      review_teacher_id3 = #{reviewTeacherId3,jdbcType=VARCHAR},
+      review_teacher_id1 = #{reviewTeacherId1,jdbcType=BIGINT},
+      review_teacher_id2 = #{reviewTeacherId2,jdbcType=BIGINT},
+      review_teacher_id3 = #{reviewTeacherId3,jdbcType=BIGINT},
       state = #{state,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

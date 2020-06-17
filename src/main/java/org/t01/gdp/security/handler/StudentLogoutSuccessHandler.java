@@ -1,4 +1,4 @@
-package org.t01.gdp.handler;
+package org.t01.gdp.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

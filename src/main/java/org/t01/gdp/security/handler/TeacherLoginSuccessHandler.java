@@ -1,4 +1,4 @@
-package org.t01.gdp.handler;
+package org.t01.gdp.security.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,7 +24,7 @@ public class TeacherLoginSuccessHandler implements AuthenticationSuccessHandler 
         TeacherExample teacherExample = new TeacherExample();
         teacherExample.createCriteria().andTeacherIdEqualTo(teacherId);
         Teacher teacher = teacherMapper.selectByExample(teacherExample).get(0);
-        UserInfo userInfo = new UserInfo(teacher.getTeacherId(),teacher.getName(),teacher.getPhoneNumber(),teacher.getEmail(),teacher.getHeadPortrait(),teacher.getCreateTime());
+        UserInfo userInfo = new UserInfo(teacher.getId(),teacher.getTeacherId(),teacher.getName(),teacher.getPhoneNumber(),teacher.getEmail(),teacher.getHeadPortrait(),teacher.getCreateTime());
 
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("USER_INFO", userInfo);

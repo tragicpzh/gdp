@@ -1,9 +1,9 @@
 package org.t01.gdp.domain;
 
 public class Major {
-    private String id;
+    private Long id;
 
-    private String collegeId;
+    private Long collegeId;
 
     private String name;
 
@@ -13,20 +13,20 @@ public class Major {
 
     private String phoneNumber;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getCollegeId() {
+    public Long getCollegeId() {
         return collegeId;
     }
 
-    public void setCollegeId(String collegeId) {
-        this.collegeId = collegeId == null ? null : collegeId.trim();
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 
     public String getName() {

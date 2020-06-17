@@ -10,7 +10,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="college_id" jdbcType="VARCHAR" property="collegeId" />
+    <result column="college_id" jdbcType="BIGINT" property="collegeId" />
     <result column="direction" jdbcType="VARCHAR" property="direction" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -112,7 +112,7 @@
       direction)
     values (#{id,jdbcType=BIGINT}, #{teacherId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{headPortrait,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{collegeId,jdbcType=VARCHAR}, 
+      #{headPortrait,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{collegeId,jdbcType=BIGINT}, 
       #{direction,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.t01.gdp.domain.Teacher">
@@ -175,7 +175,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="collegeId != null">
-        #{collegeId,jdbcType=VARCHAR},
+        #{collegeId,jdbcType=BIGINT},
       </if>
       <if test="direction != null">
         #{direction,jdbcType=VARCHAR},
@@ -216,7 +216,7 @@
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.collegeId != null">
-        college_id = #{record.collegeId,jdbcType=VARCHAR},
+        college_id = #{record.collegeId,jdbcType=BIGINT},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
@@ -236,7 +236,7 @@
       email = #{record.email,jdbcType=VARCHAR},
       head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      college_id = #{record.collegeId,jdbcType=VARCHAR},
+      college_id = #{record.collegeId,jdbcType=BIGINT},
       direction = #{record.direction,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -267,7 +267,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="collegeId != null">
-        college_id = #{collegeId,jdbcType=VARCHAR},
+        college_id = #{collegeId,jdbcType=BIGINT},
       </if>
       <if test="direction != null">
         direction = #{direction,jdbcType=VARCHAR},
@@ -284,7 +284,7 @@
       email = #{email,jdbcType=VARCHAR},
       head_portrait = #{headPortrait,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      college_id = #{collegeId,jdbcType=VARCHAR},
+      college_id = #{collegeId,jdbcType=BIGINT},
       direction = #{direction,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

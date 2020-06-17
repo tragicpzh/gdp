@@ -5,13 +5,14 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.t01.gdp.domain.College;
 import org.t01.gdp.domain.CollegeExample;
+
 @Repository
 public interface CollegeMapper {
     long countByExample(CollegeExample example);
 
     int deleteByExample(CollegeExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(College record);
 
@@ -19,7 +20,7 @@ public interface CollegeMapper {
 
     List<College> selectByExample(CollegeExample example);
 
-    College selectByPrimaryKey(String id);
+    College selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") College record, @Param("example") CollegeExample example);
 

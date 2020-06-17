@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t01.gdp.mapper.MajorMapper">
   <resultMap id="BaseResultMap" type="org.t01.gdp.domain.Major">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="college_id" jdbcType="VARCHAR" property="collegeId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="college_id" jdbcType="BIGINT" property="collegeId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="email" jdbcType="VARCHAR" property="email" />
@@ -84,15 +84,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from major
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from major
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="org.t01.gdp.domain.MajorExample">
     delete from major
@@ -104,7 +104,7 @@
     insert into major (id, college_id, name, 
       address, email, phone_number
       )
-    values (#{id,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{collegeId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}
       )
   </insert>
@@ -132,10 +132,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="collegeId != null">
-        #{collegeId,jdbcType=VARCHAR},
+        #{collegeId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -161,10 +161,10 @@
     update major
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.collegeId != null">
-        college_id = #{record.collegeId,jdbcType=VARCHAR},
+        college_id = #{record.collegeId,jdbcType=BIGINT},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
@@ -185,8 +185,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update major
-    set id = #{record.id,jdbcType=VARCHAR},
-      college_id = #{record.collegeId,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=BIGINT},
+      college_id = #{record.collegeId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
@@ -199,7 +199,7 @@
     update major
     <set>
       <if test="collegeId != null">
-        college_id = #{collegeId,jdbcType=VARCHAR},
+        college_id = #{collegeId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -214,15 +214,15 @@
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.t01.gdp.domain.Major">
     update major
-    set college_id = #{collegeId,jdbcType=VARCHAR},
+    set college_id = #{collegeId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       phone_number = #{phoneNumber,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
