@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `gdp` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `gdp`;
 -- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gdp
@@ -25,12 +23,17 @@ DROP TABLE IF EXISTS `administrator`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `administrator` (
-  `id` varchar(20) NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `admin_id` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '123456',
+  `name` varchar(50) NOT NULL DEFAULT 'User',
+  `phone_number` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `phone_number` varchar(45) DEFAULT NULL,
+  `head_portrait` varchar(1023) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  CONSTRAINT `admin_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `admin_id_UNIQUE` (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +42,7 @@ CREATE TABLE `administrator` (
 
 LOCK TABLES `administrator` WRITE;
 /*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
+INSERT INTO `administrator` VALUES (0,'1','123456','张三',NULL,NULL,NULL,'2020-06-17 14:01:21');
 /*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,13 +111,17 @@ DROP TABLE IF EXISTS `student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
-  `id` varchar(20) NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `student_id` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '123456',
+  `name` varchar(50) NOT NULL DEFAULT 'User',
+  `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `head_portrait` varchar(45) DEFAULT NULL,
   `major_id` varchar(6) NOT NULL,
   `state` varchar(20) NOT NULL DEFAULT 'NO_SELECTION',
-  `email` varchar(50) DEFAULT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
   `subject_id` bigint DEFAULT NULL,
-  `cross_student_id` varchar(20) DEFAULT NULL,
   `open_document` varchar(1023) DEFAULT NULL,
   `middle_document` varchar(1023) DEFAULT NULL,
   `conclusion_document` varchar(1023) DEFAULT NULL,
@@ -142,12 +150,13 @@ CREATE TABLE `student` (
   `conclusion_evaluation2` varchar(45) DEFAULT NULL,
   `conclusion_evaluation3` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `student_cross_student_id_idx` (`cross_student_id`),
+  UNIQUE KEY `student_id_UNIQUE` (`student_id`),
   KEY `student_major_id` (`major_id`),
-  CONSTRAINT `student_cross_student_id` FOREIGN KEY (`cross_student_id`) REFERENCES `student` (`id`),
+  KEY `student_subject_id_idx` (`subject_id`),
+  KEY `student_subject_id_id` (`subject_id`),
   CONSTRAINT `student_major_id` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
-  CONSTRAINT `student_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `student_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +165,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('323','1','1','1','1',1,NULL,NULL,NULL,NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,99,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `student` VALUES (0,'3','323456','王五','1','1','2020-06-17 13:23:47',NULL,'1','WaitOpenScore',NULL,'323\\openReport\\技术路线分析.docx','323\\middleReport\\技术路线分析.docx','323\\conclusionReport\\技术路线分析.docx','323\\paper\\技术路线分析.docx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,99,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,6 +179,7 @@ DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `create_teacher_id` varchar(20) NOT NULL,
+  `cross_review_teacher` varchar(20) DEFAULT NULL,
   `major_id` varchar(6) NOT NULL,
   `name` varchar(50) NOT NULL,
   `direction` varchar(50) NOT NULL,
@@ -183,17 +193,19 @@ CREATE TABLE `subject` (
   `state` varchar(20) NOT NULL DEFAULT 'NEW',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `subject_teacher_id0_idx` (`create_teacher_id`),
-  KEY `subject_teacher_id1_idx` (`review_teacher_id1`),
-  KEY `subject_teacher_id2_idx` (`review_teacher_id2`),
-  KEY `subject_teacher_id3_idx` (`review_teacher_id3`),
-  KEY `subject_major_id_idx` (`major_id`),
-  CONSTRAINT `subject_major_id` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
-  CONSTRAINT `subject_teacher_id0` FOREIGN KEY (`create_teacher_id`) REFERENCES `teacher` (`id`),
-  CONSTRAINT `subject_teacher_id1` FOREIGN KEY (`review_teacher_id1`) REFERENCES `teacher` (`id`),
-  CONSTRAINT `subject_teacher_id2` FOREIGN KEY (`review_teacher_id2`) REFERENCES `teacher` (`id`),
-  CONSTRAINT `subject_teacher_id3` FOREIGN KEY (`review_teacher_id3`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `create_teacher_id_idx` (`create_teacher_id`),
+  KEY `cross_review_teacher_id_idx` (`cross_review_teacher`),
+  KEY `review_teacher_id1_idx` (`review_teacher_id1`),
+  KEY `review_teacher_id2_idx` (`review_teacher_id2`),
+  KEY `review_teacher_id3_idx` (`review_teacher_id3`),
+  KEY `major_id_idx` (`major_id`),
+  CONSTRAINT `create_teacher_id` FOREIGN KEY (`create_teacher_id`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `cross_review_teacher_id` FOREIGN KEY (`cross_review_teacher`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `major_id` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
+  CONSTRAINT `review_teacher_id1` FOREIGN KEY (`review_teacher_id1`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `review_teacher_id2` FOREIGN KEY (`review_teacher_id2`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `review_teacher_id3` FOREIGN KEY (`review_teacher_id3`) REFERENCES `teacher` (`teacher_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +214,6 @@ CREATE TABLE `subject` (
 
 LOCK TABLES `subject` WRITE;
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-INSERT INTO `subject` VALUES (1,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(2,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(7,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(8,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(9,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(10,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(11,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(12,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(13,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46'),(14,'223','1','1','1',0.10,'1','1','','223',NULL,NULL,'NEW','2020-06-14 06:17:46');
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,16 +225,21 @@ DROP TABLE IF EXISTS `teacher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teacher` (
-  `id` varchar(20) NOT NULL,
-  `college_id` varchar(3) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `teacher_id` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '123456',
+  `name` varchar(50) NOT NULL DEFAULT 'User',
   `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `head_portrait` varchar(1023) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `college_id` varchar(3) NOT NULL,
   `direction` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `teacher_id_UNIQUE` (`teacher_id`),
   KEY `college_id_idx` (`college_id`),
-  CONSTRAINT `teacher_college_id` FOREIGN KEY (`college_id`) REFERENCES `college` (`id`),
-  CONSTRAINT `teacher_user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `teacher_college_id` FOREIGN KEY (`college_id`) REFERENCES `college` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,37 +248,8 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES ('223','1',NULL,NULL,NULL);
+INSERT INTO `teacher` VALUES (0,'2','223456','李四',NULL,NULL,NULL,'2020-06-17 14:00:41','1',NULL);
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` varchar(20) NOT NULL,
-  `password` varchar(32) NOT NULL DEFAULT '',
-  `role` varchar(3) NOT NULL,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `phone_number` varchar(20) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('123','123456','ADM','张三',NULL,NULL,'2020-06-09 09:34:10'),('223','123456','TEA','李四',NULL,NULL,'2020-06-09 11:59:13'),('323','123456','STU','王五',NULL,NULL,'2020-06-09 11:59:13');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -274,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-15 13:58:01
+-- Dump completed on 2020-06-17 22:16:43

@@ -78,7 +78,7 @@ public class SubjectService {
             List<Student> students = studentMapper.selectByExample(studentExample);
             if(students.size()>0){
                 for (Student student : students) {
-                    studentAndSubjectList.add(new StudentAndSubject(student.getId(), allSubject.getId().toString(),
+                    studentAndSubjectList.add(new StudentAndSubject(student.getStudentId(), allSubject.getId().toString(),
                             allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
                 }
             }
@@ -97,7 +97,7 @@ public class SubjectService {
     public boolean chooseSubjectByStudent(String student_id, String subject_id){
         Student student=new Student();
         student.setSubjectId(Long.valueOf(subject_id));
-        student.setId(student_id);
+        student.setStudentId(student_id);
         studentMapper.updateByPrimaryKeySelective(student);
         return true;
     }
@@ -107,14 +107,14 @@ public class SubjectService {
         return new PageInfo<>(subjectForTeacher.selectByTeacherId(id));
     }
 
-    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
-        PageHelper.startPage(pageNo, pageSize);
-
-        SubjectExample subjectExample = new SubjectExample();
-        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
-
-        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
-    }
+//    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
+//        PageHelper.startPage(pageNo, pageSize);
+//
+//        SubjectExample subjectExample = new SubjectExample();
+//        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
+//
+//        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
+//    }
 
     public Subject getSubjectById(long id){
         return subjectMapper.selectByPrimaryKey(id);

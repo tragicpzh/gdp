@@ -11,13 +11,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Service
-public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
+public class AdministratorLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         HttpSession session = request.getSession();
         if(session != null){
             session.removeAttribute("USER_INFO");
         }
-        response.sendRedirect("/login?logout=true");
+        response.sendRedirect("/administrator/login");
     }
 }

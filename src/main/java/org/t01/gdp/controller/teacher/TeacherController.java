@@ -29,34 +29,34 @@ public class TeacherController {
     @Autowired
     StudentService studentService;
 
-    @PostMapping("/addSubject")
-    @ResponseBody
-    public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
-        //获取教师信息
-        UserInfo userInfo = (UserInfo) request.getSession(true).getAttribute("USER_INFO");
-        Teacher teacher = teacherService.selectTeacherById(userInfo.getId());
-        //获取专业信息
-        List<Major> majorList = majorService.selectMajorByName(major);
-        //subject信息添加并插入
-        if (majorList.size() > 0) {
-            subject.setMajorId(majorList.get(0).getId());
-        }
-        subject.setCreateTeacherId(teacher.getId());
-        subject.setCreateTime(new Date());
-        subject.setState("NEW");
-        teacherService.addSubject(subject);
-
-        //文件处理
-        if (file != null) {
-            String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
-            uploadService.uploadFile(file, path);
-            String fileUrl = path + file.getOriginalFilename();
-            subject.setDocument(fileUrl);
-            subjectService.updateWithSubject(subject);
-        }
-
-        teacherService.addSubject(subject);
-    }
+//    @PostMapping("/addSubject")
+//    @ResponseBody
+//    public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
+//        //获取教师信息
+//        UserInfo userInfo = (UserInfo) request.getSession(true).getAttribute("USER_INFO");
+//        Teacher teacher = teacherService.selectTeacherById(userInfo.getId());
+//        //获取专业信息
+//        List<Major> majorList = majorService.selectMajorByName(major);
+//        //subject信息添加并插入
+//        if (majorList.size() > 0) {
+//            subject.setMajorId(majorList.get(0).getId());
+//        }
+//        subject.setCreateTeacherId(teacher.getTeacherId());
+//        subject.setCreateTime(new Date());
+//        subject.setState("NEW");
+//        teacherService.addSubject(subject);
+//
+//        //文件处理
+//        if (file != null) {
+//            String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
+//            uploadService.uploadFile(file, path);
+//            String fileUrl = path + file.getOriginalFilename();
+//            subject.setDocument(fileUrl);
+//            subjectService.updateWithSubject(subject);
+//        }
+//
+//        teacherService.addSubject(subject);
+//    }
 
     @RequestMapping("/paperReview/getList")
     @ResponseBody

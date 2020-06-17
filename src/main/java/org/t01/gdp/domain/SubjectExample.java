@@ -236,6 +236,76 @@ public class SubjectExample {
             return (Criteria) this;
         }
 
+        public Criteria andCrossReviewTeacherIsNull() {
+            addCriterion("cross_review_teacher is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherIsNotNull() {
+            addCriterion("cross_review_teacher is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherEqualTo(String value) {
+            addCriterion("cross_review_teacher =", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherNotEqualTo(String value) {
+            addCriterion("cross_review_teacher <>", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherGreaterThan(String value) {
+            addCriterion("cross_review_teacher >", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherGreaterThanOrEqualTo(String value) {
+            addCriterion("cross_review_teacher >=", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherLessThan(String value) {
+            addCriterion("cross_review_teacher <", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherLessThanOrEqualTo(String value) {
+            addCriterion("cross_review_teacher <=", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherLike(String value) {
+            addCriterion("cross_review_teacher like", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherNotLike(String value) {
+            addCriterion("cross_review_teacher not like", value, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherIn(List<String> values) {
+            addCriterion("cross_review_teacher in", values, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherNotIn(List<String> values) {
+            addCriterion("cross_review_teacher not in", values, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherBetween(String value1, String value2) {
+            addCriterion("cross_review_teacher between", value1, value2, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrossReviewTeacherNotBetween(String value1, String value2) {
+            addCriterion("cross_review_teacher not between", value1, value2, "crossReviewTeacher");
+            return (Criteria) this;
+        }
+
         public Criteria andMajorIdIsNull() {
             addCriterion("major_id is null");
             return (Criteria) this;

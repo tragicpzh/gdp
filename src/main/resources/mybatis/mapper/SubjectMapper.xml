@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="org.t01.gdp.domain.Subject">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_teacher_id" jdbcType="VARCHAR" property="createTeacherId" />
+    <result column="cross_review_teacher" jdbcType="VARCHAR" property="crossReviewTeacher" />
     <result column="major_id" jdbcType="VARCHAR" property="majorId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="direction" jdbcType="VARCHAR" property="direction" />
@@ -16,14 +17,6 @@
     <result column="review_teacher_id3" jdbcType="VARCHAR" property="reviewTeacherId3" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <resultMap id="BriefMap" type="org.t01.gdp.domain.SubjectBrief">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="difficulty" jdbcType="DECIMAL" property="difficulty" />
-    <result column="direction" jdbcType="VARCHAR" property="direction" />
-    <result column="state" jdbcType="VARCHAR" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -84,8 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_teacher_id, major_id, `name`, direction, difficulty, technology, `describe`,
-    document, review_teacher_id1, review_teacher_id2, review_teacher_id3, state, create_time
+    id, create_teacher_id, cross_review_teacher, major_id, name, direction, difficulty, 
+    technology, describe, document, review_teacher_id1, review_teacher_id2, review_teacher_id3, 
+    state, create_time
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
     select
@@ -101,22 +95,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectBriefByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BriefMap">
-    select id,`name`,difficulty,major_id,direction,state
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from subject
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from subject
     where id = #{id,jdbcType=BIGINT}
@@ -132,16 +112,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
-    insert into subject (id, create_teacher_id, major_id,
-      `name`, direction, difficulty,
-      technology, `describe`, document,
-      review_teacher_id1, review_teacher_id2, review_teacher_id3,
-      state, create_time)
-    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{difficulty,jdbcType=DECIMAL},
-      #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{document,jdbcType=VARCHAR},
-      #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, #{reviewTeacherId3,jdbcType=VARCHAR},
-      #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    insert into subject (id, create_teacher_id, cross_review_teacher, 
+      major_id, name, direction, 
+      difficulty, technology, describe, 
+      document, review_teacher_id1, review_teacher_id2, 
+      review_teacher_id3, state, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{createTeacherId,jdbcType=VARCHAR}, #{crossReviewTeacher,jdbcType=VARCHAR}, 
+      #{majorId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
+      #{difficulty,jdbcType=DECIMAL}, #{technology,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+      #{document,jdbcType=VARCHAR}, #{reviewTeacherId1,jdbcType=VARCHAR}, #{reviewTeacherId2,jdbcType=VARCHAR}, 
+      #{reviewTeacherId3,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject">
     insert into subject
@@ -152,11 +134,14 @@
       <if test="createTeacherId != null">
         create_teacher_id,
       </if>
+      <if test="crossReviewTeacher != null">
+        cross_review_teacher,
+      </if>
       <if test="majorId != null">
         major_id,
       </if>
       <if test="name != null">
-        `name`,
+        name,
       </if>
       <if test="direction != null">
         direction,
@@ -168,7 +153,7 @@
         technology,
       </if>
       <if test="describe != null">
-        `describe`,
+        describe,
       </if>
       <if test="document != null">
         document,
@@ -195,6 +180,9 @@
       </if>
       <if test="createTeacherId != null">
         #{createTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="crossReviewTeacher != null">
+        #{crossReviewTeacher,jdbcType=VARCHAR},
       </if>
       <if test="majorId != null">
         #{majorId,jdbcType=VARCHAR},
@@ -249,11 +237,14 @@
       <if test="record.createTeacherId != null">
         create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
       </if>
+      <if test="record.crossReviewTeacher != null">
+        cross_review_teacher = #{record.crossReviewTeacher,jdbcType=VARCHAR},
+      </if>
       <if test="record.majorId != null">
         major_id = #{record.majorId,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
@@ -265,7 +256,7 @@
         technology = #{record.technology,jdbcType=VARCHAR},
       </if>
       <if test="record.describe != null">
-        `describe` = #{record.describe,jdbcType=VARCHAR},
+        describe = #{record.describe,jdbcType=VARCHAR},
       </if>
       <if test="record.document != null">
         document = #{record.document,jdbcType=VARCHAR},
@@ -293,19 +284,20 @@
   <update id="updateByExample" parameterType="map">
     update subject
     set id = #{record.id,jdbcType=BIGINT},
-    create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
-    major_id = #{record.majorId,jdbcType=VARCHAR},
-    `name` = #{record.name,jdbcType=VARCHAR},
-    direction = #{record.direction,jdbcType=VARCHAR},
-    difficulty = #{record.difficulty,jdbcType=DECIMAL},
-    technology = #{record.technology,jdbcType=VARCHAR},
-    `describe` = #{record.describe,jdbcType=VARCHAR},
-    document = #{record.document,jdbcType=VARCHAR},
-    review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
-    review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
-    review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
-    state = #{record.state,jdbcType=VARCHAR},
-    create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_teacher_id = #{record.createTeacherId,jdbcType=VARCHAR},
+      cross_review_teacher = #{record.crossReviewTeacher,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      direction = #{record.direction,jdbcType=VARCHAR},
+      difficulty = #{record.difficulty,jdbcType=DECIMAL},
+      technology = #{record.technology,jdbcType=VARCHAR},
+      describe = #{record.describe,jdbcType=VARCHAR},
+      document = #{record.document,jdbcType=VARCHAR},
+      review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=VARCHAR},
+      review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=VARCHAR},
+      review_teacher_id3 = #{record.reviewTeacherId3,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -316,11 +308,14 @@
       <if test="createTeacherId != null">
         create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
       </if>
+      <if test="crossReviewTeacher != null">
+        cross_review_teacher = #{crossReviewTeacher,jdbcType=VARCHAR},
+      </if>
       <if test="majorId != null">
         major_id = #{majorId,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="direction != null">
         direction = #{direction,jdbcType=VARCHAR},
@@ -332,7 +327,7 @@
         technology = #{technology,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
-        `describe` = #{describe,jdbcType=VARCHAR},
+        describe = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="document != null">
         document = #{document,jdbcType=VARCHAR},
@@ -358,12 +353,13 @@
   <update id="updateByPrimaryKey" parameterType="org.t01.gdp.domain.Subject">
     update subject
     set create_teacher_id = #{createTeacherId,jdbcType=VARCHAR},
+      cross_review_teacher = #{crossReviewTeacher,jdbcType=VARCHAR},
       major_id = #{majorId,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       direction = #{direction,jdbcType=VARCHAR},
       difficulty = #{difficulty,jdbcType=DECIMAL},
       technology = #{technology,jdbcType=VARCHAR},
-      `describe` = #{describe,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
       document = #{document,jdbcType=VARCHAR},
       review_teacher_id1 = #{reviewTeacherId1,jdbcType=VARCHAR},
       review_teacher_id2 = #{reviewTeacherId2,jdbcType=VARCHAR},

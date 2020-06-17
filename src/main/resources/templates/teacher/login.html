@@ -20,7 +20,7 @@
 			<span th:if="${param.failure}">登录失败</span>
 			<span th:if="${param.logout}">您已成功登出</span>
 			<h1>用户登录</h1>
-			<form class="form" id="entry_form" th:action="@{/login}" method="post">
+			<form class="form" id="entry_form" th:action="@{/teacher/login/check}" method="post">
 				<input type="text" placeholder="用户名" id="entry_name" name="username">
 				<input type="password" placeholder="密码" id="entry_password" name="password">
 				<button type="submit" id="entry_btn">登录</button>

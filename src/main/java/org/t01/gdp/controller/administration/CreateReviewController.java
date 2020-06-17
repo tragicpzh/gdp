@@ -18,12 +18,12 @@ public class CreateReviewController {
     CreateReviewService createReviewService;
 
     //自动分配评审团队
-    @PostMapping("/CreateReview")
-    public Object review_Create(@RequestBody List<String> list){
-        //Map<String,Object> map=new HashMap<>();
-        createReviewService.create_review(list);
-        //map.put("success",true);
-       // return map;
-        return "index";
-    }
+//    @PostMapping("/CreateReview")
+//    public Object review_Create(@RequestBody List<String> list){
+//        //Map<String,Object> map=new HashMap<>();
+//        createReviewService.create_review(list);
+//        //map.put("success",true);
+//       // return map;
+//        return "index";
+//    }
 }

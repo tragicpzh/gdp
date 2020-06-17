@@ -16,7 +16,7 @@ import java.util.Date;
 class GdpApplicationTests {
 	@Test
 	void contextLoads() {
-		VerificationService.sendEmailVerificationCode("");
+		VerificationService.sendEmailVerificationCode("429050398@qq.com");
 	}
 
 }

@@ -16,22 +16,22 @@ public class AccountController {
     private final UserService userService;
     private final SMSService smsService;
 
-    @ResponseBody
-    @RequestMapping(value = "/getAccountInfo", method = RequestMethod.GET)
-    public Map<String, String> getAccountInfo(@RequestParam(name = "id") String id) {
-        return userService.getAccountInfoById(id);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/getAccountInfo", method = RequestMethod.GET)
+//    public Map<String, String> getAccountInfo(@RequestParam(name = "id") String id) {
+//        return userService.getAccountInfoById(id);
+//    }
 
-    @ResponseBody
-    @RequestMapping(value = "/updateAccountInfo", method = RequestMethod.POST)
-    public Map<String, String> updateAccountInfo(@RequestBody JSONObject jsonObject) {
-        return userService.updateAccountInfo(
-                jsonObject.getString("id"),
-                jsonObject.getString("role"),
-                jsonObject.getString("phoneNumber"),
-                jsonObject.getString("email"
-                ));
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/updateAccountInfo", method = RequestMethod.POST)
+//    public Map<String, String> updateAccountInfo(@RequestBody JSONObject jsonObject) {
+//        return userService.updateAccountInfo(
+//                jsonObject.getString("id"),
+//                jsonObject.getString("role"),
+//                jsonObject.getString("phoneNumber"),
+//                jsonObject.getString("email"
+//                ));
+//    }
 
     @ResponseBody
     @RequestMapping("/sendCode")

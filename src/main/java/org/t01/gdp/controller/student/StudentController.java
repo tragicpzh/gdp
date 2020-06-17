@@ -50,12 +50,12 @@ public class StudentController {
         return studentService.getSubjectById(id);
     }
 
-    @ResponseBody
-    @PostMapping("/crowssreview")
-    public boolean cross_review_create(List<Student> list){
-        studentService.cross_review_create(list);
-        return true;
-    }
+//    @ResponseBody
+//    @PostMapping("/crowssreview")
+//    public boolean cross_review_create(List<Student> list){
+//        studentService.cross_review_create(list);
+//        return true;
+//    }
 
     @ResponseBody
     @RequestMapping("/uploadOpenReport")
@@ -93,19 +93,19 @@ public class StudentController {
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
     }
 
-    @ResponseBody
-    @GetMapping("/crossReview/select")//交叉评阅信息查找
-    public Object select_cross_review(HttpServletRequest request){
-        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        Crossreview crossreview=studentService.selectCrossReview(student_id);
-        return Result.success(crossreview,"success");
-    }
+//    @ResponseBody
+//    @GetMapping("/crossReview/select")//交叉评阅信息查找
+//    public Object select_cross_review(HttpServletRequest request){
+//        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+//        Crossreview crossreview=studentService.selectCrossReview(student_id);
+//        return Result.success(crossreview,"success");
+//    }
 
-    @ResponseBody
-    @PostMapping("/crossReview/score")
-    public void crossScore(String studentId,int score,HttpServletRequest request){
-        String reviewStudentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        studentService.updateStudentCrossPaperScore(reviewStudentId,studentId,score);
-    }
+//    @ResponseBody
+//    @PostMapping("/crossReview/score")
+//    public void crossScore(String studentId,int score,HttpServletRequest request){
+//        String reviewStudentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+//        studentService.updateStudentCrossPaperScore(reviewStudentId,studentId,score);
+//    }
 
 }

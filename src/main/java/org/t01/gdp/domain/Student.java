@@ -1,21 +1,30 @@
 package org.t01.gdp.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Student {
-    private String id;
+    private Long id;
+
+    private String studentId;
+
+    private String password;
+
+    private String name;
+
+    private String phoneNumber;
+
+    private String email;
+
+    private Date createTime;
+
+    private String headPortrait;
 
     private String majorId;
 
     private String state;
 
-    private String email;
-
-    private String phoneNumber;
-
     private Long subjectId;
-
-    private String crossStudentId;
 
     private String openDocument;
 
@@ -71,12 +80,68 @@ public class Student {
 
     private String conclusionEvaluation3;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId == null ? null : studentId.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait == null ? null : headPortrait.trim();
     }
 
     public String getMajorId() {
@@ -95,36 +160,12 @@ public class Student {
         this.state = state == null ? null : state.trim();
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
-    }
-
     public Long getSubjectId() {
         return subjectId;
     }
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
-    }
-
-    public String getCrossStudentId() {
-        return crossStudentId;
-    }
-
-    public void setCrossStudentId(String crossStudentId) {
-        this.crossStudentId = crossStudentId == null ? null : crossStudentId.trim();
     }
 
     public String getOpenDocument() {

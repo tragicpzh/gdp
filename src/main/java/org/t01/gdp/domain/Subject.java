@@ -8,6 +8,8 @@ public class Subject {
 
     private String createTeacherId;
 
+    private String crossReviewTeacher;
+
     private String majorId;
 
     private String name;
@@ -32,41 +34,6 @@ public class Subject {
 
     private Date createTime;
 
-    @Override
-    public String toString() {
-        return "{"
-                + "\"id\":"
-                + id
-                + ",\"createTeacherId\":\""
-                + createTeacherId + '\"'
-                + ",\"majorId\":\""
-                + majorId + '\"'
-                + ",\"name\":\""
-                + name + '\"'
-                + ",\"direction\":\""
-                + direction + '\"'
-                + ",\"difficulty\":"
-                + difficulty
-                + ",\"technology\":\""
-                + technology + '\"'
-                + ",\"describe\":\""
-                + describe + '\"'
-                + ",\"document\":\""
-                + document + '\"'
-                + ",\"reviewTeacherId1\":\""
-                + reviewTeacherId1 + '\"'
-                + ",\"reviewTeacherId2\":\""
-                + reviewTeacherId2 + '\"'
-                + ",\"reviewTeacherId3\":\""
-                + reviewTeacherId3 + '\"'
-                + ",\"state\":\""
-                + state + '\"'
-                + ",\"createTime\":\""
-                + createTime + '\"'
-                + "}";
-
-    }
-
     public Long getId() {
         return id;
     }
@@ -81,6 +48,14 @@ public class Subject {
 
     public void setCreateTeacherId(String createTeacherId) {
         this.createTeacherId = createTeacherId == null ? null : createTeacherId.trim();
+    }
+
+    public String getCrossReviewTeacher() {
+        return crossReviewTeacher;
+    }
+
+    public void setCrossReviewTeacher(String crossReviewTeacher) {
+        this.crossReviewTeacher = crossReviewTeacher == null ? null : crossReviewTeacher.trim();
     }
 
     public String getMajorId() {
