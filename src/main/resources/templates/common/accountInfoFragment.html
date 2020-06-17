@@ -274,7 +274,7 @@
             url: '/sendNoteCode',
             async: false,
             data: {phoneNumber: phoneNumber},
-            dataType: "json",
+            dataType: "text",
             success: function (result) {
                 if (result !== 'success') {
                     alert('发送验证码失败!');
