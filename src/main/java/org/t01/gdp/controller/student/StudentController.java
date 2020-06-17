@@ -61,7 +61,7 @@ public class StudentController {
     @RequestMapping("/uploadOpenReport")
     public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
         String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = studentId + "\\openReport\\";
+        String path ="student\\" + studentId + "\\openReport";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentOpenReport(studentId, path, multipartFile.getOriginalFilename());
     }
@@ -70,7 +70,7 @@ public class StudentController {
     @RequestMapping("/uploadMiddleReport")
     public void uploadMiddleReport(HttpServletRequest request, MultipartFile multipartFile){
         String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = studentId + "\\middleReport\\";
+        String path ="student\\" + studentId + "\\middleReport\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentMiddleReport(studentId, path, multipartFile.getOriginalFilename());
     }
@@ -79,7 +79,7 @@ public class StudentController {
     @RequestMapping("/uploadConclusionReport")
     public void uploadConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
         String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = studentId + "\\conclusionReport\\";
+        String path ="student\\" + studentId + "\\conclusionReport\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentConclusionReport(studentId, path, multipartFile.getOriginalFilename());
     }
@@ -88,7 +88,7 @@ public class StudentController {
     @RequestMapping("/uploadPaper")
     public void uploadPaper(HttpServletRequest request, MultipartFile multipartFile){
         String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = studentId + "\\paper\\";
+        String path ="student\\" + studentId + "\\paper\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
     }
