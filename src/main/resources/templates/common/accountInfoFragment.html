@@ -21,6 +21,12 @@
                         <label id="role" class="form-control-plaintext col-3" readonly></label>
                     </div>
                     <div class="form-group row">
+                        <label class="col-form-label col-1">密码:</label>
+                        <input type="button" id="password" class="form-control btn btn-outline-primary col-1"
+                               data-toggle="modal" data-target="#updatePasswordModal"
+                               value="修改密码"/>
+                    </div>
+                    <div class="form-group row">
                         <label for="phoneNumber" class="col-form-label col-1">电话:</label>
                         <input type="text" class="form-control col-3" id="phoneNumber" name="phoneNumber">
                     </div>
@@ -66,6 +72,42 @@
                 </div>
                 <div class="modal-footer">
                     <button id="btnCheckCode" type="button" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updatePasswordModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="updatePasswordModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePasswordModalLabel">修改密码</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updatePasswordForm" role="form" action="#" method="get">
+                        <div class="form-group row">
+                            <label for="oldPassword" class="col-form-label ml-2 mr-3">原密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="oldPassword" required>
+                        </div>
+                        <div class="form-group row">
+                            <label for="newPassword" class="col-form-label ml-2 mr-3">新密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="newPassword" required>
+                        </div>
+                        <div class="form-group row">
+                            <label for="confirmPassword" class="col-form-label ml-2 mr-3">确认密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnUpdatePassword" type="button" class="btn btn-primary btn-sm">确认</button>
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
                 </div>
             </div>
@@ -222,6 +264,41 @@
     $('#btn_reset').on('click', function () {
         $('#phoneNumber').val(Infos['phoneNumber']);
         $('#email').val(Infos['email']);
+    })
+
+    $('#btnUpdatePassword').on('click', function () {
+        let oldPassword = $('#oldPassword').val();
+        let newPassword = $('#newPassword').val();
+        let confirmPassword = $('#confirmPassword').val();
+        if (newPassword !== confirmPassword) {
+            alert('新密码与确认密码不符');
+            return;
+        }
+        $.ajax({
+            url: '/checkPassword',
+            async: false,
+            data: {id: Infos['id'], oldPassword: oldPassword},
+            datatype: 'text',
+            success: function (result) {
+                if (!result) {
+                    alert('原密码错误！');
+                } else {
+                    $.ajax({
+                        url: '/updatePassword',
+                        async: false,
+                        data: {id: Infos['id'], newPassword: newPassword},
+                        datatype: 'text',
+                        success: function (result) {
+                            if (!result) {
+                                alert('修改密码失败');
+                            } else {
+                                $('#updatePasswordModal').modal('hide');
+                            }
+                        }
+                    })
+                }
+            }
+        })
     })
 </script>
 </body>

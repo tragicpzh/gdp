@@ -45,4 +45,18 @@ public class AccountController {
                              @RequestParam(name = "code") String code) {
         return VerificationService.smsVerify(code, phoneNumber);
     }
+
+    @ResponseBody
+    @RequestMapping("/checkPassword")
+    public boolean checkPassword(@RequestParam(name = "id") String id,
+                                 @RequestParam(name = "oldPassword") String oldPassword) {
+        return userService.getUserById(id).getPassword().equals(oldPassword);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updatePassword")
+    public boolean updatePassword(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "newPassword") String newPassword) {
+        return userService.updateUserPassword(id, newPassword);
+    }
 }

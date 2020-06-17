@@ -135,4 +135,11 @@ public class UserService {
     public List<HashMap<String, Object>> getUserByRole(String role) {
         return sqlMapper.getUserByRole(role);
     }
+
+    public boolean updateUserPassword(String id, String newPassword) {
+        User user = new User();
+        user.setId(id);
+        user.setPassword(newPassword);
+        return userMapper.updateByPrimaryKeySelective(user) == 1;
+    }
 }
