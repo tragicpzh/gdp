@@ -54,31 +54,54 @@ public class UserService {
         return infos;
     }
 
-    public Map<String, String> updateAccountInfo(String id, String role, String phoneNumber, String email) {
-        Map<String, String> infos = new HashMap<>();
+    public boolean updatePhoneNumber(String id, String role, String phoneNumber) {
         int length = 0;
         switch (role) {
             case "TEA":
-                Teacher teacher = teacherMapper.selectByPrimaryKey(id);
+                Teacher teacher = new Teacher();
+                teacher.setId(id);
                 teacher.setPhoneNumber(phoneNumber);
+                length += teacherMapper.updateByPrimaryKeySelective(teacher);
+                break;
+            case "STU":
+                Student student = new Student();
+                student.setId(id);
+                student.setPhoneNumber(phoneNumber);
+                length += studentMapper.updateByPrimaryKeySelective(student);
+                break;
+            case "ADM":
+                Administrator administrator = new Administrator();
+                administrator.setId(id);
+                administrator.setPhoneNumber(phoneNumber);
+                length += administratorMapper.updateByPrimaryKeySelective(administrator);
+                break;
+        }
+        return length == 1;
+    }
+
+    public boolean updateEmail(String id, String role, String email) {
+        int length = 0;
+        switch (role) {
+            case "TEA":
+                Teacher teacher = new Teacher();
+                teacher.setId(id);
                 teacher.setEmail(email);
                 length += teacherMapper.updateByPrimaryKeySelective(teacher);
                 break;
             case "STU":
-                Student student = studentMapper.selectByPrimaryKey(id);
-                student.setPhoneNumber(phoneNumber);
+                Student student = new Student();
+                student.setId(id);
                 student.setEmail(email);
                 length += studentMapper.updateByPrimaryKeySelective(student);
                 break;
             case "ADM":
-                Administrator administrator = administratorMapper.selectByPrimaryKey(id);
-                administrator.setPhoneNumber(phoneNumber);
+                Administrator administrator = new Administrator();
+                administrator.setId(id);
                 administrator.setEmail(email);
                 length += administratorMapper.updateByPrimaryKeySelective(administrator);
                 break;
         }
-        infos.put("length", String.valueOf(length));
-        return infos;
+        return length == 1;
     }
 
     public boolean addUser(User user, String otherInfo) {
