@@ -12,8 +12,6 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class VerificationService {
-    private final SMSService smsService;
-    private final MailService mailService;
     private static Map<String, CodeAndOverdueTime> smsVerificationRecord = new HashMap<>();
     private static Map<String, CodeAndOverdueTime> mailVerificationRecord = new HashMap<>();
     private static final int CODEWIDTH = 10000;
@@ -38,7 +36,7 @@ public class VerificationService {
     }
 
     //发送SMS验证码，并记录发送的验证码
-    public void sendSMSVerificationCode(String phoneNumber) {
+    public void sendSMSVerificationCode(String phoneNumber, SMSService smsService) {
         String code = "" + (int) (Math.random() * CODEWIDTH);
         smsService.sendVerificationCode(code, phoneNumber);
         CodeAndOverdueTime codeAndOverdueTime = new CodeAndOverdueTime(code);
@@ -46,7 +44,7 @@ public class VerificationService {
     }
 
     //发送E-mail验证码，并记录发送的验证码
-    public void sendEmailVerificationCode(String emailAddress) {
+    public void sendEmailVerificationCode(String emailAddress,MailService mailService) {
         String code = "" + (int) (Math.random() * CODEWIDTH);
         System.out.println(code);
         mailService.sendVerificationCode(code, emailAddress);

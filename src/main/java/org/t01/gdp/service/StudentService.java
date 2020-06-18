@@ -28,6 +28,10 @@ public class StudentService {
         return studentMapper.selectByExample(studentExample).get(0);
     }
 
+    public Student getStudent(long id){
+        return studentMapper.selectByPrimaryKey(id);
+    }
+
     public String updateState(Student student) {
         String id = student.getStudentId();
         studentMapper.updateByPrimaryKeySelective(student);
@@ -168,33 +172,33 @@ public class StudentService {
 //        return  crossreview;
 //    }
 
-    public void updateStudentOpenReport(String studentId, String path, String originalFilename) {
+    public void updateStudentOpenReport(long studentId, String path, String originalFilename) {
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         student.setOpenDocument(path+originalFilename);
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
-    public void updateStudentMiddleReport(String studentId, String path, String originalFilename) {
+    public void updateStudentMiddleReport(long studentId, String path, String originalFilename) {
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         student.setMiddleDocument(path+originalFilename);
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
-    public void updateStudentConclusionReport(String studentId, String path, String originalFilename) {
+    public void updateStudentConclusionReport(long studentId, String path, String originalFilename) {
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         student.setConclusionDocument(path+originalFilename);
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
-    public void updatePaper(String studentId, String path, String originalFilename) {
+    public void updatePaper(long studentId, String path, String originalFilename) {
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         student.setPaperDocument(path+originalFilename);
         studentMapper.updateByPrimaryKeySelective(student);

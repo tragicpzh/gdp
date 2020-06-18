@@ -65,25 +65,4 @@
             </if>
         </where>
     </select>
-    <select id="selectCrossReview" resultType="org.t01.gdp.domain.Crossreview">
-        select st.id as id,
-               u.name as createTeacher,
-               m.name as major,
-               su.name as `name`,
-               su.direction as direction,
-               su.difficulty as difficulty,
-               su.technology as technology,
-               su.describe as `describe` ,
-               su.document as document,
-               st.email as email,
-               st.open_document as openDocument,
-               st.middle_document as middleDocument,
-               st.paper_document as paperDocument,
-               st.conclusion_document as conclusionDocument
-        from student st
-                left join subject su on st.subject_id=su.id
-                left join `user` u on u.id=su.create_teacher_id
-                left join major m on m.id=su.major_id
-        where st.id = #{id}
-    </select>
 </mapper>

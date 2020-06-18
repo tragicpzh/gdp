@@ -124,12 +124,12 @@
                 $("#subjectName").val(data.name);
                 $("#majorId").val(data.majorId);
                 $("#direction").val(data.direction);
-                $("#difficulty").val(data.difficulty*100);
+                $("#difficulty").val(data.difficulty);
                 $("#technology").val(data.technology);
                 $("#describe").val(data.describe);
 
                 if(data.document!=null && data.document!=""){
-                    $("#downloadFile").html("<a type='button' class='btn btn-danger' href='/download/" + data.document + "' >下载</a>")
+                    $("#downloadFile").html("<br>" + data.document + "<a type='button' class='btn btn-primary' href='/download/" + data.document + "' >下载</a><button type='button' class='btn btn-danger' onclick='onDeleteFile(" +  data.id + ")' >删除</button>")
                 }else{
                     $("#downloadFile").html("")
                 }
@@ -227,5 +227,30 @@
         if(confirm("确定要删除该选题？")){
             $.ajax(setting);
         }
+    }
+</script>
+
+<script>
+    function onDeleteFile(subjectId) {
+        if(!confirm("确定删除该文件？")){
+            return;
+        }
+        var setting = {
+            url: "/teacher/deleteFile",
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: {
+                "subjectId": subjectId
+            },
+            success: function (data) {
+                alert("删除成功");
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        }
+
+        $.ajax(setting);
     }
 </script>

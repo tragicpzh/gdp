@@ -6,12 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class TeacherController {
     @Autowired
     MajorService majorService;
     @Autowired
-    UploadService uploadService;
+    FileService fileService;
     @Autowired
     SubjectService subjectService;
     @Autowired
@@ -51,7 +49,7 @@ public class TeacherController {
         //文件处理
         if (file != null) {
             String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
-            uploadService.uploadFile(file, path);
+            fileService.uploadFile(file, path);
             String fileUrl = path + file.getOriginalFilename();
             subject.setDocument(fileUrl);
             subjectService.updateWithSubject(subject);
@@ -154,7 +152,7 @@ public class TeacherController {
     @RequestMapping("/searchSubject/getList")
     @ResponseBody
     public String getSubjectList(int start,int length, HttpServletRequest request){
-        long id = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        long id = ((UserInfo) request.getSession().getAttribute("USER_INFO")).getId();
 
         SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
         subjectSearchCase.setCreateTeacherId(id);
@@ -189,21 +187,36 @@ public class TeacherController {
         MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
         String subPath = null,filePath = null;
         if(file != null){
-            subPath = teacherId + "\\" + id + "\\";
+            subPath = "subjectDocument/" + id + "/";
             filePath = subPath + file.getOriginalFilename();
             subject.setDocument(filePath);
         }
 
         if(subjectService.updateSubjectSelective(subject,teacherId) == 1){
             if(file != null){
-                uploadService.uploadFile(file,subPath);
+                fileService.uploadFile(file,subPath);
             }
         }
+    }
+
+    @RequestMapping("/deleteFile")
+    @ResponseBody
+    public void deleteSubjectDocument(HttpServletRequest request,long subjectId){
+        long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+
+        Subject subject = subjectService.getSubjectById(subjectId);
+
+        fileService.deleteFile(subject.getDocument());
+        subject.setDocument("");
+
+        subjectService.updateSubjectSelective(subject,teacherId);
     }
 
     @PostMapping("/deleteSubject")
     @ResponseBody
     public boolean deleteSubject(long subjectId){
+        Subject subject = subjectService.getSubjectById(subjectId);
+        fileService.deleteFile(subject.getDocument());
 
         return subjectService.deleteSubject(subjectId)==1;
     }

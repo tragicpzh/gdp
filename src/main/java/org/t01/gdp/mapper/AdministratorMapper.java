@@ -2,9 +2,11 @@ package org.t01.gdp.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 import org.t01.gdp.domain.Administrator;
 import org.t01.gdp.domain.AdministratorExample;
 
+@Repository
 public interface AdministratorMapper {
     long countByExample(AdministratorExample example);
 

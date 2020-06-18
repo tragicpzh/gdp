@@ -2,19 +2,17 @@ package org.t01.gdp.controller.student;
 
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.domain.UserInfo;
+import org.t01.gdp.service.FileService;
 import org.t01.gdp.service.StudentService;
 import org.t01.gdp.service.SubjectService;
-import org.t01.gdp.service.UploadService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,9 +24,10 @@ public class StudentController {
     @Autowired
     StudentService studentService;
     @Autowired
-    UploadService uploadService;
+    FileService fileService;
     @Autowired
     SubjectService subjectService;
+
 
     @GetMapping("selectSubject/getList")
     @ResponseBody
@@ -87,36 +86,72 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/uploadOpenReport")
     public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path ="student\\" + studentId + "\\openReport";
-        uploadService.uploadFile(multipartFile, path);
+        fileService.uploadFile(multipartFile, path);
         studentService.updateStudentOpenReport(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @RequestMapping("/deleteOpenReport")
+    public void deleteOpenReport(HttpServletRequest request, MultipartFile multipartFile){
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        Student student = studentService.getStudent(studentId);
+        fileService.deleteFile(student.getOpenDocument());
+
+        studentService.updateStudentOpenReport(studentId,"","");
     }
 
     @ResponseBody
     @RequestMapping("/uploadMiddleReport")
     public void uploadMiddleReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path ="student\\" + studentId + "\\middleReport\\";
-        uploadService.uploadFile(multipartFile, path);
+        fileService.uploadFile(multipartFile, path);
         studentService.updateStudentMiddleReport(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @RequestMapping("/deleteMiddleReport")
+    public void deleteMiddleReport(HttpServletRequest request, MultipartFile multipartFile){
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        Student student = studentService.getStudent(studentId);
+        fileService.deleteFile(student.getMiddleDocument());
+
+        studentService.updateStudentMiddleReport(studentId,"","");
     }
 
     @ResponseBody
     @RequestMapping("/uploadConclusionReport")
     public void uploadConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path ="student\\" + studentId + "\\conclusionReport\\";
-        uploadService.uploadFile(multipartFile, path);
+        fileService.uploadFile(multipartFile, path);
         studentService.updateStudentConclusionReport(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @RequestMapping("/deleteConclusionReport")
+    public void deleteConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        Student student = studentService.getStudent(studentId);
+        fileService.deleteFile(student.getConclusionDocument());
+
+        studentService.updateStudentConclusionReport(studentId,"","");
     }
 
     @ResponseBody
     @RequestMapping("/uploadPaper")
     public void uploadPaper(HttpServletRequest request, MultipartFile multipartFile){
-        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path ="student\\" + studentId + "\\paper\\";
-        uploadService.uploadFile(multipartFile, path);
+        fileService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
+    }
+
+    @RequestMapping("/deletePaper")
+    public void deletePaper(HttpServletRequest request, MultipartFile multipartFile){
+        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        Student student = studentService.getStudent(studentId);
+        fileService.deleteFile(student.getPaperDocument());
+
+        studentService.updatePaper(studentId,"","");
     }
 }

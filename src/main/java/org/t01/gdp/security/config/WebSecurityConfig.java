@@ -172,7 +172,7 @@ public class WebSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/", "/index","/Rendering/**").permitAll()
+                    .antMatchers("/", "/index","/Rendering/**","/forgotPassword","/retrievePassword","/sendVerifyCode").permitAll()
                     .and()
                     .csrf().disable();
         }

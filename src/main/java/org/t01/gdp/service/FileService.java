@@ -1,6 +1,7 @@
 package org.t01.gdp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +9,50 @@ import java.io.*;
 import java.net.URLDecoder;
 
 @Service
-public class DownloadService {
+public class FileService {
+
+    public void deleteFile(String subPath){
+        try {
+            String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + URLDecoder.decode(subPath==null?"":subPath,"UTF-8");
+            File file = new File(filePath);
+            if(file.exists() && file.isFile()){
+                file.delete();
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int uploadFile(MultipartFile file, String subPath){
+        if (file.isEmpty()) {
+            return 1;
+        }
+
+        String fileName = file.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + subPath + fileName;
+        File dest = new File(filePath);
+
+        if(!dest.getParentFile().exists()){
+            dest.getParentFile().mkdirs();
+        }
+        if(!dest.exists()){
+            try {
+                dest.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 2;
+            }
+        }
+
+        try {
+            file.transferTo(dest);
+            return 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 3;
+    }
+
     public boolean downloadFile(HttpServletRequest request, HttpServletResponse response){
         String requestURI = request.getRequestURI();
 

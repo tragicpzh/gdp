@@ -1,49 +1,81 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>txt</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>GDP-管理员登录</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" th:href="@{/Rendering/login/css/layout.css}" >
-
-<script type="text/javascript" th:src="@{/Rendering/login/js/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/Rendering/login/js/vector.js}"></script>
-
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/Rendering/plugins/fontawesome-free/css/all.min.css">
+	<!-- Ionicons -->
+	<link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
+	<!-- icheck bootstrap -->
+	<link rel="stylesheet" href="/Rendering/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="/Rendering/dist/css/adminlte.min.css">
 </head>
-<body>
-
-<div id="container">
-	<div id="output">
-		<div class="containerT">
-			<span th:if="${param.failure}">登录失败</span>
+<body class="hold-transition login-page">
+<div class="login-box">
+	<div class="login-logo">
+		<a href="/index"><b>GDP</b></a>
+	</div>
+	<!-- /.login-logo -->
+	<div class="card">
+		<div class="card-body login-card-body">
+			<p class="login-box-msg">管理员登录</p>
+			<span th:if="${param.failure}" style="color: red">登录失败</span>
 			<span th:if="${param.logout}">您已成功登出</span>
-			<h1>用户登录</h1>
-			<form class="form" id="entry_form" th:action="@{/administrator/login/check}" method="post">
-				<input type="text" placeholder="用户名" id="entry_name" name="username">
-				<input type="password" placeholder="密码" id="entry_password" name="password">
-				<button type="submit" id="entry_btn">登录</button>
-				<div id="prompt" class="prompt"></div>
+			<form th:action="@{/administrator/login/check}" method="post">
+				<div class="input-group mb-3">
+					<input class="form-control" required="required" placeholder="用户名" name="username">
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-user"></span>
+						</div>
+					</div>
+				</div>
+				<div class="input-group mb-3">
+					<input type="password" class="form-control" required="required" placeholder="密码" name="password">
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-lock"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8">
+						<div class="icheck-primary">
+							<input type="checkbox" id="remember">
+							<label for="remember">
+								Remember Me
+							</label>
+						</div>
+					</div>
+					<!-- /.col -->
+					<div class="col-4">
+						<button type="submit" class="btn btn-primary btn-block">登录</button>
+					</div>
+					<!-- /.col -->
+				</div>
 			</form>
+
+			<p class="mb-1">
+				<a href="/forgotPassword">忘记密码？</a>
+			</p>
 		</div>
+		<!-- /.login-card-body -->
 	</div>
 </div>
+<!-- /.login-box -->
 
-<script>
-		sessionStorage.removeItem("position");
-</script>
+<!-- jQuery -->
+<script src="/Rendering/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/Rendering/dist/js/adminlte.min.js"></script>
 
-<script type="text/javascript">
-    $(function(){
-        Victor("container", "output");   //登录背景函数
-        $("#entry_name").focus();
-        $(document).keydown(function(event){
-            if(event.keyCode==13){
-                $("#entry_btn").click();
-            }
-        });
-    });
-</script>
 </body>
 </html>
