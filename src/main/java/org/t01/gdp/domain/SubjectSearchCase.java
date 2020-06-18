@@ -9,6 +9,7 @@ public class SubjectSearchCase {
     private String majorName;
     private String direction;
     private List<String> state;
+    private Long createTeacherId;
 
     public List<String> getState() {
         return state;
@@ -18,24 +19,28 @@ public class SubjectSearchCase {
         this.state = state;
     }
 
-    public SubjectSearchCase() {
-    }
-
-    public SubjectSearchCase(Long id, String name, Integer difficulty, String majorName, String direction, List<String> state) {
-        this.id = id;
-        this.name = name;
-        this.difficulty = difficulty;
-        this.majorName = majorName;
-        this.direction = direction;
-        this.state = state;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Long getCreateTeacherId() {
+        return createTeacherId;
+    }
+
+    public void setCreateTeacherId(Long createTeacherId) {
+        this.createTeacherId = createTeacherId;
     }
 
     public String getName() {
@@ -44,14 +49,6 @@ public class SubjectSearchCase {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
     }
 
     public String getMajorName() {

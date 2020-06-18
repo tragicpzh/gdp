@@ -57,7 +57,7 @@
                 <p><input type="text" style="width: 100%" maxlength="50" id="direction"></p>
                 <p>难度：</p>
                 <p>
-                    0. <input type="number" max="99" min="0" id="difficulty">
+                    <input type="number" max="99" min="0" id="difficulty">%
                 </p>
                 <p>相关技术：</p>
                 <p><input type="text" maxlength="255" style="width: 100%" id="technology"></p>
@@ -82,6 +82,7 @@
 <script>
     $(function () {
         $("#table").DataTable({
+            "retrieve": true,
             "responsive": true,
             "autoWidth": false,
             "processing": true,

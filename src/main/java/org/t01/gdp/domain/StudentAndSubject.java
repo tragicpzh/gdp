@@ -1,55 +1,66 @@
 package org.t01.gdp.domain;
 
 public class StudentAndSubject {
-    private String studentId;
-    private String subjectId;
+    private Long studentId;
+
+    private String studentName;
+
+    private String reviewDocument;
+
+    private Long subjectId;
+
+    private String majorName;
+
     private String subjectName;
-    private String majorId;
+
     private String direction;
 
-    @Override
-    public String toString() {
-        return "{"
-                + "\"studentId\":\""
-                + studentId + '\"'
-                + ",\"subjectId\":\""
-                + subjectId + '\"'
-                + ",\"subjectName\":\""
-                + subjectName + '\"'
-                + ",\"majorId\":\""
-                + majorId + '\"'
-                + ",\"direction\":\""
-                + direction + '\"'
-                + ",\"openDocument\":\""
-                + "timeAxis.save" + '\"'
-                + "}";
-    }
+    private Integer difficulty;
 
-    public StudentAndSubject() {
-    }
+    private String technology;
 
-    public StudentAndSubject(String studentId, String subjectId, String subjectName, String majorId, String direction) {
-        this.studentId = studentId;
-        this.subjectId = subjectId;
-        this.subjectName = subjectName;
-        this.majorId = majorId;
-        this.direction = direction;
-    }
+    private String describe;
 
-    public String getStudentId() {
+    private String subjectDocument;
+
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 
-    public String getSubjectId() {
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getReviewDocument() {
+        return reviewDocument;
+    }
+
+    public void setReviewDocument(String reviewDocument) {
+        this.reviewDocument = reviewDocument;
+    }
+
+    public Long getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(String subjectId) {
+    public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public String getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(String majorName) {
+        this.majorName = majorName;
     }
 
     public String getSubjectName() {
@@ -60,19 +71,43 @@ public class StudentAndSubject {
         this.subjectName = subjectName;
     }
 
-    public String getMajorId() {
-        return majorId;
-    }
-
-    public void setMajorId(String majorId) {
-        this.majorId = majorId;
-    }
-
     public String getDirection() {
         return direction;
     }
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(String technology) {
+        this.technology = technology;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getSubjectDocument() {
+        return subjectDocument;
+    }
+
+    public void setSubjectDocument(String subjectDocument) {
+        this.subjectDocument = subjectDocument;
     }
 }

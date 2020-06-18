@@ -1,6 +1,5 @@
 package org.t01.gdp.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,9 @@ public class SubjectService {
     @Autowired
     SubjectForTeacher subjectForTeacher;
 
+    @Autowired
+    StudentAndSubjectMapper studentAndSubjectMapper;
+
     public PageInfo<Subject> searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
         PageHelper.startPage(pageNo,pageSize);
 
@@ -65,8 +67,36 @@ public class SubjectService {
         if(subjectSearchCase.getState()!=null){
             criteria.andStateIn(subjectSearchCase.getState());
         }
+        if(subjectSearchCase.getCreateTeacherId()!=null){
+            criteria.andCreateTeacherIdEqualTo(subjectSearchCase.getCreateTeacherId());
+        }
 
         return new PageInfo<>(subjectMapper.selectByExample(subjectExample));
+    }
+
+    public PageInfo<StudentAndSubject> searchReview(ReviewSearchCase reviewSearchCase,int pageNo, int pageSize){
+        PageHelper.startPage(pageNo,pageSize);
+
+        if(reviewSearchCase.getPaperReviewTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByPaperReviewTeacherId(reviewSearchCase.getPaperReviewTeacherId()));
+        }
+        if(reviewSearchCase.getCreateTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByCreateTeacherId(reviewSearchCase.getCreateTeacherId()));
+        }
+        if(reviewSearchCase.getCrossReviewTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByCrossReviewTeacherId(reviewSearchCase.getCrossReviewTeacherId()));
+        }
+        if(reviewSearchCase.getOpenReviewTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByOpenReviewTeacherId(reviewSearchCase.getOpenReviewTeacherId()));
+        }
+        if(reviewSearchCase.getMiddleReviewTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByMiddleReviewTeacherId(reviewSearchCase.getMiddleReviewTeacherId()));
+        }
+        if(reviewSearchCase.getConclusionReviewTeacherId()!=null){
+            return new PageInfo<>(studentAndSubjectMapper.selectByConclusionReviewTeacherId(reviewSearchCase.getConclusionReviewTeacherId()));
+        }
+
+        return new PageInfo<>(new ArrayList<>());
     }
 
     public void updateById(Subject subject, String examine_flag) {
@@ -78,12 +108,9 @@ public class SubjectService {
         return subjectMapper.updateByPrimaryKey(subject);
     }
 
-    public int updateSubjectSelective(Subject subject, String teacherId){
+    public int updateSubjectSelective(Subject subject, long teacherId){
         if(subjectMapper.selectByPrimaryKey(subject.getId()).getCreateTeacherId().equals(teacherId)){
-            SubjectExample subjectExample = new SubjectExample();
-            subjectExample.createCriteria().andIdEqualTo(subject.getId());
-
-            return subjectMapper.updateByExampleSelective(subject,subjectExample);
+            return subjectMapper.updateByPrimaryKeySelective(subject);
         }
         return -1;
     }
