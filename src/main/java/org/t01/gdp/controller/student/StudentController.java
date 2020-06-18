@@ -51,32 +51,6 @@ public class StudentController {
         return subjectService.getSubjectById(subjectId);
     }
 
-
-    @ResponseBody
-    @RequestMapping("/getTimeState")
-    public String getTimeState() {
-        return String.valueOf(TimeAxis.getTimeAxisState());
-    }
-
-    @ResponseBody
-    @RequestMapping("/getStudentInfo")
-    public Student getStudentInfo(@RequestParam(name = "id") String id) {
-        return studentService.getStudentInfoById(id);
-    }
-
-    @ResponseBody
-    @RequestMapping("/upgradeState")
-    public String upgradeState(Student student) {
-        return studentService.updateState(student);
-    }
-
-    @ResponseBody
-    @RequestMapping("/getSubject")
-
-    public Subject getSubject(@RequestParam(name = "id") long id) {
-        return studentService.getSubjectById(id);
-    }
-
 //    @ResponseBody
 //    @PostMapping("/crowssreview")
 //    public boolean cross_review_create(List<Student> list){
