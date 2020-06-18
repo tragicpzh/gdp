@@ -2,12 +2,9 @@ package org.t01.gdp.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.SubjectExample;
 
-@Repository
 public interface SubjectMapper {
     long countByExample(SubjectExample example);
 

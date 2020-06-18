@@ -58,7 +58,7 @@ CREATE TABLE `college` (
   `name` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `phone_numer` varchar(20) NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -264,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-18  9:24:49
+-- Dump completed on 2020-06-18 10:01:10

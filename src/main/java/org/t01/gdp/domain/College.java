@@ -9,7 +9,7 @@ public class College {
 
     private String email;
 
-    private String phoneNumer;
+    private String phoneNumber;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class College {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getPhoneNumer() {
-        return phoneNumer;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNumer(String phoneNumer) {
-        this.phoneNumer = phoneNumer == null ? null : phoneNumer.trim();
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 }

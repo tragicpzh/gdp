@@ -77,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_teacher_id, cross_review_teacher, major_id, `name`, direction, difficulty,
-    technology, `describe`, document, review_teacher_id1, review_teacher_id2, review_teacher_id3,
+    id, create_teacher_id, cross_review_teacher, major_id, name, direction, difficulty, 
+    technology, describe, document, review_teacher_id1, review_teacher_id2, review_teacher_id3, 
     state, create_time
   </sql>
   <select id="selectByExample" parameterType="org.t01.gdp.domain.SubjectExample" resultMap="BaseResultMap">
@@ -113,8 +113,8 @@
   </delete>
   <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
     insert into subject (id, create_teacher_id, cross_review_teacher, 
-      major_id, `name`, direction,
-      difficulty, technology, `describe`,
+      major_id, name, direction, 
+      difficulty, technology, describe, 
       document, review_teacher_id1, review_teacher_id2, 
       review_teacher_id3, state, create_time
       )
@@ -141,7 +141,7 @@
         major_id,
       </if>
       <if test="name != null">
-        `name`,
+        name,
       </if>
       <if test="direction != null">
         direction,
@@ -153,7 +153,7 @@
         technology,
       </if>
       <if test="describe != null">
-        `describe`,
+        describe,
       </if>
       <if test="document != null">
         document,
@@ -244,7 +244,7 @@
         major_id = #{record.majorId,jdbcType=BIGINT},
       </if>
       <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.direction != null">
         direction = #{record.direction,jdbcType=VARCHAR},
@@ -256,7 +256,7 @@
         technology = #{record.technology,jdbcType=VARCHAR},
       </if>
       <if test="record.describe != null">
-        `describe` = #{record.describe,jdbcType=VARCHAR},
+        describe = #{record.describe,jdbcType=VARCHAR},
       </if>
       <if test="record.document != null">
         document = #{record.document,jdbcType=VARCHAR},
@@ -287,11 +287,11 @@
       create_teacher_id = #{record.createTeacherId,jdbcType=BIGINT},
       cross_review_teacher = #{record.crossReviewTeacher,jdbcType=BIGINT},
       major_id = #{record.majorId,jdbcType=BIGINT},
-      `name` = #{record.name,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
       direction = #{record.direction,jdbcType=VARCHAR},
       difficulty = #{record.difficulty,jdbcType=INTEGER},
       technology = #{record.technology,jdbcType=VARCHAR},
-      `describe` = #{record.describe,jdbcType=VARCHAR},
+      describe = #{record.describe,jdbcType=VARCHAR},
       document = #{record.document,jdbcType=VARCHAR},
       review_teacher_id1 = #{record.reviewTeacherId1,jdbcType=BIGINT},
       review_teacher_id2 = #{record.reviewTeacherId2,jdbcType=BIGINT},
@@ -315,7 +315,7 @@
         major_id = #{majorId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="direction != null">
         direction = #{direction,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
         technology = #{technology,jdbcType=VARCHAR},
       </if>
       <if test="describe != null">
-        `describe` = #{describe,jdbcType=VARCHAR},
+        describe = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="document != null">
         document = #{document,jdbcType=VARCHAR},
@@ -355,11 +355,11 @@
     set create_teacher_id = #{createTeacherId,jdbcType=BIGINT},
       cross_review_teacher = #{crossReviewTeacher,jdbcType=BIGINT},
       major_id = #{majorId,jdbcType=BIGINT},
-      `name` = #{name,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       direction = #{direction,jdbcType=VARCHAR},
       difficulty = #{difficulty,jdbcType=INTEGER},
       technology = #{technology,jdbcType=VARCHAR},
-      `describe` = #{describe,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
       document = #{document,jdbcType=VARCHAR},
       review_teacher_id1 = #{reviewTeacherId1,jdbcType=BIGINT},
       review_teacher_id2 = #{reviewTeacherId2,jdbcType=BIGINT},

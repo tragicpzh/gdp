@@ -374,73 +374,73 @@ public class CollegeExample {
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerIsNull() {
-            addCriterion("phone_numer is null");
+        public Criteria andPhoneNumberIsNull() {
+            addCriterion("phone_number is null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerIsNotNull() {
-            addCriterion("phone_numer is not null");
+        public Criteria andPhoneNumberIsNotNull() {
+            addCriterion("phone_number is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerEqualTo(String value) {
-            addCriterion("phone_numer =", value, "phoneNumer");
+        public Criteria andPhoneNumberEqualTo(String value) {
+            addCriterion("phone_number =", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerNotEqualTo(String value) {
-            addCriterion("phone_numer <>", value, "phoneNumer");
+        public Criteria andPhoneNumberNotEqualTo(String value) {
+            addCriterion("phone_number <>", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerGreaterThan(String value) {
-            addCriterion("phone_numer >", value, "phoneNumer");
+        public Criteria andPhoneNumberGreaterThan(String value) {
+            addCriterion("phone_number >", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerGreaterThanOrEqualTo(String value) {
-            addCriterion("phone_numer >=", value, "phoneNumer");
+        public Criteria andPhoneNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("phone_number >=", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerLessThan(String value) {
-            addCriterion("phone_numer <", value, "phoneNumer");
+        public Criteria andPhoneNumberLessThan(String value) {
+            addCriterion("phone_number <", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerLessThanOrEqualTo(String value) {
-            addCriterion("phone_numer <=", value, "phoneNumer");
+        public Criteria andPhoneNumberLessThanOrEqualTo(String value) {
+            addCriterion("phone_number <=", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerLike(String value) {
-            addCriterion("phone_numer like", value, "phoneNumer");
+        public Criteria andPhoneNumberLike(String value) {
+            addCriterion("phone_number like", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerNotLike(String value) {
-            addCriterion("phone_numer not like", value, "phoneNumer");
+        public Criteria andPhoneNumberNotLike(String value) {
+            addCriterion("phone_number not like", value, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerIn(List<String> values) {
-            addCriterion("phone_numer in", values, "phoneNumer");
+        public Criteria andPhoneNumberIn(List<String> values) {
+            addCriterion("phone_number in", values, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerNotIn(List<String> values) {
-            addCriterion("phone_numer not in", values, "phoneNumer");
+        public Criteria andPhoneNumberNotIn(List<String> values) {
+            addCriterion("phone_number not in", values, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerBetween(String value1, String value2) {
-            addCriterion("phone_numer between", value1, value2, "phoneNumer");
+        public Criteria andPhoneNumberBetween(String value1, String value2) {
+            addCriterion("phone_number between", value1, value2, "phoneNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNumerNotBetween(String value1, String value2) {
-            addCriterion("phone_numer not between", value1, value2, "phoneNumer");
+        public Criteria andPhoneNumberNotBetween(String value1, String value2) {
+            addCriterion("phone_number not between", value1, value2, "phoneNumber");
             return (Criteria) this;
         }
     }
