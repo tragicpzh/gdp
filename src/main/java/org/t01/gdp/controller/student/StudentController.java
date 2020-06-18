@@ -88,7 +88,7 @@ public class StudentController {
     @RequestMapping("/uploadOpenReport")
     public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
         String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
-        String path ="student\\" + studentId + "\\openReport";
+        String path ="student\\" + studentId + "\\openReport\\";
         uploadService.uploadFile(multipartFile, path);
         studentService.updateStudentOpenReport(studentId, path, multipartFile.getOriginalFilename());
     }
