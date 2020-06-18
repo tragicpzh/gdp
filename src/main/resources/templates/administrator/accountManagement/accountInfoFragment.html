@@ -179,7 +179,7 @@
     $(function () {
         let id = Infos['id'];
         $.ajax({
-            url: '/getAccountInfo',
+            url: '/administrator/getAccountInfo',
             async: false,
             data: {id: id},
             dataType: "json",
@@ -188,13 +188,7 @@
                     Infos['phoneNumber'] = result['phoneNumber'];
                     Infos['email'] = result['email'];
                     $('#name').html(Infos['name']);
-                    if (Infos['role'] === 'ADM') {
-                        $('#role').html('管理员');
-                    } else if (Infos['role'] === 'TEA') {
-                        $('#role').html('教师');
-                    } else if (Infos['role'] === 'STU') {
-                        $('#role').html('学生');
-                    }
+                    $('#role').html('管理员');
                     $('#phoneNumber').html(Infos['phoneNumber']);
                     $('#email').html(Infos['email']);
                 } else {

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card border-dark" style="width: 100%;">
+            <div class="card-header bg-transparent border-dark">账号信息</div>
+            <div class="card-body">
+                <form id="infoForm" role="form" action="#" method="post">
+                    <div class="form-group row">
+                        <label class="col-form-label col-1">姓名:</label>
+                        <label id="name" class="form-control-plaintext col-1" readonly></label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-1">用户类型:</label>
+                        <label id="role" class="form-control-plaintext col-1" readonly></label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-1">密码:</label>
+                        <input type="button" id="showUpdatePasswordModal"
+                               class="form-control btn btn-outline-primary col-1"
+                               data-toggle="modal" data-target="#updatePasswordModal"
+                               value="修改密码"/>
+                    </div>
+                    <div class="form-group row">
+                        <label for="phoneNumber" class="col-form-label col-1">电话:</label>
+                        <label class="form-control-plaintext col-2" id="phoneNumber"></label>
+                        <input type="button" id="showUpdatePhoneNumberModal"
+                               class="form-control btn btn-outline-primary col-1 ml-3"
+                               data-toggle="modal" data-target="#updatePhoneNumberModal"
+                               value="修改电话"/>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-form-label  col-1">Email:</label>
+                        <label class="form-control-plaintext col-2" id="email"></label>
+                        <input type="button" id="showUpdateEmailModal"
+                               class="form-control btn btn-outline-primary col-1 ml-3"
+                               data-toggle="modal" data-target="#updateEmailModal"
+                               value="修改邮箱"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:name="invisibleDiv">
+
+    <div class="modal fade" id="updatePasswordModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="updatePasswordModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePasswordModalLabel">修改密码</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updatePasswordForm" role="form" action="#" method="get">
+                        <div class="form-group row">
+                            <label for="oldPassword" class="col-form-label ml-2 mr-3">原密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="oldPassword" required>
+                        </div>
+                        <div class="form-group row">
+                            <label for="newPassword" class="col-form-label ml-2 mr-3">新密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="newPassword" required>
+                        </div>
+                        <div class="form-group row">
+                            <label for="confirmPassword" class="col-form-label ml-2 mr-3">确认密码: </label>
+                            <input type="password" class="form-control col-sm mr-3" id="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnUpdatePassword" type="button" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updatePhoneNumberModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="updatePhoneNumberModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePhoneNumberModalLabel">验证</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updatePhoneNumberForm" role="form" action="#" method="get">
+                        <div class="form-group row">
+                            <label for="newPhoneNumber" class="col-form-label ml-2 mr-3">新电话号码: </label>
+                            <input type="text" id="newPhoneNumber" class="form-control col">
+                        </div>
+                        <div class="form-group row">
+                            <label for="noteCode" class="col-form-label ml-2 mr-3">短信验证码: </label>
+                            <input type="text" class="form-control col-sm-5 mr-2" id="noteCode">
+                            <input type="button" id="btnSendNoteCode" class="btn btn-primary btn-sm col-sm-2"
+                                   value="发送">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCheckNoteCode" type="button" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateEmailModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="updateEmailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateEmailModalLabel">验证</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateEmailForm" role="form" action="#" method="get">
+                        <div class="form-group row">
+                            <label for="newEmail" class="col-form-label ml-2 mr-3">新邮箱: </label>
+                            <input type="text" id="newEmail" class="form-control col">
+                        </div>
+                        <div class="form-group row">
+                            <label for="emailCode" class="col-form-label ml-2 mr-3">邮箱验证码: </label>
+                            <input type="text" class="form-control col-sm-5 mr-2" id="emailCode">
+                            <input type="button" id="btnSendEmailCode" class="btn btn-primary btn-sm col-sm-2"
+                                   value="发送">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCheckEmailCode" type="button" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    Infos = {
+        id: [[${session.USER_INFO.getId()}]],
+        name: [[${session.USER_INFO.getName()}]],
+        role: [[${session.USER_INFO.getRole()}]]
+    };
+    $.ajaxSetup({
+        async: false,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            bootbox.alert({
+                title: '错误',
+                message: '请求数据出错',
+                size: 'small'
+            });
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    })
+
+    $(function () {
+        let id = Infos['id'];
+        $.ajax({
+            url: '/administrator/getAccountInfo',
+            async: false,
+            data: {id: id},
+            dataType: "json",
+            success: function (result) {
+                if (result['length'] === '2') {
+                    Infos['phoneNumber'] = result['phoneNumber'];
+                    Infos['email'] = result['email'];
+                    $('#name').html(Infos['name']);
+                    $('#role').html('管理员');
+                    $('#phoneNumber').html(Infos['phoneNumber']);
+                    $('#email').html(Infos['email']);
+                } else {
+                    bootbox.alert({
+                        title: "失败",
+                        message: '读取账户信息失败，后台未返回数据',
+                        size: 'small'
+                    });
+                }
+            },
+        })
+    })
+
+    $('#btnUpdatePassword').on('click', function () {
+        let oldPassword = $('#oldPassword').val();
+        let newPassword = $('#newPassword').val();
+        let confirmPassword = $('#confirmPassword').val();
+        if (newPassword !== confirmPassword) {
+            alert('新密码与确认密码不符');
+            return;
+        }
+        $.ajax({
+            url: '/checkPassword',
+            async: false,
+            data: {id: Infos['id'], oldPassword: oldPassword},
+            dataType: "json",
+            success: function (result) {
+                if (!result) {
+                    alert('原密码错误！');
+                } else {
+                    $.ajax({
+                        url: '/updatePassword',
+                        async: false,
+                        data: {id: Infos['id'], newPassword: newPassword},
+                        dataType: "json",
+                        success: function (result) {
+                            if (!result) {
+                                alert('修改密码失败');
+                            } else {
+                                bootbox.alert({
+                                    title: "成功",
+                                    message: '修改密码成功',
+                                    size: 'small'
+                                });
+                                $('#updatePasswordModal').modal('hide');
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    })
+
+    function setCoolDown(button, wait) {
+        if (wait === 0) {
+            button.attr('disabled', false);
+            button.val('发送');
+        } else {
+            if (button.attr('disabled') !== true) {
+                button.attr('disabled', true);
+            }
+            let newWait = wait - 1;
+            button.val(newWait + 's');
+            setTimeout(function () {
+                setCoolDown(button, newWait);
+            }, 1000);
+        }
+    }
+
+    $('#btnSendNoteCode').on('click', function () {
+        let phoneNumber = $('#newPhoneNumber').val();
+        if (phoneNumber === '' || phoneNumber === null) {
+            alert('电话号码不能为空');
+            return;
+        }
+        $.ajax({
+            url: '/sendNoteCode',
+            async: false,
+            data: {phoneNumber: phoneNumber},
+            dataType: "text",
+            success: function (result) {
+                if (result !== 'success') {
+                    alert('发送验证码失败!');
+                } else {
+                    setCoolDown($('#btnSendNoteCode'), 60);
+                }
+            }
+        })
+    })
+
+    $('#btnCheckNoteCode').on('click', function () {
+        let phoneNumber = $('#newPhoneNumber').val();
+        if (phoneNumber === '' || phoneNumber === null) {
+            alert('电话号码不能为空');
+            return;
+        }
+        $.ajax({
+            url: '/checkNoteCode',
+            async: false,
+            data: {phoneNumber: phoneNumber, code: $('#noteCode').val()},
+            dataType: "json",
+            success: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/updatePhoneNumber',
+                        data: {
+                            id: Infos['id'],
+                            role: Infos['role'],
+                            phoneNumber: phoneNumber,
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result) {
+                                bootbox.alert({
+                                    title: "成功",
+                                    message: '修改信息成功',
+                                    size: 'small'
+                                });
+                                $('#updatePhoneNumberModal').modal('hide');
+                                Infos['phoneNumber'] = phoneNumber;
+                                $('#phoneNumber').html(Infos['phoneNumber']);
+                            } else {
+                                bootbox.alert({
+                                    title: "失败",
+                                    message: '修改信息失败，后台未返回数据',
+                                    size: 'small'
+                                });
+                            }
+                        },
+                    })
+                } else {
+                    alert('验证码错误！');
+                }
+            }
+        })
+    })
+
+    $('#btnSendEmailCode').on('click', function () {
+        let email = $('#newEmail').val();
+        if (email === '' || email === null) {
+            alert('邮箱地址不能为空');
+            return;
+        }
+        $.ajax({
+            url: '/sendEmailCode',
+            async: false,
+            data: {email: email},
+            dataType: "text",
+            success: function (result) {
+                if (result !== 'success') {
+                    alert('发送验证码失败!');
+                } else {
+                    setCoolDown($('#btnSendEmailCode'), 60);
+                }
+            }
+        })
+    })
+
+    $('#btnCheckEmailCode').on('click', function () {
+        let email = $('#newEmail').val();
+        if (email === '' || email === null) {
+            alert('邮箱地址不能为空');
+            return;
+        }
+        $.ajax({
+            url: '/checkEmailCode',
+            async: false,
+            data: {email: email, code: $('#emailCode').val()},
+            dataType: "json",
+            success: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/updateEmail',
+                        data: {
+                            id: Infos['id'],
+                            role: Infos['role'],
+                            email: email,
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result) {
+                                bootbox.alert({
+                                    title: "成功",
+                                    message: '修改信息成功',
+                                    size: 'small'
+                                });
+                                $('#updateEmailModal').modal('hide');
+                                Infos['email'] = email;
+                                $('#email').html(Infos['email']);
+                            } else {
+                                bootbox.alert({
+                                    title: "失败",
+                                    message: '修改信息失败，后台未返回数据',
+                                    size: 'small'
+                                });
+                            }
+                        },
+                    })
+                } else {
+                    alert('验证码错误！');
+                }
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

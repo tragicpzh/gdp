@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.domain.*;
+import org.t01.gdp.service.AdministratorService;
 import org.t01.gdp.service.SubjectService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,15 @@ import java.util.List;
 public class AdministratorController {
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    AdministratorService administratorService;
+
+    @GetMapping("/accountManagement/accountInfoFragment")
+    @ResponseBody
+    public UserInfo getAccountInfo(HttpServletRequest request){
+//        System.out.println((UserInfo) request.getSession(false).getAttribute("USER_INFO"));
+        return (UserInfo) request.getSession(false).getAttribute("USER_INFO");
+    }
 
 //    @GetMapping("/home")
 //    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
@@ -73,7 +83,7 @@ public class AdministratorController {
 
     @GetMapping("/searchSubject/detail")
     @ResponseBody
-    public Subject getSubjectList(long subjectId) {
+    public Subject getSubjectDetail(long subjectId) {
         return subjectService.getSubjectById(subjectId);
     }
 
