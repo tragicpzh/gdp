@@ -111,7 +111,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.t01.gdp.domain.Subject">
+  <insert id="insert" parameterType="org.t01.gdp.domain.Subject" useGeneratedKeys="true" keyProperty="id">
     insert into subject (id, create_teacher_id, cross_review_teacher, 
       major_id, `name`, direction,
       difficulty, technology, `describe`, 
@@ -125,7 +125,7 @@
       #{reviewTeacherId3,jdbcType=BIGINT}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject">
+  <insert id="insertSelective" parameterType="org.t01.gdp.domain.Subject" useGeneratedKeys="true" keyProperty="id">
     insert into subject
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

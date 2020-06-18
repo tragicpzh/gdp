@@ -46,6 +46,8 @@ public class TeacherController {
         subject.setState("NEW");
         teacherService.addSubject(subject);
 
+        System.out.println(subject.getId());
+
         //文件处理
         if (file != null) {
             String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
@@ -54,8 +56,6 @@ public class TeacherController {
             subject.setDocument(fileUrl);
             subjectService.updateWithSubject(subject);
         }
-
-        teacherService.addSubject(subject);
     }
 
     @RequestMapping("/paperReview/getList")
