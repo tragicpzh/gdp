@@ -1,21 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t01.gdp.mapper.UserMapper">
-    <select id="getAllStudentId" resultType="java.lang.String">
+    <select id="getAllIds" resultType="java.lang.String">
         select student_id
         from student s
-    </select>
-    <select id="getAllTeacherId" resultType="java.lang.String">
+        union
         select teacher_id
         from teacher t
+        union
+        select admin_id
+        from administrator a
+    </select>
+
+    <select id="getAllPhoneNumbers" resultType="java.lang.String">
+        select phone_number
+        from student s
+        union
+        select phone_number
+        from teacher t
+        union
+        select phone_number
+        from administrator a
+    </select>
+
+    <select id="getAllEmails" resultType="java.lang.String">
+        select email
+        from student s
+        union
+        select email
+        from teacher t
+        union
+        select a.email
+        from administrator a
     </select>
 
     <select id="getAllStudents" resultType="java.util.Map">
-        select student_id, name, phone_number as phoneNumbser, email, major_id as majorId
+        select student_id as id, name, phone_number as phoneNumber, email, major_id as otherInfo
         from student s
     </select>
     <select id="getAllTeachers" resultType="java.util.Map">
-        select teacher_id, name, phone_number as phoneNumbser, email, college_id as collegeId
+        select teacher_id as id, name, phone_number as phoneNumber, email, college_id as otherInfo
         from teacher t
     </select>
+
+    <select id="getStudentByStudentId" resultType="java.util.Map">
+        select student_id as id, name, phone_number as phoneNumber, email, major_id as otherInfo
+        from student s
+        where student_id = #{id}
+    </select>
+    <select id="getTeacherByTeacherID" resultType="java.util.Map">
+        select teacher_id as id, name, phone_number as phoneNumber, email, college_id as otherInfo
+        from teacher t
+        where teacher_id = #{id}
+    </select>
+
+    <select id="getAdminByAdminID" resultType="java.util.Map">
+        select admin_id as id, name, phone_number as phoneNumber, email
+        from administrator a
+        where admin_id = #{id}
+    </select>
+
+    <update id="updateStudentByStudentId" parameterType="java.lang.String">
+        update student
+        set name         = #{name,jdbcType=VARCHAR},
+            phone_number = #{phoneNumber,jdbcType=VARCHAR},
+            email        = #{email,jdbcType=VARCHAR},
+            major_id     = #{otherInfo,jdbcType=BIGINT}
+        where student_id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateTeacherByTeacherID" parameterType="java.lang.String">
+        update teacher
+        set name         = #{name,jdbcType=VARCHAR},
+            phone_number = #{phoneNumber,jdbcType=VARCHAR},
+            email        = #{email,jdbcType=VARCHAR},
+            college_id   = #{otherInfo,jdbcType=BIGINT}
+        where teacher_id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteStudentByStudentId" parameterType="java.lang.Long">
+        delete
+        from student s
+        where student_id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteTeacherByTeacherId" parameterType="java.lang.Long">
+        delete
+        from teacher t
+        where teacher_id = #{id,jdbcType=BIGINT}
+    </delete>
 </mapper>

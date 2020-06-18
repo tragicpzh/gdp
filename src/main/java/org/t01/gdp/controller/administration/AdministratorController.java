@@ -26,12 +26,12 @@ public class AdministratorController {
     @Autowired
     AdministratorService administratorService;
 
-    @GetMapping("/accountManagement/accountInfoFragment")
+    /*@GetMapping("/accountManagement/accountInfoFragment")
     @ResponseBody
     public UserInfo getAccountInfo(HttpServletRequest request){
 //        System.out.println((UserInfo) request.getSession(false).getAttribute("USER_INFO"));
         return (UserInfo) request.getSession(false).getAttribute("USER_INFO");
-    }
+    }*/
 
 //    @GetMapping("/home")
 //    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){

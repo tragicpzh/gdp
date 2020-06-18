@@ -25,21 +25,26 @@ public class UserController {
         return userService.addUser(name, phoneNumber, email, role, otherInfo);
     }
 
-    /*@ResponseBody
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    public boolean updateUser(User user, @RequestParam(name = "otherInfo") String otherInfo) {
-        return userService.updateUser(user, otherInfo);
-    }*/
+    @ResponseBody
+    @RequestMapping("/updateUser")
+    public String updateUser(@RequestParam(name = "id") String id,
+                             @RequestParam(name = "name") String name,
+                             @RequestParam(name = "phoneNumber") String phoneNumber,
+                             @RequestParam(name = "email") String email,
+                             @RequestParam(name = "role") String role,
+                             @RequestParam(name = "otherInfo") String otherInfo) {
+        return userService.updateUser(id, name, phoneNumber, email, role, otherInfo);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/batchImportUsers", method = RequestMethod.POST)
-    public List<String> batchImportUsers(@RequestBody JSONObject inputJsonObject) {
+    public List<String[]> batchImportUsers(@RequestBody JSONObject inputJsonObject) {
         JSONArray jsonArray = inputJsonObject.getJSONArray("data");
         String name = "";
         String role = "";
         String phoneNumber = "";
         String email = "";
-        List<String> duplicateIds = new ArrayList<>();
+        List<String[]> duplicateIds = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             String otherInfo = "";
@@ -64,8 +69,9 @@ public class UserController {
                         break;
                 }
             }
-            if (!userService.addUser(name, phoneNumber, email, role, otherInfo).contains("success")) {
-                duplicateIds.add(name);
+            String message = userService.addUser(name, phoneNumber, email, role, otherInfo);
+            if (!message.equals("success")) {
+                duplicateIds.add(new String[]{name, message, otherInfo});
             }
         }
         return duplicateIds;
@@ -73,25 +79,27 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/getUsersByRole", method = RequestMethod.POST)
-    public List<Map<String, String>> getUsersByRole(@RequestParam(name = "role") String role) {
+    public List<Map<String, Object>> getUsersByRole(@RequestParam(name = "role") String role) {
         return userService.getUserByRole(role);
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/deleteUserById", method = RequestMethod.DELETE)
-    public boolean deleteUserById(@RequestParam(name = "id") String id) {
-        return userService.deleteUserById(id);
-    }*/
+    public boolean deleteUserById(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "role") String role) {
+        return userService.deleteUserById(id, role);
+    }
 
-    /*@ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/deleteUsersById", method = RequestMethod.DELETE)
-    public boolean deleteUsersById(@RequestBody List<Integer> ids) {
+    public boolean deleteUsersById(@RequestBody List<String> ids) {
         int count = ids.size();
-        for (int id : ids) {
-            if (userService.deleteUserById(String.valueOf(id))) {
+        String role = ids.get(0).length() == 10 ? "TEA" : "STU";
+        for (String id : ids) {
+            if (userService.deleteUserById(id, role)) {
                 count--;
             }
         }
         return count == 0;
-    }*/
+    }
 }
