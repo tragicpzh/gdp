@@ -3,45 +3,81 @@ package org.t01.gdp.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-//import org.t01.gdp.domain.VerificationCode;
-import org.t01.gdp.service.SMSService;
+import org.t01.gdp.service.UserService;
+import org.t01.gdp.service.VerificationService;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class AccountController {
-//    private final UserService userService;
-//    private final SMSService smsService;
+    private final UserService userService;
+    private final VerificationService verificationService;
 
-//    @ResponseBody
-//    @RequestMapping(value = "/getAccountInfo", method = RequestMethod.GET)
-//    public Map<String, String> getAccountInfo(@RequestParam(name = "id") String id) {
-//        return userService.getAccountInfoById(id);
-//    }
+    @ResponseBody
+    @RequestMapping("/getAccountInfo")
+    public Map<String, Object> getAccountInfo(@RequestParam(name = "id") String id,
+                                              @RequestParam(name = "role") String role) {
+        return userService.getUserInfo(id, role);
+    }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/updateAccountInfo", method = RequestMethod.POST)
-//    public Map<String, String> updateAccountInfo(@RequestBody JSONObject jsonObject) {
-//        return userService.updateAccountInfo(
-//                jsonObject.getString("id"),
-//                jsonObject.getString("role"),
-//                jsonObject.getString("phoneNumber"),
-//                jsonObject.getString("email"
-//                ));
-//    }
+    @ResponseBody
+    @RequestMapping("/checkPassword")
+    public boolean checkPassword(@RequestParam(name = "id") String id,
+                                 @RequestParam(name = "role") String role,
+                                 @RequestParam(name = "oldPassword") String oldPassword) {
+        return userService.getUserPassword(id, role).equals(oldPassword);
+    }
 
-//    @ResponseBody
-//    @RequestMapping("/sendCode")
-//    public String sendCode(@RequestParam(name = "phoneNumber") String phoneNumber) {
-//        String code = VerificationCode.createCode(phoneNumber);
-//        smsService.sendVerificationCode(code, phoneNumber);
-//        System.out.println(code);
-//        return "success";
-//    }
-//
-//    @ResponseBody
-//    @RequestMapping("/checkCode")
-//    public boolean checkCode(@RequestParam(name = "phoneNumber") String phoneNumber,
-//                             @RequestParam(name = "code") String code) {
-//        return VerificationCode.checkCode(phoneNumber, code);
-//    }
+    @ResponseBody
+    @RequestMapping("/updatePassword")
+    public boolean updatePassword(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "role") String role,
+                                  @RequestParam(name = "newPassword") String newPassword) {
+        return userService.updateUserPassword(id, role, newPassword);
+    }
+
+    @ResponseBody
+    @RequestMapping("/sendNoteCode")
+    public String sendNoteCode(@RequestParam(name = "phoneNumber") String phoneNumber) {
+        verificationService.sendSMSVerificationCode(phoneNumber);
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping("/checkNoteCode")
+    public boolean checkNoteCode(@RequestParam(name = "phoneNumber") String phoneNumber,
+                                 @RequestParam(name = "code") String code) {
+        return verificationService.smsVerify(code, phoneNumber);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updatePhoneNumber")
+    public boolean updatePhoneNumber(@RequestParam(name = "id") String id,
+                                     @RequestParam(name = "role") String role,
+                                     @RequestParam(name = "phoneNumber") String phoneNumber) {
+        return userService.updatePhoneNumber(id, role, phoneNumber);
+    }
+
+    @ResponseBody
+    @RequestMapping("/sendEmailCode")
+    public String sendEmailCode(@RequestParam(name = "email") String email) {
+        verificationService.sendEmailVerificationCode(email);
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping("/checkEmailCode")
+    public boolean checkEmailCode(@RequestParam(name = "email") String email,
+                                  @RequestParam(name = "code") String code) {
+        return verificationService.emailVerify(code, email);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateEmail")
+    public boolean updateEmail(@RequestParam(name = "id") String id,
+                               @RequestParam(name = "role") String role,
+                               @RequestParam(name = "email") String email) {
+        return userService.updateEmail(id, role, email);
+    }
 }

@@ -41,34 +41,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="inputUserForm" role="form" action="/administrator/addSingleUser" method="post">
-                        <div class="form-group row">
-                            <label for="inputId" class="col-form-label col-3">Id:</label>
+                    <form id="inputUserForm" role="form" action="/administrator/addSingleUser" method="get">
+                        <div id="rowOfId" class="form-group row" style="display: none;">
+                            <label for="inputId" class="col-form-label col-3 mr-3">Role:</label>
                             <input type="text" class="form-control col" id="inputId" name="id">
                         </div>
-                        <div class="form-group row">
-                            <label for="inputPassword" class="col-form-label col-3">Password:</label>
-                            <input type="text" class="form-control col" id="inputPassword" name="password">
-                        </div>
                         <div id="rowOfRole" class="form-group row" style="display: none;">
-                            <label for="inputRole" class="col-form-label col-3">Role:</label>
+                            <label for="inputRole" class="col-form-label col-3 mr-3">Role:</label>
                             <input type="text" class="form-control col" id="inputRole" name="role">
                         </div>
                         <div class="form-group row">
-                            <label for="inputName" class="ol-form-label col-3">Name</label>
+                            <label for="inputName" class="ol-form-label col-3 mr-3">Name</label>
                             <input type="text" class="form-control col" id="inputName" name="name">
                         </div>
                         <div class="form-group row">
-                            <label for="inputPhoneNumber" class="ol-form-label col-3">PhoneNum</label>
+                            <label for="inputPhoneNumber" class="ol-form-label col-3 mr-3">PhoneNumber</label>
                             <input type="text" class="form-control col" id="inputPhoneNumber" name="phoneNumber">
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail" class="ol-form-label col-3">Email</label>
+                            <label for="inputEmail" class="ol-form-label col-3 mr-3">Email</label>
                             <input type="text" class="form-control col" id="inputEmail" name="email">
                         </div>
                         <div class="form-group row">
                             <label id="inputOtherInfoLabel" for="inputOtherInfo"
-                                   class="ol-form-label col-3">OtherInfo</label>
+                                   class="ol-form-label col-3 mr-3">OtherInfo</label>
                             <input type="text" class="form-control col" id="inputOtherInfo" name="otherInfo">
                         </div>
                     </form>
@@ -147,12 +143,11 @@
 
     $inputUserForm = $('#inputUserForm');
 
-    $inputId = $('#inputId');
     $inputOtherInfoLabel = $('#inputOtherInfoLabel');
 
     $(function () {
         $(":text").each(function () {
-            if ($(this).attr('id') === 'newRole' || $(this).attr('id') === 'inputRole') {
+            if ($(this).attr('id') === 'inputRole') {
                 $(this).val(role);
             }
         });
@@ -214,11 +209,11 @@
                 title: roleNames[role] + 'Id',
                 align: 'center',
             },
-            {
+            /*{
                 field: 'password',
                 title: roleNames[role] + '密码',
                 align: 'center',
-            },
+            },*/
             //{field: 'role', title: '用户类型'},
             {
                 field: 'name',
@@ -251,9 +246,7 @@
                 },
                 events: {
                     'click .RoleOfEdit': function (e, value, row, index) {
-                        $inputId.attr('readonly', true);
-                        $inputId.val(row['id']);
-                        $('#inputPassword').val(row['password']);
+                        $('#inputId').val(row['id']);
                         $('#inputName').val(row['name']);
                         $('#inputPhoneNumber').val(row['phoneNumber']);
                         $('#inputEmail').val(row['email']);
@@ -283,7 +276,7 @@
                                         url: "/administrator/deleteUserById",
                                         type: "delete",
                                         async: "false",
-                                        data: {id: id},
+                                        data: {id: id, role: role},
                                         dataType: "json",
                                         success: function (result) {
                                             $UsersTable.bootstrapTable('refresh');
@@ -296,7 +289,7 @@
                                             } else {
                                                 bootbox.alert({
                                                     title: "提示",
-                                                    message: '"删除失败"',
+                                                    message: '删除失败',
                                                     size: 'small',
                                                 });
                                             }
@@ -304,7 +297,7 @@
                                         error: function (e) {
                                             bootbox.alert({
                                                 title: "提示",
-                                                message: '"删除失败"',
+                                                message: '删除失败',
                                                 size: 'small',
                                             });
                                             console.log(e.status);
@@ -322,7 +315,7 @@
 
     function clearForm() {
         $(":text").each(function () {
-            if ($(this).attr('id') !== 'newRole' && $(this).attr('id') !== 'inputRole') {
+            if ($(this).attr('id') !== 'inputRole') {
                 $(this).val('');
             }
         });
@@ -331,12 +324,6 @@
     function validateForm(form) {
         return form.validate({
             rules: {
-                id: {
-                    required: true,
-                },
-                password: {
-                    required: true
-                },
                 name: {
                     required: true
                 },
@@ -351,12 +338,6 @@
                 }
             },
             messages: {
-                id: {
-                    required: "id不能为空",
-                },
-                password: {
-                    required: "密码不能为空"
-                },
                 name: {
                     required: "姓名不能为空"
                 },
@@ -431,7 +412,7 @@
                             error: function (e) {
                                 bootbox.alert({
                                     title: "提示",
-                                    message: '"删除失败"',
+                                    message: '删除失败',
                                     size: 'small',
                                 });
                                 console.log(e.status);
@@ -461,7 +442,7 @@
                 }
             },
             success: function (responseText, statusText, xhr, form) {
-                if (responseText) {
+                if (responseText === 'success') {
                     bootbox.alert({
                         title: "成功",
                         message: getMessage($inputUserForm) + "成功",
@@ -473,7 +454,7 @@
                 } else {
                     bootbox.alert({
                         title: "失败",
-                        message: getMessage($inputUserForm) + '失败',
+                        message: getMessage($inputUserForm) + '失败<br>' + responseText,
                         size: 'small'
                     });
                 }
@@ -519,16 +500,6 @@
             pageSize: 10,
             pagination: false,
             columns: [
-                {
-                    field: 'Id',
-                    title: roleNames[role] + 'Id',
-                    align: 'center',
-                },
-                {
-                    field: '密码',
-                    title: roleNames[role] + '密码',
-                    align: 'center',
-                },
                 //{field: 'role', title: '用户类型'},
                 {
                     field: '姓名',
@@ -585,7 +556,11 @@
                 });
                 $UsersTable.bootstrapTable('refresh');
                 if (result.length > 0) {
-                    alert("以下Id的条目未保存，可能与数据库中的Id重复\n" + result);
+                    let message = '';
+                    for (let i = 0; i < result.length; i++) {
+                        message += result[i] + '\n';
+                    }
+                    alert("以下的条目未保存\n" + message);
                     console.log(result);
                     console.log(result.length);
                 }

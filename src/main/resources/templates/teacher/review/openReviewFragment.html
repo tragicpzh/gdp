@@ -82,7 +82,7 @@
                     "targets": [5],
                     "data": "subjectDocument",
                     "render": function(data, type, full) {
-                        if(data != null || data != ""){
+                        if(data != null && data != ""){
                             return "<a type='button' class='btn btn-danger' href='/download/" + data + "'>下载</a>";
                         }else{
                             return "<span>暂无可下载资料</span>"

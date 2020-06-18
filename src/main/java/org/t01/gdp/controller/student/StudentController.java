@@ -128,30 +128,12 @@ public class StudentController {
         studentService.updateStudentConclusionReport(studentId, path, multipartFile.getOriginalFilename());
     }
 
-    @RequestMapping("/deleteConclusionReport")
-    public void deleteConclusionReport(HttpServletRequest request, MultipartFile multipartFile){
-        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        Student student = studentService.getStudent(studentId);
-        fileService.deleteFile(student.getConclusionDocument());
-
-        studentService.updateStudentConclusionReport(studentId,"","");
-    }
-
     @ResponseBody
     @RequestMapping("/uploadPaper")
     public void uploadPaper(HttpServletRequest request, MultipartFile multipartFile){
-        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
         String path ="student\\" + studentId + "\\paper\\";
-        fileService.uploadFile(multipartFile, path);
+        uploadService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
-    }
-
-    @RequestMapping("/deletePaper")
-    public void deletePaper(HttpServletRequest request, MultipartFile multipartFile){
-        long studentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        Student student = studentService.getStudent(studentId);
-        fileService.deleteFile(student.getPaperDocument());
-
-        studentService.updatePaper(studentId,"","");
     }
 }

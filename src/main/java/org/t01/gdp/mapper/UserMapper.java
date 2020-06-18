@@ -1,35 +1,36 @@
 package org.t01.gdp.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.t01.gdp.domain.User;
-import org.t01.gdp.domain.UserExample;
+import org.t01.gdp.domain.Student;
+import org.t01.gdp.domain.Teacher;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Repository
 public interface UserMapper {
-    long countByExample(UserExample example);
+    Set<String> getAllIds();
 
-    int deleteByExample(UserExample example);
+    Set<String> getAllPhoneNumbers();
 
-    int deleteByPrimaryKey(String id);
+    Set<String> getAllEmails();
 
-    int insert(User record);
+    List<Map<String, Object>> getAllStudents();
 
-    int insertSelective(User record);
+    List<Map<String, Object>> getAllTeachers();
 
-    List<User> selectByExample(UserExample example);
+    Map<String, Object> getStudentByStudentId(long id);
 
-    User selectByPrimaryKey(String id);
+    Map<String, Object> getTeacherByTeacherID(long id);
 
-    List<User> selectByRole(String role);
+    Map<String, Object> getAdminByAdminID(long id);
 
-    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+    int updateStudentByStudentId(String id, String name, String phoneNumber, String email, String otherInfo);
 
-    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
+    int updateTeacherByTeacherID(String id, String name, String phoneNumber, String email, String otherInfo);
 
-    int updateByPrimaryKeySelective(User record);
+    int deleteStudentByStudentId(long id);
 
-    int updateByPrimaryKey(User record);
+    int deleteTeacherByTeacherId(long id);
 }

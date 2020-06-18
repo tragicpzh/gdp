@@ -5,13 +5,12 @@
     <title>Templates</title>
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <div class="card border-dark" style="width: 100%;">
             <div class="card-header bg-transparent border-dark">账号信息</div>
             <div class="card-body">
-                <form id="infoForm" role="form" action="#" method="post">
+                <form id="infoForm" role="form" action="#" method="get">
                     <div class="form-group row">
                         <label class="col-form-label col-1">姓名:</label>
                         <label id="name" class="form-control-plaintext col-1" readonly></label>
@@ -159,8 +158,9 @@
 <script th:inline="javascript">
     Infos = {
         id: [[${session.USER_INFO.getId()}]],
+        roleId: [[${session.USER_INFO.getRoleId()}]],
         name: [[${session.USER_INFO.getName()}]],
-        role: [[${session.USER_INFO.getRole()}]]
+        role: 'Invalid'
     };
     $.ajaxSetup({
         async: false,
@@ -177,18 +177,31 @@
     })
 
     $(function () {
-        let id = Infos['id'];
+        let location = window.location.pathname.split('/')[1];
+        if (location === 'administrator') {
+            Infos['role'] = 'ADM';
+        } else if (location === 'teacher') {
+            Infos['role'] = 'TEA';
+        } else if (location === 'student') {
+            Infos['role'] = 'STU';
+        }
         $.ajax({
-            url: '/administrator/getAccountInfo',
+            url: '/getAccountInfo',
             async: false,
-            data: {id: id},
-            dataType: "json",
+            data: {id: Infos['roleId'], role: Infos['role']},
+            dataType: 'json',
             success: function (result) {
-                if (result['length'] === '2') {
+                if (result.id === Infos['roleId']) {
                     Infos['phoneNumber'] = result['phoneNumber'];
                     Infos['email'] = result['email'];
                     $('#name').html(Infos['name']);
-                    $('#role').html('管理员');
+                    if (Infos['role'] === 'ADM') {
+                        $('#role').html('管理员');
+                    } else if (Infos['role'] === 'TEA') {
+                        $('#role').html('教师');
+                    } else if (Infos['role'] === 'STU') {
+                        $('#role').html('学生');
+                    }
                     $('#phoneNumber').html(Infos['phoneNumber']);
                     $('#email').html(Infos['email']);
                 } else {
@@ -213,7 +226,7 @@
         $.ajax({
             url: '/checkPassword',
             async: false,
-            data: {id: Infos['id'], oldPassword: oldPassword},
+            data: {id: Infos['id'], role: Infos['role'], oldPassword: oldPassword},
             dataType: "json",
             success: function (result) {
                 if (!result) {
@@ -222,7 +235,7 @@
                     $.ajax({
                         url: '/updatePassword',
                         async: false,
-                        data: {id: Infos['id'], newPassword: newPassword},
+                        data: {id: Infos['id'], role: Infos['role'], newPassword: newPassword},
                         dataType: "json",
                         success: function (result) {
                             if (!result) {
