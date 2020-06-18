@@ -46,11 +46,9 @@ public class TeacherController {
         subject.setState("NEW");
         teacherService.addSubject(subject);
 
-        System.out.println(subject.getId());
-
         //文件处理
         if (file != null) {
-            String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\";
+            String path = "teacher\\" + subject.getCreateTeacherId() + "\\subjectDocuments\\" + subject.getId() + "\\";
             uploadService.uploadFile(file, path);
             String fileUrl = path + file.getOriginalFilename();
             subject.setDocument(fileUrl);
@@ -74,9 +72,9 @@ public class TeacherController {
 
     @RequestMapping("/paperReview/score")
     @ResponseBody
-    public void paperReviewScoring(int score, long studentId, String subjectId, HttpServletRequest request) {
+    public void paperReviewScoring(int score, long studentId, long subjectId, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        studentService.updateStudentTeacherPaperScore(teacherId, studentId, Long.valueOf(subjectId), score);
+        studentService.updateStudentTeacherPaperScore(teacherId, studentId, subjectId, score);
     }
 
 //    @GetMapping("/openingReview/getListTest")
@@ -102,10 +100,10 @@ public class TeacherController {
 
     @PostMapping("/openReview/openScoring")
     @ResponseBody
-    public void openingReviewScoring(String score, long studentId, String subjectId, HttpServletRequest request) {
+    public void openingReviewScoring(String score, long studentId, long subjectId, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
         Integer openingReviewScore = Integer.valueOf(score);
-        studentService.updateStudentOpeningScore(teacherId, studentId, Long.valueOf(subjectId), openingReviewScore);
+        studentService.updateStudentOpeningScore(teacherId, studentId, subjectId, openingReviewScore);
     }
 
     @RequestMapping("/middleReview/getList")
@@ -126,7 +124,7 @@ public class TeacherController {
     public void middleReviewScoring(int score, long studentId, long subjectId, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
 
-        studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), score);
+        studentService.updateStudentMiddleScore(teacherId, studentId, subjectId, score);
     }
 
     @RequestMapping("/conclusionReview/getList")
@@ -148,7 +146,7 @@ public class TeacherController {
     public void conclusionReviewScoring(int score, long studentId, long subjectId, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
 
-        studentService.updateStudentMiddleScore(teacherId, studentId, Long.valueOf(subjectId), score);
+        studentService.updateStudentMiddleScore(teacherId, studentId, subjectId, score);
     }
 
     @RequestMapping("/searchSubject/getList")
