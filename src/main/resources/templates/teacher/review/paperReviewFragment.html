@@ -13,7 +13,8 @@
                 <th>项目名称</th>
                 <th>专业编号</th>
                 <th>项目方向</th>
-                <th>论文</th>
+                <th>项目资料</th>
+                <th>学生论文</th>
                 <th>评审</th>
             </tr>
             </thead>
@@ -24,7 +25,8 @@
                 <th>项目名称</th>
                 <th>专业编号</th>
                 <th>项目方向</th>
-                <th>论文</th>
+                <th>项目资料</th>
+                <th>学生论文</th>
                 <th>评审</th>
             </tr>
             </tfoot>
@@ -78,13 +80,24 @@
             "columnDefs":[
                 {
                     "targets": [5],
-                    "data": "paperDocument",
+                    "data": "subjectDocument",
+                    "render": function(data, type, full) {
+                        if(data != null || data != ""){
+                            return "<a type='button' class='btn btn-danger' href='/download/" + data + "'>下载</a>";
+                        }else{
+                            return "<span>暂无可下载资料</span>"
+                        }
+                    }
+                },
+                {
+                    "targets": [6],
+                    "data": "reviewDocument",
                     "render": function(data, type, full) {
                         return "<a type='button' class='btn btn-danger' href='/download/" + data + "'>下载</a>";
                     }
                 },
                 {
-                    "targets": [6],
+                    "targets": [7],
                     "data": "studentId",
                     "render": function(data, type, full) {
                         return "<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-default\" onclick='onReview(" + full.studentId + ',' + full.subjectId + ")' >评分</button>";

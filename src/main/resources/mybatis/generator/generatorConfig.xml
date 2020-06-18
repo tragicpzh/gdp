@@ -42,12 +42,12 @@
         <!--<table tableName="subject"  domainObjectName="Subject"></table>-->
         <!--table tableName="teacher" domainObjectName="Teacher"></table>-->
         <!--<table tableName="college" domainObjectName="College"></table>-->
-        <table tableName="subject" domainObjectName="Subject"></table>
-        <table tableName="college" domainObjectName="College"></table>
-        <table tableName="major" domainObjectName="Major"></table>
+<!--        <table tableName="subject" domainObjectName="Subject"></table>-->
+<!--        <table tableName="college" domainObjectName="College"></table>-->
+<!--        <table tableName="major" domainObjectName="Major"></table>-->
         <table tableName="student" domainObjectName="Student"></table>
-        <table tableName="teacher" domainObjectName="Teacher"></table>
-        <table tableName="administrator" domainObjectName="Administrator"></table>
+<!--        <table tableName="teacher" domainObjectName="Teacher"></table>-->
+<!--        <table tableName="administrator" domainObjectName="Administrator"></table>-->
 
     </context>
 </generatorConfiguration>

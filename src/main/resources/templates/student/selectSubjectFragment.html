@@ -1,3 +1,160 @@
-<div>
-    选题
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">与我相关的题目列表</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>题目编号</th>
+                <th>题目名称</th>
+                <th>难度</th>
+                <th>专业</th>
+                <th>方向</th>
+                <th>状态</th>
+                <th>详情</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>题目编号</th>
+                <th>题目名称</th>
+                <th>难度</th>
+                <th>专业</th>
+                <th>方向</th>
+                <th>状态</th>
+                <th>详情</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
 </div>
+<!-- /.card -->
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">开题评审评分</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                题目编号：<p id = "subjectId"></p>
+                题目名称：<p id="subjectName"></p>
+                专业编号<p id="majorId"></p>
+                方向：<p id="direction"></p>
+                难度：<p id="difficulty"></p>
+                相关技术：<p id="technology"></p>
+                题目描述：<p id="describe"></p>
+                相关资料：<p id="downloadFile"></p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" id="cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="onSelect()">保存</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    $(function () {
+        $("#table").DataTable({
+            "retrieve": true,
+            "responsive": true,
+            "autoWidth": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/student/selectSubject/getList",
+            "columns":[
+                {"data":"id"},
+                {"data":"name"},
+                {"data":"difficulty"},
+                {"data":"majorId"},
+                {"data":"direction"},
+                {"data":"state"}
+            ],
+            "columnDefs":[
+                {
+                    "targets": [6],
+                    "data": "id",
+                    "render": function(data, type, full) {
+                        return "<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-default\" onclick='onDetail(" + data + ")' >查看</button>";
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+<script>
+    function onDetail(subjectId) {
+        var setting = {
+            url: "/student/selectSubject/detail",
+            method: "get",
+            timeout: 6000,
+            async: false,
+            data:{
+                "subjectId": subjectId
+            },
+            success: function (data) {
+                $("#subjectId").text(data.id);
+                $("#subjectName").text(data.name);
+                $("#majorId").text(data.majorId);
+                $("#direction").text(data.direction);
+                $("#difficulty").text(data.difficulty + "%");
+                $("#technology").text(data.technology);
+                $("#describe").text(data.describe);
+
+                if(data.document!=null && data.document!=""){
+                    $("#downloadFile").html("<a type='button' class='btn btn-danger' href='/download/" + data.document + "' >下载</a>")
+                }else{
+                    $("#downloadFile").html("无附加文件")
+                }
+            },
+            error: function () {
+                alert("请求页面失败");
+                $("#cancel").click();
+            }
+        }
+
+        $.ajax(setting);
+    }
+</script>
+
+<script>
+    function onSelect() {
+        var option = {
+            url: "/student/selectSubject/select",
+            contentType: false,
+            processData : false,
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: $("#subjectId").text(),
+            success: function () {
+                alert("选题成功");
+
+                $("#submit").attr("data-dismiss","modal");
+                $("#submit").attr("onclick","");
+                $("#submit").click();
+                $("#submit").attr("data-dismiss","");
+                $("#submit").attr("onclick","onSubmit()");
+
+                $("#table").dataTable().fnDraw(false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        };
+
+        $.ajax(option);
+    }
+</script>

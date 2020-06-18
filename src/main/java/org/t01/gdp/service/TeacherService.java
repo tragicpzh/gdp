@@ -8,6 +8,8 @@ import org.t01.gdp.domain.TeacherExample;
 import org.t01.gdp.mapper.SubjectMapper;
 import org.t01.gdp.mapper.TeacherMapper;
 
+import java.util.List;
+
 @Service
 public class TeacherService {
     @Autowired
@@ -15,11 +17,9 @@ public class TeacherService {
     @Autowired
     SubjectMapper subjectMapper;
 
-//    public Teacher selectTeacherById(String teacherId){
-//        TeacherExample teacherExample = new TeacherExample();
-//        teacherExample.createCriteria().andTeacherIdEqualTo(teacherId);
-//        teacherMapper.selectByExample(teacherExample);
-//    }
+    public Teacher selectTeacherById(long teacherId){
+        return teacherMapper.selectByPrimaryKey(teacherId);
+    }
 
     public int addSubject(Subject subject)
     {

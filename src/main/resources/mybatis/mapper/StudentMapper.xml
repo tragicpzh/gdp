@@ -27,7 +27,7 @@
     <result column="conclusion_score2" jdbcType="INTEGER" property="conclusionScore2" />
     <result column="conclusion_score3" jdbcType="INTEGER" property="conclusionScore3" />
     <result column="teacher_paper_score" jdbcType="INTEGER" property="teacherPaperScore" />
-    <result column="student_paper_score" jdbcType="INTEGER" property="studentPaperScore" />
+    <result column="cross_paper_score" jdbcType="INTEGER" property="crossPaperScore" />
     <result column="final_score" jdbcType="DECIMAL" property="finalScore" />
     <result column="open_evaluation1" jdbcType="VARCHAR" property="openEvaluation1" />
     <result column="open_evaluation2" jdbcType="VARCHAR" property="openEvaluation2" />
@@ -104,7 +104,7 @@
     major_id, state, subject_id, open_document, middle_document, conclusion_document, 
     paper_document, open_score1, open_score2, open_score3, middle_score1, middle_score2, 
     middle_score3, conclusion_score1, conclusion_score2, conclusion_score3, teacher_paper_score, 
-    student_paper_score, final_score, open_evaluation1, open_evaluation2, open_evaluation3, 
+    cross_paper_score, final_score, open_evaluation1, open_evaluation2, open_evaluation3, 
     middle_evaluation1, middle_evaluation2, middle_evaluation3, teacher_paper_evaluation, 
     cross_paper_evaluation, conclusion_evaluation1, conclusion_evaluation2, conclusion_evaluation3
   </sql>
@@ -147,7 +147,7 @@
       open_score1, open_score2, open_score3, 
       middle_score1, middle_score2, middle_score3, 
       conclusion_score1, conclusion_score2, conclusion_score3, 
-      teacher_paper_score, student_paper_score, final_score, 
+      teacher_paper_score, cross_paper_score, final_score, 
       open_evaluation1, open_evaluation2, open_evaluation3, 
       middle_evaluation1, middle_evaluation2, middle_evaluation3, 
       teacher_paper_evaluation, cross_paper_evaluation, 
@@ -161,7 +161,7 @@
       #{openScore1,jdbcType=INTEGER}, #{openScore2,jdbcType=INTEGER}, #{openScore3,jdbcType=INTEGER}, 
       #{middleScore1,jdbcType=INTEGER}, #{middleScore2,jdbcType=INTEGER}, #{middleScore3,jdbcType=INTEGER}, 
       #{conclusionScore1,jdbcType=INTEGER}, #{conclusionScore2,jdbcType=INTEGER}, #{conclusionScore3,jdbcType=INTEGER}, 
-      #{teacherPaperScore,jdbcType=INTEGER}, #{studentPaperScore,jdbcType=INTEGER}, #{finalScore,jdbcType=DECIMAL}, 
+      #{teacherPaperScore,jdbcType=INTEGER}, #{crossPaperScore,jdbcType=INTEGER}, #{finalScore,jdbcType=DECIMAL}, 
       #{openEvaluation1,jdbcType=VARCHAR}, #{openEvaluation2,jdbcType=VARCHAR}, #{openEvaluation3,jdbcType=VARCHAR}, 
       #{middleEvaluation1,jdbcType=VARCHAR}, #{middleEvaluation2,jdbcType=VARCHAR}, #{middleEvaluation3,jdbcType=VARCHAR}, 
       #{teacherPaperEvaluation,jdbcType=VARCHAR}, #{crossPaperEvaluation,jdbcType=VARCHAR}, 
@@ -246,8 +246,8 @@
       <if test="teacherPaperScore != null">
         teacher_paper_score,
       </if>
-      <if test="studentPaperScore != null">
-        student_paper_score,
+      <if test="crossPaperScore != null">
+        cross_paper_score,
       </if>
       <if test="finalScore != null">
         final_score,
@@ -362,8 +362,8 @@
       <if test="teacherPaperScore != null">
         #{teacherPaperScore,jdbcType=INTEGER},
       </if>
-      <if test="studentPaperScore != null">
-        #{studentPaperScore,jdbcType=INTEGER},
+      <if test="crossPaperScore != null">
+        #{crossPaperScore,jdbcType=INTEGER},
       </if>
       <if test="finalScore != null">
         #{finalScore,jdbcType=DECIMAL},
@@ -487,8 +487,8 @@
       <if test="record.teacherPaperScore != null">
         teacher_paper_score = #{record.teacherPaperScore,jdbcType=INTEGER},
       </if>
-      <if test="record.studentPaperScore != null">
-        student_paper_score = #{record.studentPaperScore,jdbcType=INTEGER},
+      <if test="record.crossPaperScore != null">
+        cross_paper_score = #{record.crossPaperScore,jdbcType=INTEGER},
       </if>
       <if test="record.finalScore != null">
         final_score = #{record.finalScore,jdbcType=DECIMAL},
@@ -558,7 +558,7 @@
       conclusion_score2 = #{record.conclusionScore2,jdbcType=INTEGER},
       conclusion_score3 = #{record.conclusionScore3,jdbcType=INTEGER},
       teacher_paper_score = #{record.teacherPaperScore,jdbcType=INTEGER},
-      student_paper_score = #{record.studentPaperScore,jdbcType=INTEGER},
+      cross_paper_score = #{record.crossPaperScore,jdbcType=INTEGER},
       final_score = #{record.finalScore,jdbcType=DECIMAL},
       open_evaluation1 = #{record.openEvaluation1,jdbcType=VARCHAR},
       open_evaluation2 = #{record.openEvaluation2,jdbcType=VARCHAR},
@@ -650,8 +650,8 @@
       <if test="teacherPaperScore != null">
         teacher_paper_score = #{teacherPaperScore,jdbcType=INTEGER},
       </if>
-      <if test="studentPaperScore != null">
-        student_paper_score = #{studentPaperScore,jdbcType=INTEGER},
+      <if test="crossPaperScore != null">
+        cross_paper_score = #{crossPaperScore,jdbcType=INTEGER},
       </if>
       <if test="finalScore != null">
         final_score = #{finalScore,jdbcType=DECIMAL},
@@ -718,7 +718,7 @@
       conclusion_score2 = #{conclusionScore2,jdbcType=INTEGER},
       conclusion_score3 = #{conclusionScore3,jdbcType=INTEGER},
       teacher_paper_score = #{teacherPaperScore,jdbcType=INTEGER},
-      student_paper_score = #{studentPaperScore,jdbcType=INTEGER},
+      cross_paper_score = #{crossPaperScore,jdbcType=INTEGER},
       final_score = #{finalScore,jdbcType=DECIMAL},
       open_evaluation1 = #{openEvaluation1,jdbcType=VARCHAR},
       open_evaluation2 = #{openEvaluation2,jdbcType=VARCHAR},

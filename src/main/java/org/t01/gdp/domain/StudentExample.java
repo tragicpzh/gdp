@@ -1716,63 +1716,63 @@ public class StudentExample {
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreIsNull() {
-            addCriterion("student_paper_score is null");
+        public Criteria andCrossPaperScoreIsNull() {
+            addCriterion("cross_paper_score is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreIsNotNull() {
-            addCriterion("student_paper_score is not null");
+        public Criteria andCrossPaperScoreIsNotNull() {
+            addCriterion("cross_paper_score is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreEqualTo(Integer value) {
-            addCriterion("student_paper_score =", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreEqualTo(Integer value) {
+            addCriterion("cross_paper_score =", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreNotEqualTo(Integer value) {
-            addCriterion("student_paper_score <>", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreNotEqualTo(Integer value) {
+            addCriterion("cross_paper_score <>", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreGreaterThan(Integer value) {
-            addCriterion("student_paper_score >", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreGreaterThan(Integer value) {
+            addCriterion("cross_paper_score >", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreGreaterThanOrEqualTo(Integer value) {
-            addCriterion("student_paper_score >=", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("cross_paper_score >=", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreLessThan(Integer value) {
-            addCriterion("student_paper_score <", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreLessThan(Integer value) {
+            addCriterion("cross_paper_score <", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreLessThanOrEqualTo(Integer value) {
-            addCriterion("student_paper_score <=", value, "studentPaperScore");
+        public Criteria andCrossPaperScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("cross_paper_score <=", value, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreIn(List<Integer> values) {
-            addCriterion("student_paper_score in", values, "studentPaperScore");
+        public Criteria andCrossPaperScoreIn(List<Integer> values) {
+            addCriterion("cross_paper_score in", values, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreNotIn(List<Integer> values) {
-            addCriterion("student_paper_score not in", values, "studentPaperScore");
+        public Criteria andCrossPaperScoreNotIn(List<Integer> values) {
+            addCriterion("cross_paper_score not in", values, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreBetween(Integer value1, Integer value2) {
-            addCriterion("student_paper_score between", value1, value2, "studentPaperScore");
+        public Criteria andCrossPaperScoreBetween(Integer value1, Integer value2) {
+            addCriterion("cross_paper_score between", value1, value2, "crossPaperScore");
             return (Criteria) this;
         }
 
-        public Criteria andStudentPaperScoreNotBetween(Integer value1, Integer value2) {
-            addCriterion("student_paper_score not between", value1, value2, "studentPaperScore");
+        public Criteria andCrossPaperScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("cross_paper_score not between", value1, value2, "crossPaperScore");
             return (Criteria) this;
         }
 

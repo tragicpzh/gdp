@@ -1,5 +1,6 @@
 package org.t01.gdp.controller.student;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,11 @@ import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.service.StudentService;
+import org.t01.gdp.service.SubjectService;
 import org.t01.gdp.service.UploadService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,6 +27,30 @@ public class StudentController {
     StudentService studentService;
     @Autowired
     UploadService uploadService;
+    @Autowired
+    SubjectService subjectService;
+
+    @GetMapping("selectSubject/getList")
+    @ResponseBody
+    public String getSubjectList(int start,int length, HttpServletRequest request){
+        SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
+        ArrayList<String> states = new ArrayList<>();
+        states.add("PASSED");
+        subjectSearchCase.setState(states);
+
+        PageInfo<Subject> subjectsByTeacherId = subjectService.searchSubjects(subjectSearchCase,start/length+1,length);
+        long total = subjectsByTeacherId.getTotal();
+        List<Subject> list = subjectsByTeacherId.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
+    }
+
+    @GetMapping("/selectSubject/detail")
+    @ResponseBody
+    public Subject getSubjectDetail(long subjectId){
+        return subjectService.getSubjectById(subjectId);
+    }
+
 
     @ResponseBody
     @RequestMapping("/getTimeState")
@@ -92,20 +119,4 @@ public class StudentController {
         uploadService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
     }
-
-//    @ResponseBody
-//    @GetMapping("/crossReview/select")//交叉评阅信息查找
-//    public Object select_cross_review(HttpServletRequest request){
-//        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-//        Crossreview crossreview=studentService.selectCrossReview(student_id);
-//        return Result.success(crossreview,"success");
-//    }
-
-//    @ResponseBody
-//    @PostMapping("/crossReview/score")
-//    public void crossScore(String studentId,int score,HttpServletRequest request){
-//        String reviewStudentId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-//        studentService.updateStudentCrossPaperScore(reviewStudentId,studentId,score);
-//    }
-
 }

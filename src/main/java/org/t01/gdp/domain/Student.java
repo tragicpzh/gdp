@@ -54,7 +54,7 @@ public class Student {
 
     private Integer teacherPaperScore;
 
-    private Integer studentPaperScore;
+    private Integer crossPaperScore;
 
     private BigDecimal finalScore;
 
@@ -280,12 +280,12 @@ public class Student {
         this.teacherPaperScore = teacherPaperScore;
     }
 
-    public Integer getStudentPaperScore() {
-        return studentPaperScore;
+    public Integer getCrossPaperScore() {
+        return crossPaperScore;
     }
 
-    public void setStudentPaperScore(Integer studentPaperScore) {
-        this.studentPaperScore = studentPaperScore;
+    public void setCrossPaperScore(Integer crossPaperScore) {
+        this.crossPaperScore = crossPaperScore;
     }
 
     public BigDecimal getFinalScore() {

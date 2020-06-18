@@ -40,74 +40,71 @@ public class StudentService {
         return subjectMapper.selectByPrimaryKey(subjectId);
     }
 
-    public int updateStudentOpeningScore(String teacherId, String studentId, Long subjectId, Integer score) {
+    public int updateStudentOpeningScore(long teacherId, long studentId, long subjectId, Integer score) {
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
-        if (subject.getReviewTeacherId1().equals(teacherId)) {
+        if (subject.getReviewTeacherId1() == teacherId) {
             student.setOpenScore1(score);
             return studentMapper.updateByPrimaryKey(student);
-        } else if (subject.getReviewTeacherId2().equals(teacherId)) {
+        } else if (subject.getReviewTeacherId2() == teacherId) {
             student.setOpenScore2(score);
             return studentMapper.updateByPrimaryKey(student);
-        } else if (subject.getReviewTeacherId3().equals(teacherId)) {
+        } else if (subject.getReviewTeacherId3() == teacherId) {
             student.setOpenScore3(score);
             return studentMapper.updateByPrimaryKey(student);
         }
         return -1;
     }
 
-    public int updateStudentMiddleScore(String teacherId, String studentId, Long subjectId, Integer score) {
+    public int updateStudentMiddleScore(long teacherId, long studentId, Long subjectId, Integer score) {
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
-        if (subject.getReviewTeacherId1().equals(teacherId)) {
+        if (subject.getReviewTeacherId1() == teacherId) {
             student.setMiddleScore1(score);
             return studentMapper.updateByPrimaryKey(student);
-        } else if (subject.getReviewTeacherId2().equals(teacherId)) {
+        } else if (subject.getReviewTeacherId2() == teacherId) {
             student.setMiddleScore2(score);
             return studentMapper.updateByPrimaryKey(student);
-        } else if (subject.getReviewTeacherId3().equals(teacherId)) {
+        } else if (subject.getReviewTeacherId3() == teacherId) {
             student.setMiddleScore3(score);
             return studentMapper.updateByPrimaryKey(student);
         }
         return -1;
     }
 
-    public int updateStudentConclusionScore(String teacherId, String studentId, Long subjectId,Integer score){
+    public int updateStudentConclusionScore(long teacherId, long studentId, Long subjectId,Integer score){
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
-        if(subject.getReviewTeacherId1().equals(teacherId)){
+        if(subject.getReviewTeacherId1() == teacherId){
             student.setConclusionScore1(score);
             return studentMapper.updateByPrimaryKey(student);
-        }else if(subject.getReviewTeacherId2().equals(teacherId)){
+        }else if(subject.getReviewTeacherId2() == teacherId){
             student.setConclusionScore2(score);
             return studentMapper.updateByPrimaryKey(student);
-        }else if(subject.getReviewTeacherId3().equals(teacherId)){
+        }else if(subject.getReviewTeacherId3() == teacherId){
             student.setConclusionScore3(score);
             return studentMapper.updateByPrimaryKey(student);
         }
         return -1;
     }
 
-    public int updateStudentTeacherPaperScore(String teacherId, String studentId, Long subjectId,Integer score){
+    public int updateStudentTeacherPaperScore(long teacherId, long studentId, long subjectId,Integer score){
         Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(studentId);
+        studentExample.createCriteria().andIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         if(subject.getCreateTeacherId().equals(teacherId) && student.getSubjectId().equals(subjectId)){
             student = new Student();
             student.setTeacherPaperScore(score);
+            student.setId(studentId);
 
-            studentExample = new StudentExample();
-            StudentExample.Criteria criteria = studentExample.createCriteria();
-            criteria.andStudentIdEqualTo(studentId);
-
-            return studentMapper.updateByExampleSelective(student,studentExample);
+            return studentMapper.updateByPrimaryKeySelective(student);
         }
         return -1;
     }
