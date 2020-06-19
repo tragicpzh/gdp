@@ -19,22 +19,7 @@ public class CommonController {
     @Autowired
     private VerificationService verificationService;
     @Autowired
-    private SMSService smsService;
-    @Autowired
-    private MailService mailService;
-    @Autowired
     private UserService userService;
-//    @Autowired
-//    SMSService smsService;
-//
-//    @RequestMapping("/test")
-//    public String test(){
-//        String result = smsService.sendVerificationCode("1234", "17361040193");
-//        String result = smsService.sendBatchSMS();
-//        System.out.println(result);
-//
-//        return "test";
-//    }
 
     @GetMapping("/download/**")
     @ResponseBody
@@ -93,14 +78,14 @@ public class CommonController {
             if(phoneNumber==null || phoneNumber.equals("")){
                 return "PHONE_NUMBER_ERROR";
             }
-            verificationService.sendSMSVerificationCode(phoneNumber,smsService);
+            verificationService.sendSMSVerificationCode(phoneNumber);
             return "OK";
         }else if(method.equals("email")){
             String email = userService.getEmail(username, role);
             if(email==null || email.equals("")){
                 return "EMAIL_ADDR_ERROR";
             }
-            verificationService.sendEmailVerificationCode(email,mailService);
+            verificationService.sendEmailVerificationCode(email);
             return "OK";
         }
         

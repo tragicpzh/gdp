@@ -2,9 +2,11 @@ package org.t01.gdp.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 import org.t01.gdp.domain.College;
 import org.t01.gdp.domain.CollegeExample;
 
+@Repository
 public interface CollegeMapper {
     long countByExample(CollegeExample example);
 
