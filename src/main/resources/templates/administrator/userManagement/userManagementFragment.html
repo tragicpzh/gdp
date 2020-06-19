@@ -41,35 +41,48 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="inputUserForm" role="form" action="/administrator/addSingleUser" method="get">
-                        <div id="rowOfId" class="form-group row" style="display: none;">
-                            <label for="inputId" class="col-form-label col-3 mr-3">Role:</label>
-                            <input type="text" class="form-control col" id="inputId" name="id">
+                    <form id="inputUserForm" role="form" action="/administrator/addSingleUser" method="get" novalidate>
+                        <div id="rowOfId" class="form-group form-row" style="display: none;">
+                            <label for="inputId" class="col-form-label col-3">Id:</label>
+                            <input type="text" class="form-control col" id="inputId" name="id" value="default">
                         </div>
-                        <div id="rowOfRole" class="form-group row" style="display: none;">
-                            <label for="inputRole" class="col-form-label col-3 mr-3">Role:</label>
+                        <div id="rowOfRole" class="form-group form-row" style="display: none;">
+                            <label for="inputRole" class="col-form-label col-3">Role:</label>
                             <input type="text" class="form-control col" id="inputRole" name="role">
                         </div>
-                        <div class="form-group row">
-                            <label for="inputName" class="ol-form-label col-3 mr-3">Name</label>
-                            <input type="text" class="form-control col" id="inputName" name="name">
+                        <div class="form-group form-row">
+                            <label for="inputName" class="col-form-label col-3">姓名</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="inputName" name="name" required>
+                                <div class="invalid-feedback" id="inputName-feedback">请输入用户名</div>
+                            </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputPhoneNumber" class="ol-form-label col-3 mr-3">PhoneNumber</label>
-                            <input type="text" class="form-control col" id="inputPhoneNumber" name="phoneNumber">
+                        <div class="form-group form-row">
+                            <label for="inputPhoneNumber" class="col-form-label col-3">电话号码</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="inputPhoneNumber" name="phoneNumber"
+                                       required>
+                                <div class="invalid-feedback" id="inputPhoneNumber-feedback">请输入电话号码</div>
+                            </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputEmail" class="ol-form-label col-3 mr-3">Email</label>
-                            <input type="text" class="form-control col" id="inputEmail" name="email">
+                        <div class="form-group form-row">
+                            <label for="inputEmail" class="ol-form-label col-3">电子邮箱</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="inputEmail" name="email" required>
+                                <div class="invalid-feedback" id="inputEmail-feedback">请输入电子邮箱</div>
+                            </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group form-row">
                             <label id="inputOtherInfoLabel" for="inputOtherInfo"
-                                   class="ol-form-label col-3 mr-3">OtherInfo</label>
-                            <input type="text" class="form-control col" id="inputOtherInfo" name="otherInfo">
+                                   class="ol-form-label col-3">OtherInfo</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="inputOtherInfo" name="otherInfo" required>
+                                <div class="invalid-feedback" id="inputOtherInfo-feedback"></div>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer form-group">
+                <div class="modal-footer">
                     <button id="submitInputUserForm" type="button" class="btn btn-primary">提交</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearForm()">
                         取消
@@ -115,7 +128,13 @@
 
     role = getRole();
     $UsersTable = $('#UsersTable');
+
+    $loadUserTable = $('#loadUserTable');
+    $loadUserModal = $('#loadUserModal');
+
     $inputUserModal = $('#inputUserModal');
+    $inputUserForm = $('#inputUserForm');
+    $inputOtherInfoLabel = $('#inputOtherInfoLabel');
 
     formActions = {
         addUser: {
@@ -138,27 +157,16 @@
         'STU': '学生'
     }
 
-    $loadUserTable = $('#loadUserTable');
-    $loadUserModal = $('#loadUserModal');
-
-    $inputUserForm = $('#inputUserForm');
-
-    $inputOtherInfoLabel = $('#inputOtherInfoLabel');
-
     $(function () {
         $(":text").each(function () {
             if ($(this).attr('id') === 'inputRole') {
                 $(this).val(role);
             }
         });
-
-        if (role === 'TEA') {
-            $inputOtherInfoLabel.html('CollegeId');
-        } else if (role === 'STU') {
-            $inputOtherInfoLabel.html('MajorId');
-        }
-
         $('#tableTitle').html(roleNames[role] + '管理');
+
+        $inputOtherInfoLabel.html(otherInfoNames[role]);
+        $('#inputOtherInfo-feedback').html('请输入' + otherInfoNames[role]);
     })
 
     $UsersTable.bootstrapTable('destroy');
@@ -319,47 +327,12 @@
                 $(this).val('');
             }
         });
+        $inputUserForm.removeClass('was-validated');
     }
 
-    function validateForm(form) {
-        return form.validate({
-            rules: {
-                name: {
-                    required: true
-                },
-                phoneNumber: {
-                    required: true
-                },
-                email: {
-                    required: true
-                },
-                otherInfo: {
-                    required: true
-                }
-            },
-            messages: {
-                name: {
-                    required: "姓名不能为空"
-                },
-                phoneNumber: {
-                    required: "电话号码不能为空"
-                },
-                email: {
-                    required: "邮箱不能为空"
-                },
-                otherInfo: {
-                    required: otherInfoNames[role] + '不能为空',
-                }
-            },
-            errorElement: 'span',
-            highlight: function (element) {
-                $(element).closest('.form-group').addClass('has-error has-feedback');
-            },
-        });
-    }
+    0
 
     $('#button_addUser').on('click', function () {
-        $inputId.attr('readonly', false);
         $inputUserForm.attr('action', formActions['addUser']['action']);
     });
 
@@ -437,9 +410,8 @@
         }
         $inputUserForm.ajaxSubmit({
             beforeSubmit: function (data, form, option) {
-                if (!validateForm(form).form()) {
-                    return false;
-                }
+                form.addClass('was-validated')
+                return form[0].checkValidity();
             },
             success: function (responseText, statusText, xhr, form) {
                 if (responseText === 'success') {
