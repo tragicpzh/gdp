@@ -9,9 +9,9 @@ import java.util.*;
 
 @Service
 public class UserService {
-//    private final StudentMapper studentMapper;
-//    private final TeacherMapper teacherMapper;
-//    private final AdministratorMapper administratorMapper;
+    /*private final StudentMapper studentMapper;
+    private final TeacherMapper teacherMapper;
+    private final AdministratorMapper administratorMapper;*/
     @Autowired
     MajorMapper majorMapper;
     @Autowired
@@ -47,19 +47,24 @@ public class UserService {
         }
     }
 
-    private String checkNewPhoneNumberAndEmail(String id, String role, String phoneNumber, String email, Map<String, Object> result) {
-        if (result.get("phoneNumber") != null && !result.get("phoneNumber").toString().equals(phoneNumber) && allPhoneNumbers.contains(phoneNumber)) {
-            return "Phone Number Already Exist";
+    private String checkNewPhoneNumberAndEmail(String phoneNumber, String email, Map<String, Object> result) {
+        if (allPhoneNumbers.contains(phoneNumber)) {
+            if (result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber)) {
+                return "Phone Number Already Exist";
+            }
         }
-        if (result.get("email") != null && !result.get("email").toString().equals(email) && allEmails.contains(email)) {
-            return "Email Already Exist";
+
+        if (allEmails.contains(email)) {
+            if (result.get("email") == null || !result.get("email").toString().equals(email)) {
+                return "Email Already Exist";
+            }
         }
+
         return "success";
     }
 
     public String addUser(String name, String phoneNumber, String email, String role, String otherInfo) {
         initialize();
-
         if (allPhoneNumbers.contains(phoneNumber)) {
             return "Phone Number Already Exist";
         }
@@ -127,11 +132,10 @@ public class UserService {
                 return "No Such College";
             }
             result = userMapper.getTeacherByTeacherID(Long.parseLong(id));
-            String check = checkNewPhoneNumberAndEmail(id, role, phoneNumber, email, result);
+            String check = checkNewPhoneNumberAndEmail(phoneNumber, email, result);
             if (!check.equals("success")) {
                 return check;
             }
-
             if (userMapper.updateTeacherByTeacherID(id, name, phoneNumber, email, otherInfo) != 1) {
                 return "Unknown Failure";
             }
@@ -141,7 +145,7 @@ public class UserService {
                 return "No Such Major";
             }
             result = userMapper.getStudentByStudentId(Long.parseLong(id));
-            String check = checkNewPhoneNumberAndEmail(id, role, phoneNumber, email, result);
+            String check = checkNewPhoneNumberAndEmail(phoneNumber, email, result);
             if (!check.equals("success")) {
                 return check;
             }
@@ -151,6 +155,10 @@ public class UserService {
         }
 
         if (allIds != null) {
+            if (result.get("phoneNumber") == null){
+                allPhoneNumbers.add(phoneNumber);
+            }
+
             if (result.get("phoneNumber") != null && !result.get("phoneNumber").toString().equals(phoneNumber)) {
                 allPhoneNumbers.remove(result.get("phoneNumber").toString());
                 allPhoneNumbers.add(phoneNumber);
@@ -284,83 +292,92 @@ public class UserService {
     }
 
 
-    public boolean setPassword(String username, String password, String role){
-        if(role.equals("STU")){
-            StudentExample studentExample = new StudentExample();
-            studentExample.createCriteria().andStudentIdEqualTo(username);
+    public boolean setPassword(String username, String password, String role) {
+        switch (role) {
+            case "STU":
+                StudentExample studentExample = new StudentExample();
+                studentExample.createCriteria().andStudentIdEqualTo(username);
 
-            Student student = new Student();
-            student.setPassword(password);
+                Student student = new Student();
+                student.setPassword(password);
 
-            return studentMapper.updateByExampleSelective(student,studentExample)==1;
-        }else if(role.equals("TEA")){
-            TeacherExample teacherExample = new TeacherExample();
-            teacherExample.createCriteria().andTeacherIdEqualTo(username);
+                return studentMapper.updateByExampleSelective(student, studentExample) == 1;
+            case "TEA":
+                TeacherExample teacherExample = new TeacherExample();
+                teacherExample.createCriteria().andTeacherIdEqualTo(username);
 
-            Teacher teacher = new Teacher();
-            teacher.setPassword(password);
+                Teacher teacher = new Teacher();
+                teacher.setPassword(password);
 
-            return teacherMapper.updateByExampleSelective(teacher,teacherExample)==1;
-        }else if(role.equals("ADM")){
-            AdministratorExample administratorExample = new AdministratorExample();
-            administratorExample.createCriteria().andAdminIdEqualTo(username);
+                return teacherMapper.updateByExampleSelective(teacher, teacherExample) == 1;
+            case "ADM":
+                AdministratorExample administratorExample = new AdministratorExample();
+                administratorExample.createCriteria().andAdminIdEqualTo(username);
 
-            Administrator administrator = new Administrator();
-            administrator.setPassword(password);
+                Administrator administrator = new Administrator();
+                administrator.setPassword(password);
 
-            return administratorMapper.updateByExampleSelective(administrator,administratorExample)==1;
+                return administratorMapper.updateByExampleSelective(administrator, administratorExample) == 1;
         }
         return false;
     }
 
-    public String getEmail(String username, String role){
-        if(role.equals("STU")){
-            StudentExample studentExample = new StudentExample();
-            studentExample.createCriteria().andStudentIdEqualTo(username);
-            List<Student> students = studentMapper.selectByExample(studentExample);
-            if(!students.isEmpty()){
-                return students.get(0).getEmail();
-            }
-        }else if(role.equals("TEA")){
-            TeacherExample teacherExample = new TeacherExample();
-            teacherExample.createCriteria().andTeacherIdEqualTo(username);
-            List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
-            if(!teachers.isEmpty()){
-                return teachers.get(0).getEmail();
-            }
-        }else if(role.equals("ADM")){
-            AdministratorExample administratorExample = new AdministratorExample();
-            administratorExample.createCriteria().andAdminIdEqualTo(username);
-            List<Administrator> administrators = administratorMapper.selectByExample(administratorExample);
-            if(!administrators.isEmpty()){
-                return administrators.get(0).getEmail();
-            }
+    public String getEmail(String username, String role) {
+        switch (role) {
+            case "STU":
+                StudentExample studentExample = new StudentExample();
+                studentExample.createCriteria().andStudentIdEqualTo(username);
+                List<Student> students = studentMapper.selectByExample(studentExample);
+                if (!students.isEmpty()) {
+                    return students.get(0).getEmail();
+                }
+                break;
+            case "TEA":
+                TeacherExample teacherExample = new TeacherExample();
+                teacherExample.createCriteria().andTeacherIdEqualTo(username);
+                List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
+                if (!teachers.isEmpty()) {
+                    return teachers.get(0).getEmail();
+                }
+                break;
+            case "ADM":
+                AdministratorExample administratorExample = new AdministratorExample();
+                administratorExample.createCriteria().andAdminIdEqualTo(username);
+                List<Administrator> administrators = administratorMapper.selectByExample(administratorExample);
+                if (!administrators.isEmpty()) {
+                    return administrators.get(0).getEmail();
+                }
+                break;
         }
         return null;
     }
 
-    public String getPhoneNumber(String username, String role){
-        if(role.equals("STU")){
-            StudentExample studentExample = new StudentExample();
-            studentExample.createCriteria().andStudentIdEqualTo(username);
-            List<Student> students = studentMapper.selectByExample(studentExample);
-            if(!students.isEmpty()){
-                return students.get(0).getPhoneNumber();
-            }
-        }else if(role.equals("TEA")){
-            TeacherExample teacherExample = new TeacherExample();
-            teacherExample.createCriteria().andTeacherIdEqualTo(username);
-            List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
-            if(!teachers.isEmpty()){
-                return teachers.get(0).getPhoneNumber();
-            }
-        }else if(role.equals("ADM")){
-            AdministratorExample administratorExample = new AdministratorExample();
-            administratorExample.createCriteria().andAdminIdEqualTo(username);
-            List<Administrator> administrators = administratorMapper.selectByExample(administratorExample);
-            if(!administrators.isEmpty()){
-                return administrators.get(0).getPhoneNumber();
-            }
+    public String getPhoneNumber(String username, String role) {
+        switch (role) {
+            case "STU":
+                StudentExample studentExample = new StudentExample();
+                studentExample.createCriteria().andStudentIdEqualTo(username);
+                List<Student> students = studentMapper.selectByExample(studentExample);
+                if (!students.isEmpty()) {
+                    return students.get(0).getPhoneNumber();
+                }
+                break;
+            case "TEA":
+                TeacherExample teacherExample = new TeacherExample();
+                teacherExample.createCriteria().andTeacherIdEqualTo(username);
+                List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
+                if (!teachers.isEmpty()) {
+                    return teachers.get(0).getPhoneNumber();
+                }
+                break;
+            case "ADM":
+                AdministratorExample administratorExample = new AdministratorExample();
+                administratorExample.createCriteria().andAdminIdEqualTo(username);
+                List<Administrator> administrators = administratorMapper.selectByExample(administratorExample);
+                if (!administrators.isEmpty()) {
+                    return administrators.get(0).getPhoneNumber();
+                }
+                break;
         }
         return null;
     }

@@ -38,6 +38,9 @@ public class SubjectService {
     @Autowired
     StudentAndSubjectMapper studentAndSubjectMapper;
 
+    @Autowired
+    FileService fileService;
+
     public PageInfo searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
 
         SubjectExample subjectExample = new SubjectExample();
@@ -130,13 +133,27 @@ public class SubjectService {
         return -1;
     }
 
-    public boolean chooseSubjectByStudent(String student_id, String subject_id){
+    public boolean chooseSubjectByStudent(Long student_id, String subject_id){
         Student student=new Student();
         student.setSubjectId(Long.valueOf(subject_id));
-        student.setStudentId(student_id);
+        student.setId(student_id);
         studentMapper.updateByPrimaryKeySelective(student);
         return true;
     }
+
+    public PageInfo<SubjectBrief> getSubjectsByTeacherId(int pageNo, int pageSize, String id) {
+        PageHelper.startPage(pageNo, pageSize);
+        return new PageInfo<>(subjectForTeacher.selectByTeacherId(id));
+    }
+
+//    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
+//        PageHelper.startPage(pageNo, pageSize);
+//
+//        SubjectExample subjectExample = new SubjectExample();
+//        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
+//
+//        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
+//    }
 
     public Subject getSubjectById(long id){
         return subjectMapper.selectByPrimaryKey(id);
@@ -151,6 +168,10 @@ public class SubjectService {
     }
 
     public int deleteSubject(long subjectId){
+        Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
+        if (subject.getDocument() != null && subject.getDocument() != "") {
+            fileService.deleteFile(subject.getDocument());
+        }
         return subjectMapper.deleteByPrimaryKey(subjectId);
     }
 
@@ -160,7 +181,7 @@ public class SubjectService {
         return subjectInfo;
     }
 
-    public PageInfo<SubjectInfo> listSubjectByStudent(int pageNo,
+    public PageInfo<SubjectInfo> listSubjectByCondition(int pageNo,
                                                       int pageSize,
                                                       String subject_name,
                                                       String subject_teacher,
@@ -168,11 +189,12 @@ public class SubjectService {
                                                       String subject_ID,
                                                       String subject_direction,
                                                       String difficult_mn,
-                                                      String difficult_mx) {
-        PageHelper.startPage(pageNo,pageSize);
-        BigDecimal difficult_min=(difficult_mn!=""?new BigDecimal(difficult_mn):null);
-        BigDecimal difficult_max=(difficult_mx!=""?new BigDecimal(difficult_mx):null);
+                                                      String difficult_mx,
+                                                      String state) {
+        Integer difficult_min=(difficult_mn!=""?new Integer(difficult_mn):null);
+        Integer difficult_max=(difficult_mx!=""?new Integer(difficult_mx):null);
         Long subject_id=(subject_ID!=""?new Long(subject_ID):null);
+        PageHelper.startPage(pageNo,pageSize);
         List<SubjectInfo> list=sqlMapper.selectBycondition(
                 subject_name,
                 subject_teacher,
@@ -180,7 +202,8 @@ public class SubjectService {
                 subject_id,
                 subject_direction,
                 difficult_min,
-                difficult_max);
+                difficult_max,
+                state);
         PageInfo<SubjectInfo> subjectPageInfo=new PageInfo<>(list);
         return subjectPageInfo;
     }

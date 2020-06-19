@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.service.CreateReviewService;
 
@@ -18,12 +19,9 @@ public class CreateReviewController {
     CreateReviewService createReviewService;
 
     //自动分配评审团队
-//    @PostMapping("/CreateReview")
-//    public Object review_Create(@RequestBody List<String> list){
-//        //Map<String,Object> map=new HashMap<>();
-//        createReviewService.create_review(list);
-//        //map.put("success",true);
-//       // return map;
-//        return "index";
-//    }
+    @PostMapping("/CreateReview")
+    @ResponseBody
+    public Object review_Create(List<String> subjects){
+        return Result.success(createReviewService.create_review(subjects));
+    }
 }

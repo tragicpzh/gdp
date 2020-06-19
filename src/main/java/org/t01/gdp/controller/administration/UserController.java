@@ -96,7 +96,7 @@ public class UserController {
         int count = ids.size();
         String role = ids.get(0).length() == 10 ? "TEA" : "STU";
         for (String id : ids) {
-            if (userService.deleteUserById(id, role)) {//
+            if (userService.deleteUserById(id, role)) {
                 count--;
             }
         }

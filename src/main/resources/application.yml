@@ -38,3 +38,6 @@ time:
 
 mail:
   from: ${spring.mail.username}
+logging:
+  level:
+    org.t01.gdp.mapper: debug
