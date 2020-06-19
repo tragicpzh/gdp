@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.*;
 
@@ -218,6 +219,26 @@ public class TeacherController {
         fileService.deleteFile(subject.getDocument());
 
         return subjectService.deleteSubject(subjectId)==1;
+    }
+
+    @PostMapping("/crossReview/create")
+    @ResponseBody
+    public Object cross_review_create(List<Subject> subjects){
+        return Result.success(teacherService.cross_review_create(subjects));
+    }
+
+    @RequestMapping("/crossReview/getList")
+    @ResponseBody
+    public String getCrossingReviewList(int start,int length, HttpServletRequest request) {
+        long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        ReviewSearchCase reviewSearchCase = new ReviewSearchCase();
+        reviewSearchCase.setCrossReviewTeacherId(teacherId);
+
+        PageInfo<StudentAndSubject> subjectsByReviewTeacherId = subjectService.searchReview(reviewSearchCase,start/length+1,length);
+        long total = subjectsByReviewTeacherId.getTotal();
+        List<StudentAndSubject> list = subjectsByReviewTeacherId.getList();
+
+        return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
 
 }

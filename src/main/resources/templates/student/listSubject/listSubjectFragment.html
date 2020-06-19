@@ -57,17 +57,18 @@
             </div>
             <div class="modal-body">
                 <p>
-                    <span>教师名称：</span>
+                    <span>开题老师：</span>
                     <span id="create_teacher_id">1</span>
-                </p>
-                <p>
-                    <span>所属专业：</span>
-                    <span id="major_id">2</span>
                 </p>
                 <p>
                     <span>课题名称：</span>
                     <span id="name">3</span>
                 </p>
+                <p>
+                    <span>课题专业：</span>
+                    <span id="major_id">2</span>
+                </p>
+
                 <p>
                     <span>所属方向：</span>
                     <span id="direction">4</span>
@@ -216,8 +217,9 @@
             data: {
                 "subject_id2": subject_id2
             },
-            success: function () {
-                alert("成功");
+            success: function (msg) {
+                if(msg['data']=="true")alert("选择成功")
+                else alert("选择失败，你已有选题");
             },
             error:function () {
                 alert("失败")

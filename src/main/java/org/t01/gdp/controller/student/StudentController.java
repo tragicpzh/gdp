@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
@@ -29,13 +30,13 @@ public class StudentController {
 
     @GetMapping("selectSubject/getList")
     @ResponseBody
-    public String getSubjectList(int start,int length, HttpServletRequest request){
+    public String getSubjectList(int pageNo, int pageSize, HttpServletRequest request){
         SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
         ArrayList<String> states = new ArrayList<>();
         states.add("PASSED");
         subjectSearchCase.setState(states);
 
-        PageInfo<Subject> subjectsByTeacherId = subjectService.searchSubjects(subjectSearchCase,start/length+1,length);
+        PageInfo<Subject> subjectsByTeacherId = subjectService.searchSubjects(subjectSearchCase,pageNo,pageSize);
         long total = subjectsByTeacherId.getTotal();
         List<Subject> list = subjectsByTeacherId.getList();
 
@@ -73,13 +74,7 @@ public class StudentController {
 //        return studentService.getSubjectById(id);
 //    }
 
-//    @ResponseBody
-//    @PostMapping("/crowssreview")
-//    public boolean cross_review_create(List<Student> list){
-//        studentService.cross_review_create(list);
-//        return true;
-//    }
-
+/*
     @ResponseBody
     @RequestMapping("/uploadOpenReport")
     public void uploadOpenReport(HttpServletRequest request, MultipartFile multipartFile){
@@ -141,7 +136,7 @@ public class StudentController {
         String path ="studentDocument/" + studentId + "/paper/";
         fileService.uploadFile(multipartFile, path);
         studentService.updatePaper(studentId, path, multipartFile.getOriginalFilename());
-    }
+    }*/
 
     @RequestMapping("/deletePaper")
     public void deletePaper(HttpServletRequest request, MultipartFile multipartFile){

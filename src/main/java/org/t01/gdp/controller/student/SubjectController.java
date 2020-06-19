@@ -17,8 +17,8 @@ public class SubjectController {
     @PostMapping("/subject/choose")
     @ResponseBody
     public Object Subject_Choose(HttpServletRequest request, String subject_id2){
-        String student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getRoleId();
-        return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id2),"选择课题成功");
+        Long student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id2));
     }
 
     @GetMapping("/subject/select")
@@ -29,17 +29,17 @@ public class SubjectController {
 
     @GetMapping("/subject/list")
     @ResponseBody
-    public Object subject_list(@RequestParam(defaultValue = "1") int pageNo,
-                               @RequestParam(defaultValue = "10")int pageSize,
-                               String subject_name,
-                               String subject_teacher,
-                               String subject_major,
-                               String subject_id,
-                               String subject_direction,
-                               String difficult_min,
-                               String difficult_max
-                               ){
-        return Result.success(subjectService.listSubjectByStudent(pageNo,
+    public Object getSubjectList(@RequestParam(defaultValue = "1") int pageNo,
+                                 @RequestParam(defaultValue = "10")int pageSize,
+                                 String subject_name,
+                                 String subject_teacher,
+                                 String subject_major,
+                                 String subject_id,
+                                 String subject_direction,
+                                 String difficult_min,
+                                 String difficult_max
+    ){
+        return Result.success(subjectService.listSubjectByCondition(pageNo,
                 pageSize,
                 subject_name,
                 subject_teacher,
@@ -47,6 +47,7 @@ public class SubjectController {
                 subject_id,
                 subject_direction,
                 difficult_min,
-                difficult_max),"课题查询");
+                difficult_max,
+                "PASSED"),"课题查询");
     }
 }

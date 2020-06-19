@@ -22,10 +22,10 @@
                 s.difficulty as difficulty,
                 s.technology as technology,
                 s.describe as `describe`,
-                u.name as createTeacher,
+                t.name as createTeacher,
                 m.name as major
         from subject s
-                left join `user` u on u.id=s.create_teacher_id
+                left join teacher t on t.id=s.create_teacher_id
                 left join major m on m.id=s.major_id
         where s.id = #{id}
     </select>
@@ -36,10 +36,10 @@
                 s.difficulty as difficulty,
                 s.technology as technology,
                 s.describe as `describe`,
-                u.name as createTeacher,
+                t.name as createTeacher,
                 m.name as major
         from subject s
-                left join `user` u on u.id=s.create_teacher_id
+                left join teacher t on t.id=s.create_teacher_id
                 left join major m on m.id=s.major_id
         <where>
             <if test="subject_id!=null">
@@ -61,7 +61,10 @@
                 and m.name=#{subject_major}
             </if>
             <if test="subject_teacher!=''">
-                and s.name=#{subject_teacher}
+                and t.name=#{subject_teacher}
+            </if>
+            <if test="subject_state!=''">
+                and s.state=#{subject_state}
             </if>
         </where>
     </select>
