@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MySQLTables" targetRuntime="MyBatis3">
+        <!--  虽然插件中配置了<overwrite>true</overwrite>,但是只对java 文件有效,对mapper文件无效.特定使用 UnmergeableXmlMappersPlugin 才可以覆盖xml文件 -->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!--关闭注释的生成-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--覆盖生成XML文件-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/gdp?serverTimezone=UTC"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 实体类-->
+        <javaModelGenerator targetPackage="org.t01.gdp.domain" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--Mapper 映射文件-->
+        <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!--Mapper 到接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="org.t01.gdp.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--  对应的表生成对应的 实体类 -->
+        <!--<table tableName="user" catalog="gdp" domainObjectName="User">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>-->
+        <!--<table tableName="subject"  domainObjectName="Subject"></table>-->
+        <!--table tableName="teacher" domainObjectName="Teacher"></table>-->
+        <!--<table tableName="college" domainObjectName="College"></table>-->
+        <!--        <table tableName="subject" domainObjectName="Subject"></table>-->
+        <!--        <table tableName="college" domainObjectName="College"></table>-->
+        <!--        <table tableName="major" domainObjectName="Major"></table>-->
+        <table tableName="student" domainObjectName="Student"></table>
+        <!--        <table tableName="teacher" domainObjectName="Teacher"></table>-->
+        <!--        <table tableName="administrator" domainObjectName="Administrator"></table>-->
+
+    </context>
+</generatorConfiguration>
