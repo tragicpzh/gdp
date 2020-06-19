@@ -56,7 +56,7 @@ public class FileService {
     public boolean downloadFile(HttpServletRequest request, HttpServletResponse response){
         String requestURI = request.getRequestURI();
 
-        String uri = requestURI.substring(requestURI.indexOf("/download")+"/download".length()).replace('/','\\');
+        String uri = requestURI.substring(requestURI.indexOf("/download")+"/download".length());
 
         String filePath = null;
         try {
