@@ -96,7 +96,7 @@
                                         <span id="teacherPaperScore" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
-                                        <span class="label">交叉评阅评分:</span>
+                                        <span class="label">学生评阅评分:</span>
                                         <span id="studentPaperScore2" class="label">未打分</span>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
     Infos = {
         id: [[${session.USER_INFO.getId()}]],
         name: [[${session.USER_INFO.getName()}]],
-        role: "STU"
+        role: [[${session.USER_INFO.getRole()}]]
     };
 
     SubjectInfos = {};
@@ -172,7 +172,7 @@
     })
     $(function () {
         getStudentInfo(Infos['id']);
-        let testState = '8'
+        let testState = '7'
         $('#currentTime').html(TimeState[testState]);
         handelTimeState(testState);
         handelPersonState(Infos['state']);
@@ -515,8 +515,8 @@
                 $('#teacherPaperScore').html(Infos['teacherPaperScore']);
                 scoreCount++;
             }
-            if (checkInfo('crossPaperScore')) {
-                $('#studentPaperScore2').html(Infos['crossPaperScore']);
+            if (checkInfo('studentPaperScore')) {
+                $('#studentPaperScore2').html(Infos['studentPaperScore']);
                 scoreCount++;
             }
             if (scoreCount === 2) {
