@@ -26,6 +26,7 @@ spring:
             enable: true
             required: true
 
+
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   type-aliases-package: org.t01.gdp.domain

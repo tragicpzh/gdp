@@ -17,12 +17,12 @@
     <select id="selectByCreateTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.paper_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
         from student join `subject` join major on student.subject_id = `subject`.id and student.major_id = major.id
-        where create_teacher_id = #{id} and student.paper_document is not null and student.paper_document &lt;&gt; "" and student.teacher_paper_score is null;
+        where create_teacher_id = #{id} and student.paper_document is not null and student.paper_document &lt;&gt; "" and student.teacher_paper_score is null
     </select>
     <select id="selectByCrossReviewTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.paper_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
         from student join `subject` join major on student.subject_id = `subject`.id and student.major_id = major.id
-        where cross_review_teacher = #{id} and student.paper_document is not null and student.paper_document &lt;&gt; "" and student.cross_paper_score is null;
+        where cross_review_teacher = #{id} and student.paper_document is not null and student.paper_document &lt;&gt; "" and student.cross_paper_score is null
     </select>
     <select id="selectByPaperReviewTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.paper_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
@@ -32,16 +32,16 @@
     <select id="selectByOpenReviewTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.open_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
         from student join `subject` join major on student.subject_id = `subject`.id and student.major_id = major.id
-        where student.open_document is not null and student.open_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and open_score1 is null) or (review_teacher_id2 = #{id} and open_score2 is null) or (review_teacher_id3 = #{id} and open_score3 is null));
+        where student.open_document is not null and student.open_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and open_score1 is null) or (review_teacher_id2 = #{id} and open_score2 is null) or (review_teacher_id3 = #{id} and open_score3 is null))
     </select>
     <select id="selectByMiddleReviewTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.middle_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
         from student join `subject` join major on student.subject_id = `subject`.id and student.major_id = major.id
-        where student.middle_document is not null and student.middle_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and middle_score1 is null) or (review_teacher_id2 = #{id} and middle_score2 is null) or (review_teacher_id3 = #{id} and middle_score3 is null));
+        where student.middle_document is not null and student.middle_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and middle_score1 is null) or (review_teacher_id2 = #{id} and middle_score2 is null) or (review_teacher_id3 = #{id} and middle_score3 is null))
     </select>
     <select id="selectByConclusionReviewTeacherId" parameterType="long" resultMap="BaseResultMap">
         select student.id as student_id,student.name as student_name,student.conclusion_document as review_document,subject.id as subject_id,major.name as major_name,subject.name as subject_name,subject.direction as direction,subject.difficulty as difficulty,subject.technology as technology,subject.`describe` as `describe`,subject.document as subject_document
         from student join `subject` join major on student.subject_id = `subject`.id and student.major_id = major.id
-        where student.conclusion_document is not null and student.conclusion_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and conclusion_score1 is null) or (review_teacher_id2 = #{id} and conclusion_score2 is null) or (review_teacher_id3 = #{id} and conclusion_score3 is null));
+        where student.conclusion_document is not null and student.conclusion_document &lt;&gt; "" and ((review_teacher_id1 = #{id} and conclusion_score1 is null) or (review_teacher_id2 = #{id} and conclusion_score2 is null) or (review_teacher_id3 = #{id} and conclusion_score3 is null))
     </select>
 </mapper>

@@ -1,5 +1,6 @@
 package org.t01.gdp.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,7 @@ public class SubjectService {
     @Autowired
     StudentAndSubjectMapper studentAndSubjectMapper;
 
-    public PageInfo<Subject> searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
-        PageHelper.startPage(pageNo,pageSize);
+    public PageInfo searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
 
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
@@ -58,7 +58,7 @@ public class SubjectService {
             if(!majors.isEmpty()){
                 criteria.andMajorIdEqualTo(majors.get(0).getId());
             }else{
-                return new PageInfo<>(new ArrayList<>());
+                return new PageInfo(new ArrayList<>());
             }
         }
         if(subjectSearchCase.getDirection()!=null){
@@ -71,32 +71,47 @@ public class SubjectService {
             criteria.andCreateTeacherIdEqualTo(subjectSearchCase.getCreateTeacherId());
         }
 
-        return new PageInfo<>(subjectMapper.selectByExample(subjectExample));
+        PageHelper.startPage(pageNo,pageSize);
+
+        List<Subject> subjects = subjectMapper.selectByExample(subjectExample);
+        List<Subject> result = new ArrayList<>();
+        for(Subject subject:subjects){
+            result.add(subject);
+        }
+
+        PageInfo<Subject> subjectPageInfo = new PageInfo<>(result);
+        subjectPageInfo.setTotal(((Page)subjects).getTotal());
+        return subjectPageInfo;
     }
 
     public PageInfo<StudentAndSubject> searchReview(ReviewSearchCase reviewSearchCase,int pageNo, int pageSize){
         PageHelper.startPage(pageNo,pageSize);
+        List<StudentAndSubject> studentAndSubjects;
 
         if(reviewSearchCase.getPaperReviewTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByPaperReviewTeacherId(reviewSearchCase.getPaperReviewTeacherId()));
-        }
-        if(reviewSearchCase.getCreateTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByCreateTeacherId(reviewSearchCase.getCreateTeacherId()));
-        }
-        if(reviewSearchCase.getCrossReviewTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByCrossReviewTeacherId(reviewSearchCase.getCrossReviewTeacherId()));
-        }
-        if(reviewSearchCase.getOpenReviewTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByOpenReviewTeacherId(reviewSearchCase.getOpenReviewTeacherId()));
-        }
-        if(reviewSearchCase.getMiddleReviewTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByMiddleReviewTeacherId(reviewSearchCase.getMiddleReviewTeacherId()));
-        }
-        if(reviewSearchCase.getConclusionReviewTeacherId()!=null){
-            return new PageInfo<>(studentAndSubjectMapper.selectByConclusionReviewTeacherId(reviewSearchCase.getConclusionReviewTeacherId()));
+            studentAndSubjects = studentAndSubjectMapper.selectByPaperReviewTeacherId(reviewSearchCase.getPaperReviewTeacherId());
+        }else if(reviewSearchCase.getCreateTeacherId()!=null){
+            studentAndSubjects = studentAndSubjectMapper.selectByCreateTeacherId(reviewSearchCase.getCreateTeacherId());
+        }else if(reviewSearchCase.getCrossReviewTeacherId()!=null){
+            studentAndSubjects = studentAndSubjectMapper.selectByCrossReviewTeacherId(reviewSearchCase.getCrossReviewTeacherId());
+        }else if(reviewSearchCase.getOpenReviewTeacherId()!=null){
+            studentAndSubjects = studentAndSubjectMapper.selectByOpenReviewTeacherId(reviewSearchCase.getOpenReviewTeacherId());
+        }else if(reviewSearchCase.getMiddleReviewTeacherId()!=null){
+            studentAndSubjects = studentAndSubjectMapper.selectByMiddleReviewTeacherId(reviewSearchCase.getMiddleReviewTeacherId());
+        }else if(reviewSearchCase.getConclusionReviewTeacherId()!=null){
+            studentAndSubjects = studentAndSubjectMapper.selectByConclusionReviewTeacherId(reviewSearchCase.getConclusionReviewTeacherId());
+        }else{
+            return new PageInfo<>(new ArrayList<>());
         }
 
-        return new PageInfo<>(new ArrayList<>());
+        List<StudentAndSubject> result = new ArrayList<>();
+        for(StudentAndSubject studentAndSubject:studentAndSubjects){
+            result.add(studentAndSubject);
+        }
+
+        PageInfo studentAndSubjectPageInfo = new PageInfo(result);
+        studentAndSubjectPageInfo.setTotal(((Page)studentAndSubjects).getTotal());
+        return studentAndSubjectPageInfo;
     }
 
     public void updateById(Subject subject, String examine_flag) {
@@ -115,47 +130,6 @@ public class SubjectService {
         return -1;
     }
 
-    public PageInfo<StudentAndSubject> getSubjectsByReviewTeacherId(int pageNo, int pageSize, long reviewTeacherId){
-        PageHelper.startPage(pageNo,pageSize);
-        //查询reviewTeacherId中有一个与传入的id相同的subject
-        SubjectExample subjectExample1 = new SubjectExample();
-        subjectExample1.createCriteria().andReviewTeacherId1EqualTo(reviewTeacherId);
-        List<Subject> subjects1 = subjectMapper.selectByExample(subjectExample1);
-        SubjectExample subjectExample2 = new SubjectExample();
-        subjectExample2.createCriteria().andReviewTeacherId2EqualTo(reviewTeacherId);
-        List<Subject> subjects2 = subjectMapper.selectByExample(subjectExample2);
-        SubjectExample subjectExample3 = new SubjectExample();
-        subjectExample3.createCriteria().andReviewTeacherId2EqualTo(reviewTeacherId);
-        List<Subject> subjects3 = subjectMapper.selectByExample(subjectExample3);
-        //所有subject存入一条链表
-        List<Subject> allSubjects = new ArrayList<>();
-        allSubjects.addAll(subjects1);
-        allSubjects.addAll(subjects2);
-        allSubjects.addAll(subjects3);
-        //生成一个学生与选题的list
-        List<StudentAndSubject> studentAndSubjectList = new ArrayList<>();
-        for (Subject allSubject : allSubjects) {
-            StudentExample studentExample = new StudentExample();
-            studentExample.createCriteria().andSubjectIdEqualTo(allSubject.getId());
-            List<Student> students = studentMapper.selectByExample(studentExample);
-            if(students.size()>0){
-                for (Student student : students) {
-//                    studentAndSubjectList.add(new StudentAndSubject(student.getStudentId(), allSubject.getId().toString(),
-//                            allSubject.getName(),allSubject.getMajorId(),allSubject.getDirection()));
-                }
-            }
-        }
-        return new PageInfo<>(studentAndSubjectList);
-    }
-
-    public PageInfo<PaperReviewInfo> getSubjectsToPaperReview(int pageNo, int pageSize, String reviewTeacherId){
-        PageHelper.startPage(pageNo,pageSize);
-
-        List<PaperReviewInfo> paperReviewInfoForTeacher = reviewMapper.getPaperReviewInfoForTeacher(reviewTeacherId);
-
-        return new PageInfo<>(paperReviewInfoForTeacher);
-    }
-
     public boolean chooseSubjectByStudent(String student_id, String subject_id){
         Student student=new Student();
         student.setSubjectId(Long.valueOf(subject_id));
@@ -163,20 +137,6 @@ public class SubjectService {
         studentMapper.updateByPrimaryKeySelective(student);
         return true;
     }
-
-    public PageInfo<SubjectBrief> getSubjectsByTeacherId(int pageNo, int pageSize, String id) {
-        PageHelper.startPage(pageNo, pageSize);
-        return new PageInfo<>(subjectForTeacher.selectByTeacherId(id));
-    }
-
-//    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
-//        PageHelper.startPage(pageNo, pageSize);
-//
-//        SubjectExample subjectExample = new SubjectExample();
-//        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
-//
-//        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
-//    }
 
     public Subject getSubjectById(long id){
         return subjectMapper.selectByPrimaryKey(id);
