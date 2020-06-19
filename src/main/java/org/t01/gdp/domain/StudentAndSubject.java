@@ -23,6 +23,35 @@ public class StudentAndSubject {
 
     private String subjectDocument;
 
+    @Override
+    public String toString() {
+        return "{"
+                + "\"studentId\":"
+                + studentId
+                + ",\"studentName\":\""
+                + studentName + '\"'
+                + ",\"reviewDocument\":\""
+                + reviewDocument + '\"'
+                + ",\"subjectId\":"
+                + subjectId
+                + ",\"majorName\":\""
+                + majorName + '\"'
+                + ",\"subjectName\":\""
+                + subjectName + '\"'
+                + ",\"direction\":\""
+                + direction + '\"'
+                + ",\"difficulty\":"
+                + difficulty
+                + ",\"technology\":\""
+                + technology + '\"'
+                + ",\"describe\":\""
+                + describe + '\"'
+                + ",\"subjectDocument\":\""
+                + subjectDocument + '\"'
+                + "}";
+
+    }
+
     public Long getStudentId() {
         return studentId;
     }
