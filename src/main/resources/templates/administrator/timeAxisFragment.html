@@ -29,6 +29,11 @@
                 <p>开始时间：<input type="datetime-local" id="dateTimeInput"></p>
                 <p>首页通知：<textarea maxlength="500" rows="5" cols="35" placeholder="请输入首页通知" id="homePageNoticeInput"></textarea></p>
                 <p>消息通知：<textarea maxlength="500" rows="5" cols="35" placeholder="请输入消息通知" id="messageNoticeInput"></textarea></p>
+                <p>
+                    <button type="button" class="btn btn-primary" onclick="atSomeOne('ADM')">@管理员</button>
+                    <button type="button" class="btn btn-primary" onclick="atSomeOne('TEA')">@教师</button>
+                    <button type="button" class="btn btn-primary" onclick="atSomeOne('STU')">@学生</button>
+                </p>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -40,3 +45,13 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    function atSomeOne(someOne) {
+        var temp = $("#messageNoticeInput").val();
+        if (temp != ""){
+            temp = temp + "\n";
+        }
+        $("#messageNoticeInput").val(temp + "@" + someOne + ":");
+    }
+</script>

@@ -1,6 +1,7 @@
-package org.t01.gdp.domain;
+package org.t01.gdp.service;
 
 import com.alibaba.fastjson.JSON;
+import org.t01.gdp.domain.TimePoint;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.*;
  * 大部分情况只需要调用静态函数getTimeAxisState
  */
 
-public class TimeAxis {
+public class TimeAxisService {
     private static ArrayList<TimePoint> timePoints = new ArrayList<>();
     private static int timeAxisState = -1;
     private static final String[] name = new String[]{"出题","选题","开题答辩","项目中前期","项目中期","项目中后期","论文提交","结题答辩","结束"};
@@ -39,12 +40,21 @@ public class TimeAxis {
         return accessibleList.contains(timeAxisState);
     }
 
+    public static TimePoint getNowTimePoint(){
+        if(timeAxisState>=0 && timeAxisState < NUMOFTIMEPOINTS){
+            return timePoints.get(timeAxisState);
+        }
+        return null;
+    }
+
     //获取系统时间轴状态的函数，返回值为-1~8，分别依次表示毕业设计活动开始前，以及name数组中列出的状态
     public static int getTimeAxisState() {
         return timeAxisState;
     }
 
-    public static void checkTimeAxis(){
+    public static boolean checkTimeAxis(){
+        int oldState = timeAxisState;
+
         Date now = new Date();
         int index = -1;
         for(int i = 0; i < NUMOFTIMEPOINTS; ++i){
@@ -55,6 +65,11 @@ public class TimeAxis {
             index = timePoints.get(i).getIndex();
         }
         timeAxisState = index;
+
+        if(timeAxisState == oldState + 1){
+            return true;
+        }
+        return false;
 //        System.out.println(timeAxisState);
     }
 

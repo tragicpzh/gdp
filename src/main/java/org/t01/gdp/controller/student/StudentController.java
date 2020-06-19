@@ -8,7 +8,6 @@ import org.t01.gdp.domain.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.Subject;
-import org.t01.gdp.domain.TimeAxis;
 import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.service.FileService;
 import org.t01.gdp.service.StudentService;

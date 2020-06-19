@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.t01.gdp.domain.TimeAxis;
+import org.t01.gdp.service.TimeAxisService;
 import org.t01.gdp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class CommonController {
     @RequestMapping("/**/*Fragment")
     public String getFragment(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        if(TimeAxis.isAccessible(uri) || true){
+        if(TimeAxisService.isAccessible(uri) || true){
             return uri;
         }else{
             return "notAccessible";

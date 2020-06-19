@@ -6,8 +6,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.config.MailProperties;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class MailService {
@@ -31,7 +31,7 @@ public class MailService {
         sendMessage(verificationMessage,mailAddress);
     }
 
-    public void patchSendSingleMessage(String messageNotice,ArrayList<String> mailAddresses){
+    public void patchSendSingleMessage(String messageNotice, List<String> mailAddresses){
         Iterator<String> iterator = mailAddresses.iterator();
 
         while(iterator.hasNext()){

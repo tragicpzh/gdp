@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.Subject;
-import org.t01.gdp.domain.TimeAxis;
+import org.t01.gdp.service.TimeAxisService;
 import org.t01.gdp.service.SubjectProcessService;
 
 @Controller
@@ -21,7 +21,7 @@ public class SubjectProcessController {
     @ResponseBody
     @RequestMapping("/getTimeState")
     public String getTimeState() {
-        return String.valueOf(TimeAxis.getTimeAxisState());
+        return String.valueOf(TimeAxisService.getTimeAxisState());
     }
 
     @ResponseBody

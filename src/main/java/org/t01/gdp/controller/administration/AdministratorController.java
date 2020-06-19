@@ -2,17 +2,15 @@ package org.t01.gdp.controller.administration;
 
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.AdministratorService;
 import org.t01.gdp.service.SubjectService;
+import org.t01.gdp.service.TimeAxisService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,16 +41,16 @@ public class AdministratorController {
     @GetMapping("/timeAxis")
     @ResponseBody
     public ArrayList<TimePoint> getTimeAxis(ModelMap map){
-        return TimeAxis.getTimePoints();
+        return TimeAxisService.getTimePoints();
     }
 
     @PostMapping("/timeAxis")
     @ResponseBody
     public String setTimeAxis(TimePoint timePoint, String dateTimeString) throws ParseException {
-        Date date = TimeAxis.getFormat().parse(dateTimeString);
+        Date date = TimeAxisService.getFormat().parse(dateTimeString);
         timePoint.setDateTime(date);
 
-        int result = TimeAxis.setTimePoint(timePoint.getIndex(), timePoint);
+        int result = TimeAxisService.setTimePoint(timePoint.getIndex(), timePoint);
         switch (result){
             case 0:
                 return "保存成功";

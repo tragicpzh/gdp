@@ -4,15 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.common.Result;
-import org.t01.gdp.domain.Listsubject;
-import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.service.SubjectService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class SubjectController {

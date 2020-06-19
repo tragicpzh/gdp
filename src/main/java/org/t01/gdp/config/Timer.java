@@ -1,20 +1,26 @@
 package org.t01.gdp.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.t01.gdp.domain.TimeAxis;
+import org.t01.gdp.service.NoticeService;
+import org.t01.gdp.service.TimeAxisService;
 import org.t01.gdp.service.VerificationService;
 
 @Component
 public class Timer {
+    @Autowired
+    NoticeService noticeService;
 
     @Scheduled(cron = "${time.cron-for-time-axis}")
     public void checkTimeAxis(){
-        TimeAxis.checkTimeAxis();
+        if(TimeAxisService.checkTimeAxis()){
+            noticeService.sendMessageNotice();
+        }
     }
 
     @Scheduled(cron = "${time.cron-for-clear-verifivation-code}")
-    public void clearVerifivationCode(){
+    public void clearVerificationCode(){
         VerificationService.clearOverdueCode();
     }
 }
