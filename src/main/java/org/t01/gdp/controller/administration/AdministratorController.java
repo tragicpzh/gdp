@@ -94,4 +94,10 @@ public class AdministratorController {
 
         return subjectService.subjectExamination(operation,subjectId)==1;
     }
+
+    @PostMapping("/searchSubject/deleteSubject")
+    @ResponseBody
+    public boolean deleteSubject(long subjectId) {
+        return subjectService.deleteSubject(subjectId) == 1;
+    }
 }

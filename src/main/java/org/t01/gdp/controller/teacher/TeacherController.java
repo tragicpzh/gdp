@@ -119,6 +119,7 @@ public class TeacherController {
     }
 
     @PostMapping("/middleReview/middleScoring")
+    @ResponseBody
     public void middleReviewScoring(int score, long studentId, long subjectId, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
 

@@ -38,6 +38,9 @@ public class SubjectService {
     @Autowired
     StudentAndSubjectMapper studentAndSubjectMapper;
 
+    @Autowired
+    FileService fileService;
+
     public PageInfo searchSubjects(SubjectSearchCase subjectSearchCase,int pageNo, int pageSize){
 
         SubjectExample subjectExample = new SubjectExample();
@@ -151,6 +154,10 @@ public class SubjectService {
     }
 
     public int deleteSubject(long subjectId){
+        Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
+        if (subject.getDocument() != null && subject.getDocument() != "") {
+            fileService.deleteFile(subject.getDocument());
+        }
         return subjectMapper.deleteByPrimaryKey(subjectId);
     }
 
