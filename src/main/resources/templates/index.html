@@ -1,12 +1,54 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GDP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Rendering/plugins/fontawesome-free/css/all.min.css">
+    <link rel="shortcut icon" th:href="@{/Rendering/img/Icon.ico}"/>
+    <link rel="stylesheet" href="/Rendering/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="/Rendering/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/Rendering/login/css/layout.css">
 </head>
+<!--<body class="hold-transition login-page">-->
 <body>
-    <a th:href="@{/student/login}">学生登录</a>
-    <a th:href="@{/teacher/login}">教师登录</a>
-    <a th:href="@{/administrator/login}">管理员登录</a>
+<div class="containerBoarder">
+    <div class="loginOption">
+        <a th:href="@{/student/login}">
+            <img src="http://gitlab.suncaper.net/PengxinZeng/temp/-/raw/master/Temp/Student.png" alt="">
+            <div class="on-hover">
+                <h3>学生登录</h3>
+            </div>
+        </a>
+    </div>
+    <div class="loginOption">
+        <a th:href="@{/teacher/login}">
+            <img src="http://gitlab.suncaper.net/PengxinZeng/temp/-/raw/master/Temp/Teacher.png" alt=""
+                 class="img-responsive">
+            <div class="on-hover">
+                <h3>教师登录</h3>
+            </div>
+        </a>
+    </div>
+    <div class="loginOption">
+        <a th:href="@{/administrator/login}">
+            <img src="http://gitlab.suncaper.net/PengxinZeng/temp/-/raw/master/Temp/Administrator.png" alt="">
+            <div class="on-hover">
+                <h3>管理员登录</h3>
+            </div>
+        </a>
+    </div>
+
+</div>
+<div class="login-logo">
+    <a href="/index"><b>GDP</b></a>
+</div>
+
+<script src="/Rendering/plugins/jquery/jquery.min.js"></script>
+<script src="/Rendering/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/Rendering/dist/js/adminlte.min.js"></script>
+<script>
+    sessionStorage["position"] = "";
+</script>
 </body>
 </html>
