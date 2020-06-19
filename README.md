@@ -10,3 +10,5 @@
     对象名为TimeAxis，其中的所有参数和方法都是静态的，具体使用方法可以查看TimeAxis中的注释
 # 5 管理员用户管理
     测试数据已上传，注意输入的学院Id以及专业Id必须存在数据库内（college和major两张表），否则无法录入数据
+# 6 系统资源监控
+    MonitorService类的getMonitor可以获得当前系统资源的使用情况，如果运行不了记得将sigar-amd64-winnt.dll放到C:\Windows\System32下

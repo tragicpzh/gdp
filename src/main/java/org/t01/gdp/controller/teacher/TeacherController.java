@@ -59,7 +59,8 @@ public class TeacherController {
     public String getPaperReviewList(int start, int length, @RequestParam("search[value]") String search, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
         ReviewSearchCase reviewSearchCase = new ReviewSearchCase();
-        reviewSearchCase.setPaperReviewTeacherId(teacherId);
+        reviewSearchCase.setCreateTeacherId(teacherId);
+//        reviewSearchCase.setPaperReviewTeacherId(teacherId);
 
         PageInfo<StudentAndSubject> subjectsByReviewTeacherId = subjectService.searchReview(reviewSearchCase,start/length+1,length);
         long total = subjectsByReviewTeacherId.getTotal();
