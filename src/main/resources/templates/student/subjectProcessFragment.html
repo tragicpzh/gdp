@@ -134,6 +134,39 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-3">
+        <div class="card-header">
+            开题资料
+        </div>
+        <div class="card-body file" id="openDocumentBtn">
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card-header">
+            中期资料
+        </div>
+        <div class="card-body file" id="middleDocumentBtn">
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card-header">
+            论文
+        </div>
+        <div class="card-body file" id="paperDocumentBtn">
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card-header">
+            结题资料
+        </div>
+        <div class="card-body file" id="conclusionDocumentBtn">
+        </div>
+    </div>
+</div>
+
+
 <script th:inline="javascript">
     Infos = {
         id: [[${session.USER_INFO.getId()}]],
@@ -590,5 +623,112 @@
         return false;
     }
 </script>
+
+<!--以下是我写的资料管理的JS，可以重构-->
+<script>
+    function refresh() {
+        $(".file").html("");
+        loadFilePaths();
+    }
+
+    function onDeleteFile(uri) {
+        $.ajax({
+            url: "/student/" + uri,
+            method: "post",
+            timeout: 6000,
+            async: false,
+            success: function () {
+                alert("删除成功");
+                refresh();
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        });
+    }
+
+    function onUploadFile(name){
+        var formData = new FormData();
+        var selector = "#upload" + name + "Document";
+        formData.append("multipartFile", $(selector)[0].files[0]);
+
+        var option = {
+            url: "/student/upload" + name,
+            contentType: false,
+            processData: false,
+            method: "post",
+            timeout: 6000,
+            async: false,
+            data: formData,
+            success: function () {
+                alert("上传成功");
+                refresh();
+            },
+            error: function () {
+                alert("上传失败");
+            }
+        };
+
+        $.ajax(option);
+    }
+
+    function writeFileButton(tag,name,path,stateId) {
+        var selector = "#" + tag + "DocumentBtn"
+        if(currentState == stateId){
+            $(selector).append(
+                "<p><input type=\"file\" id=\"upload" + name + "Document\">\n<input type=\"submit\" class='btn btn-primary' onclick='onUploadFile(\"" + name + "\"z)'></p>\n");
+        }else{
+            $(selector).append("<p>当前阶段无法进行开题报告资料上传</p>");
+        }
+
+        if(path != null && path != ""){
+            if(currentState == stateId){
+                $(selector).append("<p><button type='button' class='btn btn-danger' onclick=\"onDeleteFile('delete" + name + "')\" >删除</button></p>")
+            }else{
+                $(selector).append("<p>当前阶段无法进行开题报告资料删除</p>");
+            }
+
+            $(selector).append("<p><a type='button' class='btn btn-primary' href='/download/" + path + "' >下载</a></p>");
+        }else{
+            $(selector).append("<p>没有相关资料</p>");
+        }
+    }
+
+    function writeFileButtons(paths){
+        var path;
+
+        path = paths["open"];
+        writeFileButton("open","Open",path,2);
+
+        path = paths["middle"];
+        writeFileButton("middle","Middle",path,4);
+
+        path = paths["paper"];
+        writeFileButton("paper","Paper",path,6);
+
+        path = paths["conclusion"];
+        writeFileButton("conclusion","Conclusion",path,7);
+    }
+
+    function loadFilePaths(){
+        var setting = {
+            url: "/student/getAllFilePath",
+            method: "get",
+            timeout: 6000,
+            async: false,
+            success: function (data){
+                writeFileButtons(data);
+            },
+            error: function () {
+                alert("获取资料列表失败");
+            }
+        };
+
+        $.ajax(setting);
+    }
+
+    $(document).ready(loadFilePaths());
+</script>
+
 </body>
 </html>
