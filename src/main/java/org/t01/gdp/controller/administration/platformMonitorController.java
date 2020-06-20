@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class platformMonitorController {
     @Autowired
     MonitorService monitorService;
+
     @GetMapping("/getLog")
     @ResponseBody
     public String getLog() {

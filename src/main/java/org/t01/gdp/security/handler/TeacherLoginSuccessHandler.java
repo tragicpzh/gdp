@@ -6,6 +6,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.TeacherMapper;
+import org.t01.gdp.service.MyLogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,9 @@ public class TeacherLoginSuccessHandler implements AuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String teacherId = authentication.getName();
+
+        MyLogService.info("教师用户[" + teacherId +"]成功登录管理员平台");
+
         TeacherExample teacherExample = new TeacherExample();
         teacherExample.createCriteria().andTeacherIdEqualTo(teacherId);
         Teacher teacher = teacherMapper.selectByExample(teacherExample).get(0);

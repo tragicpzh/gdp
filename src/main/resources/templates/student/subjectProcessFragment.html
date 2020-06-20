@@ -676,7 +676,7 @@
         var selector = "#" + tag + "DocumentBtn"
         if(currentState == stateId){
             $(selector).append(
-                "<p><input type=\"file\" id=\"upload" + name + "Document\">\n<input type=\"submit\" class='btn btn-primary' onclick='onUploadFile(\"" + name + "\"z)'></p>\n");
+                "<p><input type=\"file\" id=\"upload" + name + "Document\">\n<input type=\"submit\" class='btn btn-primary' onclick='onUploadFile(\"" + name + "\")'></p>\n");
         }else{
             $(selector).append("<p>当前阶段无法进行开题报告资料上传</p>");
         }

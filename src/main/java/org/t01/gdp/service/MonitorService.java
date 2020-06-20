@@ -61,15 +61,15 @@ public class MonitorService {
 //        System.out.println(monitorRecord);
 
         if (monitorRecord.getJvmUsedMemory() != null && ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory() >= jvmThreshold) {
-            System.out.println("jvm:" + monitorRecord.getJvmUsedMemory() + "/" + monitorRecord.getJvmTotalMemory());
+            MyLogService.info("jvm:" + monitorRecord.getJvmUsedMemory() + "/" + monitorRecord.getJvmTotalMemory());
         }
         if (monitorRecord.getUsedMemory() != null && ((double) monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory() >= memThreshold) {
-            System.out.println("mem:" + monitorRecord.getUsedMemory() + "/" + monitorRecord.getTotalMemory());
+            MyLogService.info("mem:" + monitorRecord.getUsedMemory() + "/" + monitorRecord.getTotalMemory());
         }
         ArrayList<Double> cpuUsages = monitorRecord.getCpuUsage();
         for (Double cpuUsage : cpuUsages) {
             if (cpuUsage >= cpuThreshold) {
-                System.out.println("cpu" + cpuUsage);
+                MyLogService.info("cpu:" + cpuUsage);
             }
         }
     }
