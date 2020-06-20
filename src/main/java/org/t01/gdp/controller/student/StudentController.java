@@ -146,4 +146,24 @@ public class StudentController {
 
         studentService.updatePaper(studentId,"","");
     }
+
+    @GetMapping("/simpleSelect")
+    @ResponseBody
+    public Object simpleSelect(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.simpleSelect(student_id));
+    }
+
+    @GetMapping("/ToDoList")
+    @ResponseBody
+    public Object ToDoList(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.ToDoList(student_id));
+    }
+    @GetMapping("/getScore")
+    @ResponseBody
+    public Object getScore(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.getScore(student_id));
+    }
 }
