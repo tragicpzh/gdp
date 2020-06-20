@@ -18,7 +18,7 @@ public class MonitorService {
         cpuThreshold = 0.80;
     }
 
-    public MonitorRecord getMonitorRecord(){
+    public MonitorRecord getMonitorRecord() {
         Runtime runtime = Runtime.getRuntime();
         Sigar sigar = new Sigar();
         MonitorRecord monitorRecord = new MonitorRecord();
@@ -37,7 +37,7 @@ public class MonitorService {
 
         try {
             CpuPerc[] cpuPercList = sigar.getCpuPercList();
-            for(CpuPerc cpuPerc:cpuPercList){
+            for (CpuPerc cpuPerc : cpuPercList) {
                 monitorRecord.addCpuUsage(cpuPerc.getCombined());
             }
         } catch (SigarException e) {
@@ -45,7 +45,7 @@ public class MonitorService {
         }
 
         try {
-            FileSystemUsage fileSystemUsage = sigar.getFileSystemUsage(System.getProperty("user.dir").substring(0,3));
+            FileSystemUsage fileSystemUsage = sigar.getFileSystemUsage(System.getProperty("user.dir").substring(0, 3));
             monitorRecord.setFileSystemTotal(fileSystemUsage.getTotal());
             monitorRecord.setFileSystemUsed(fileSystemUsage.getUsed());
         } catch (SigarException e) {
@@ -55,23 +55,27 @@ public class MonitorService {
         return monitorRecord;
     }
 
-    public void onceMonitor(){
+    public void onceMonitor() {
         MonitorRecord monitorRecord = getMonitorRecord();
 
 //        System.out.println(monitorRecord);
 
-        if(monitorRecord.getJvmUsedMemory() != null && ((double)monitorRecord.getJvmUsedMemory())/monitorRecord.getJvmTotalMemory() >= jvmThreshold){
+        if (monitorRecord.getJvmUsedMemory() != null && ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory() >= jvmThreshold) {
             System.out.println("jvm:" + monitorRecord.getJvmUsedMemory() + "/" + monitorRecord.getJvmTotalMemory());
         }
-        if(monitorRecord.getUsedMemory() != null && ((double)monitorRecord.getUsedMemory())/monitorRecord.getTotalMemory() >= memThreshold){
+        if (monitorRecord.getUsedMemory() != null && ((double) monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory() >= memThreshold) {
             System.out.println("mem:" + monitorRecord.getUsedMemory() + "/" + monitorRecord.getTotalMemory());
         }
         ArrayList<Double> cpuUsages = monitorRecord.getCpuUsage();
-        for(Double cpuUsage: cpuUsages){
-            if(cpuUsage >= cpuThreshold){
+        for (Double cpuUsage : cpuUsages) {
+            if (cpuUsage >= cpuThreshold) {
                 System.out.println("cpu" + cpuUsage);
             }
         }
+    }
+
+    public String getLog() {
+        return "My log";
     }
 
     public double getJvmThreshold() {
