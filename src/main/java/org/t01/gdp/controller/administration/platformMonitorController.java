@@ -35,12 +35,12 @@ public class platformMonitorController {
         return (double) (monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory();
     }
 
-//    @GetMapping("/getFileSystem")
-//    @ResponseBody
-//    public double getFileSystem() {
-//        return (double) (monitorRecord.getFileSystemUsed()) / monitorRecord.getFileSystemTotal();
-//    }
-//
+    @GetMapping("/getFileSystem")
+    @ResponseBody
+    public double getFileSystem() {
+        return (double) (monitorRecord.getFileSystemUsed()) / monitorRecord.getFileSystemTotal();
+    }
+
 //    @GetMapping("/getCPU")
 //    @ResponseBody
 //    public ArrayList<Double> getCPU() {
