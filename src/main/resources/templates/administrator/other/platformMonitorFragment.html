@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-6">
-        <!-- interactive chart -->
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
@@ -14,12 +13,9 @@
             <div class="card-body">
                 <div id="jvm" style="height: 300px;"></div>
             </div>
-            <!-- /.card-body-->
         </div>
-        <!-- /.card -->
     </div>
     <div class="col-6">
-        <!-- interactive chart -->
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
@@ -30,12 +26,9 @@
             <div class="card-body">
                 <div id="mem" style="height: 300px;"></div>
             </div>
-            <!-- /.card-body-->
         </div>
-        <!-- /.card -->
     </div>
 </div>
-
 <div class="row">
     <div class="col-6">
         <div class="card">
@@ -45,39 +38,25 @@
                     服务器CPU使用情况
                 </h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6 col-md-3 text-center">
-                        <input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.1"
-                               data-width="90"
-                               data-height="90" data-fgColor="#00a65a">
-
-                        <div class="knob-label">CPU0</div>
+                    <div id="example-1">
+                        <div class="col-6 col-md-3 text-center" v-for="(cpu, index) in cpus"
+                             style="display: inline-block" :key="cpu.id">
+                            <label>
+                                <input type="text" class="knob" :value="cpu" data-skin="tron"
+                                       data-thickness="0.1"
+                                       data-width="90"
+                                       data-height="90" data-fgColor="#00a65a">
+                            </label>
+                            <!--                            <div class="knob-label">CPU{{cpu}}</div>-->
+                            <div class="knob-label">CPU{{index}}</div>
+                        </div>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-6 col-md-3 text-center">
-                        <input type="text" class="knob" value="10" data-skin="tron" data-thickness="0.1" data-width="90"
-                               data-height="90" data-fgColor="#00a65a">
-
-                        <div class="knob-label">CPU1</div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-6 col-md-3 text-center">
-                        <input type="text" class="knob" value="30" data-skin="tron" data-thickness="0.1" data-width="90"
-                               data-height="90" data-fgColor="#00a65a">
-
-                        <div class="knob-label">CPU2</div>
-                    </div>
-                    <!-- ./col -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
     <div class="col-6">
         <div class="card">
             <div class="card-header">
@@ -86,26 +65,21 @@
                     服务器磁盘使用情况
                 </h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-md-12 text-center">
-                        <input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.1"
-                               data-width="360"
-                               data-height="360" data-fgColor="#00005a">
+                        <label>
+                            <input type="text" class="knob" id="fileSystem" value=100 data-skin="tron"
+                                   data-thickness="0.1"
+                                   data-width="360"
+                                   data-height="360" data-fgColor="#00005a">
+                        </label>
                     </div>
-                    <!-- ./col -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
 </div>
-<!-- /.row -->
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -115,79 +89,156 @@
                     服务器日志
                 </h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
                     <h5 id="getLog"> 这里写服务器的日志</h5>
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
 </div>
-<!-- /.row -->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
 
 <script>
-    $(function () {
-        var dataJVM = [],
-            dataMEM = [],
-            totalPoints = 60;
+    let example1 = new Vue({
+        el: '#example-1',
+        data: {
+            cpus: [1, 2, 3, 4, 6, 7, 8]
+        }
+    });
 
-        for(var i = 0;i < totalPoints;++i){
+    $(function () {
+
+        let dataJVM = [],
+            dataMEM = [];
+        const totalPoints = 60;
+        for (let i = 0; i < totalPoints; ++i) {
             dataJVM.push(0);
             dataMEM.push(0);
         }
 
+        function updateMonitor() {
+            let xmlHttpRequest;
+            if (window.XMLHttpRequest) {
+                xmlHttpRequest = new XMLHttpRequest();
+            } else {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttpRequest.open("get", "/administrator/updateMonitorRecord", true);
+            xmlHttpRequest.send();
+        }
+
         function getJVMData() {
-
-            if (dataJVM.length > 0) {
-                dataJVM = dataJVM.slice(1)
-            }
-
-            var y = Math.random() * 10 - 5
-
-            if (y < 0) {
-                y = 0
-            } else if (y > 100) {
-                y = 100
-            }
-            dataJVM.push(y)
-
-            var res = []
-            for (var i = 0; i < dataJVM.length; ++i) {
+            getJVM()
+            let res = []
+            for (let i = 0; i < dataJVM.length; ++i) {
                 res.push([i, dataJVM[i]])
             }
-
             return res
+        }
+
+        function getJVM() {
+            let xmlHttpRequest;
+            if (window.XMLHttpRequest) {
+                xmlHttpRequest = new XMLHttpRequest();
+            } else {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttpRequest.open("get", "/administrator/getJVM", true);
+            xmlHttpRequest.send();
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (dataJVM.length > 0) {
+                        dataJVM = dataJVM.slice(1)
+                    }
+                    let y = this.responseText;
+                    if (y < 0) {
+                        y = 0
+                    } else if (y > 100) {
+                        y = 100
+                    }
+                    dataJVM.push(y)
+                }
+            }
         }
 
         function getMEMData() {
-
-            if (dataMEM.length > 0) {
-                dataMEM = dataMEM.slice(1)
-            }
-
-            var y = Math.random() * 10 - 5
-
-            if (y < 0) {
-                y = 0
-            } else if (y > 100) {
-                y = 100
-            }
-            dataMEM.push(y)
-
-            var res = []
-            for (var i = 0; i < dataMEM.length; ++i) {
+            getMEM()
+            const res = [];
+            for (let i = 0; i < dataMEM.length; ++i) {
                 res.push([i, dataMEM[i]])
             }
-
             return res
         }
 
-        var jvm_plot = $.plot('#jvm', [
+        function getMEM() {
+            let xmlHttpRequest;
+            if (window.XMLHttpRequest) {
+                xmlHttpRequest = new XMLHttpRequest();
+            } else {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttpRequest.open("get", "/administrator/getMEM", true);
+            xmlHttpRequest.send();
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (dataMEM.length > 0) {
+                        dataMEM = dataMEM.slice(1)
+                    }
+                    let y = this.responseText;
+                    if (y < 0) {
+                        y = 0
+                    } else if (y > 100) {
+                        y = 100
+                    }
+                    dataMEM.push(y)
+                }
+            }
+        }
+
+        function setFileSystem() {
+            let xmlHttpRequest;
+            if (window.XMLHttpRequest) {
+                xmlHttpRequest = new XMLHttpRequest();
+            } else {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttpRequest.open("get", "/administrator/getFileSystem", true);
+            xmlHttpRequest.send();
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("fileSystem").value = (this.responseText * 100).toFixed(2);
+                }
+            }
+        }
+
+        function setCPU() {
+            let xmlHttpRequest;
+            if (window.XMLHttpRequest) {
+                xmlHttpRequest = new XMLHttpRequest();
+            } else {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttpRequest.open("get", "/administrator/getCPU", true);
+            xmlHttpRequest.send();
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    for (; 0 < example1.cpus.length;) {
+                        example1.cpus.pop();
+                    }
+                    let responseText = this.responseText.replace('[', '').replace(']', '').split(',');
+                    for (let i = 0; i < responseText.length; ++i) {
+                        let cpu = (responseText[i] * 100).toFixed(2)
+                        example1.cpus.push(cpu);
+                    }
+                    // console.log('example1.cpus: ', example1.cpus);
+                }
+            }
+        }
+
+        updateMonitor();
+        const jvm_plot = $.plot('#jvm', [
                 {
                     data: getJVMData(),
                 }
@@ -216,8 +267,7 @@
                 }
             }
         );
-
-        var mem_plot = $.plot('#mem', [
+        const mem_plot = $.plot('#mem', [
                 {
                     data: getMEMData(),
                 }
@@ -248,66 +298,95 @@
         );
 
         function update() {
+            updateMonitor()
             jvm_plot.setData([getJVMData()])
             jvm_plot.draw()
-
             mem_plot.setData([getMEMData()])
             mem_plot.draw()
-
+            setFileSystem()
+            setCPU()
+            // $.parser.parse();
             setTimeout(update, 1000)
         }
+
         update()
     })
 </script>
-
 <script>
     $(function () {
         $('.knob').knob({
             draw: function () {
-                var a = this.angle(this.cv)  // Angle
-                    ,
-                    sa = this.startAngle          // Previous start angle
-                    ,
-                    sat = this.startAngle         // Start angle
-                    ,
-                    ea                            // Previous end angle
-                    ,
-                    eat = sat + a                 // End angle
-                    ,
-                    r = true
-
+                const a = this.angle(this.cv), // Angle
+                    // sa = this.startAngle,        // Previous start angle
+                    sat = this.startAngle,        // Start angle
+                    // ea,             // Previous end angle
+                    eat = sat + a,             // End angle
+                    r = true;
                 this.g.lineWidth = this.lineWidth
-
                 this.g.beginPath()
                 this.g.strokeStyle = r ? this.o.fgColor : this.fgColor
                 this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false)
                 this.g.stroke()
-
                 this.g.lineWidth = 2
                 this.g.beginPath()
                 this.g.strokeStyle = this.o.fgColor
                 this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false)
                 this.g.stroke()
-
                 return false
             }
         })
     })
 </script>
-<script>
-    $(function () {
-        let xmlHttpRequest;
-        if (window.XMLHttpRequest) {
-            xmlHttpRequest = new XMLHttpRequest();
-        } else {
-            xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+<script type="text/javascript">
+    var websocket = null;
+
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8080/administrator/webSocket");
+
+        //连接发生错误的回调方法
+        websocket.onerror = function () {
+            setMessageInnerHTML("error");
+        };
+
+        //连接成功建立的回调方法
+        websocket.onopen = function (event) {
+            setMessageInnerHTML("open");
         }
-        xmlHttpRequest.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                document.getElementById("getLog").innerHTML = this.responseText;
-            }
+
+        //接收到消息的回调方法
+        websocket.onmessage = function (event) {
+            setMessageInnerHTML(event.data);
         }
-        xmlHttpRequest.open("get", "/administrator/getLog", true);
-        xmlHttpRequest.send();
-    })
+
+        //连接关闭的回调方法
+        websocket.onclose = function () {
+            setMessageInnerHTML("close");
+        }
+
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function () {
+            websocket.close();
+        }
+
+        //将消息显示在网页上
+        function setMessageInnerHTML(innerHTML) {
+            document.getElementById('getLog').innerHTML += innerHTML + '<br/>';
+        }
+
+        //关闭连接
+        function closeWebSocket() {
+            websocket.close();
+        }
+
+        //发送消息
+        function send() {
+            var message = document.getElementById('text').value;
+            websocket.send(message);
+        }
+    } else {
+        alert('Not support websocket')
+    }
+
 </script>
+
