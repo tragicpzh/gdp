@@ -17,11 +17,11 @@ public class platformMonitorController {
     MonitorService monitorService;
     private MonitorRecord monitorRecord;
 //
-//    @GetMapping("/updateMonitorRecord")
-//    @ResponseBody
-//    public void updateMonitorRecord() {
-//        monitorRecord = monitorService.getMonitorRecord();
-//    }
+    @GetMapping("/updateMonitorRecord")
+    @ResponseBody
+    public void updateMonitorRecord() {
+        monitorRecord = monitorService.getMonitorRecord();
+    }
 //
 //    @GetMapping("/getJVM")
 //    @ResponseBody
