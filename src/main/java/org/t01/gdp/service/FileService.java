@@ -164,7 +164,9 @@ public class FileService {
                 LOG.warn("文件\""+ subPath + "userimage.jpg" + "\"未删除成功");
             }
         }
-        file.renameTo(fileRename);
+        if(file.renameTo(fileRename)){
+            LOG.warn("文件\""+ subPath + "userimage.jpg" + "\"未重命名成功");
+        }
         return true;
     }
 }

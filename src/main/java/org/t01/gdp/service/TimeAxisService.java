@@ -1,6 +1,8 @@
 package org.t01.gdp.service;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.t01.gdp.domain.TimePoint;
 
 import java.io.*;
@@ -13,6 +15,8 @@ import java.util.*;
  */
 
 public class TimeAxisService {
+    private static final Logger LOG = LoggerFactory.getLogger(TimeAxisService.class);
+
     private static ArrayList<TimePoint> timePoints = new ArrayList<>();
     private static int timeAxisState = -1;
     private static final String[] name = new String[]{"出题","选题","开题答辩","项目中前期","项目中期","项目中后期","论文提交","结题答辩","结束"};
@@ -96,7 +100,7 @@ public class TimeAxisService {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
                 return false;
             }
         }
@@ -112,24 +116,24 @@ public class TimeAxisService {
             bos.write(jsonString.getBytes());
             return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         }finally {
             if(bos!=null){
                 try {
                     bos.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e.getMessage());
                 }
             }
             if(fos!=null){
                 try {
                     fos.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e.getMessage());
                 }
             }
         }
@@ -144,7 +148,7 @@ public class TimeAxisService {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
                 return false;
             }
         }
@@ -175,27 +179,28 @@ public class TimeAxisService {
 
                 return true;
             } catch (Exception e) {
+                LOG.error(e.getMessage());
                 return false;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         }finally {
             if(bis!=null){
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e.getMessage());
                 }
             }
             if(fis!=null){
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e.getMessage());
                 }
             }
         }
