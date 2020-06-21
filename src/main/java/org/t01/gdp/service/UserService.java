@@ -9,18 +9,15 @@ import java.util.*;
 
 @Service
 public class UserService {
-    /*private final StudentMapper studentMapper;
-    private final TeacherMapper teacherMapper;
-    private final AdministratorMapper administratorMapper;*/
     @Autowired
     MajorMapper majorMapper;
     @Autowired
     CollegeMapper collegeMapper;
     @Autowired
     UserMapper userMapper;
-    private static Set<String> allIds;
-    private static Set<String> allPhoneNumbers;
-    private static Set<String> allEmails;
+    private Set<String> allIds;
+    private Set<String> allPhoneNumbers;
+    private Set<String> allEmails;
 
     @Autowired
     StudentMapper studentMapper;
@@ -48,16 +45,12 @@ public class UserService {
     }
 
     private String checkNewPhoneNumberAndEmail(String phoneNumber, String email, Map<String, Object> result) {
-        if (allPhoneNumbers.contains(phoneNumber)) {
-            if (result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber)) {
-                return "Phone Number Already Exist";
-            }
+        if (allPhoneNumbers.contains(phoneNumber)(result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber))) {
+            return "Phone Number Already Exist";
         }
 
-        if (allEmails.contains(email)) {
-            if (result.get("email") == null || !result.get("email").toString().equals(email)) {
-                return "Email Already Exist";
-            }
+        if (allEmails.contains(email)(result.get("email") == null || !result.get("email").toString().equals(email))) {
+            return "Email Already Exist";
         }
 
         return "success";

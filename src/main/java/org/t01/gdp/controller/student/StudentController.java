@@ -156,7 +156,7 @@ public class StudentController {
     @ResponseBody
     public Object todoList(HttpServletRequest request){
         Long studentId=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
-        return Result.success(studentService.ToDoList(studentId));
+        return Result.success(studentService.toDoList(studentId));
     }
 
     @GetMapping("/getScore")

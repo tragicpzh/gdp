@@ -1,8 +1,8 @@
 package org.t01.gdp.service;
 
-import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,13 +12,13 @@ import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
+    private static final Logger LOG = LoggerFactory.getLogger(StudentService.class);
+
     private final StudentMapper studentMapper;
     private final SubjectMapper subjectMapper;
     private final UserMapper userMapper;
@@ -145,21 +145,6 @@ public class StudentService {
         return -1;
     }
 
-//    public int updateStudentCrossPaperScore(String reviewStudentId, String studentId, Integer score){
-//        Student student = studentMapper.selectByPrimaryKey(reviewStudentId);
-//        if(student.getCrossStudentId().equals(studentId)){
-//            student = new Student();
-//            student.setStudentPaperScore(score);
-//
-//            StudentExample studentExample = new StudentExample();
-//            StudentExample.Criteria criteria = studentExample.createCriteria();
-//            criteria.andIdEqualTo(studentId);
-//
-//            return studentMapper.updateByExampleSelective(student,studentExample);
-//        }
-//        return -1;
-//    }
-
     public void updateStudentOpenReport(long studentId, String path, String originalFilename) {
         StudentExample studentExample = new StudentExample();
         studentExample.createCriteria().andIdEqualTo(studentId);
@@ -192,9 +177,9 @@ public class StudentService {
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
-    public Map<String,Object> simpleSelect(Long student_id){
-        Map<String,Object> map=new HashMap<String,Object>();
-        Student student=studentMapper.selectByPrimaryKey(student_id);
+    public Map<String,Object> simpleSelect(Long studentId){
+        Map<String,Object> map=new HashMap<>();
+        Student student=studentMapper.selectByPrimaryKey(studentId);
         Major major=majorMapper.selectByPrimaryKey(student.getMajorId());
         College college=collegeMapper.selectByPrimaryKey(major.getCollegeId());
         Subject subject=subjectMapper.selectByPrimaryKey(student.getSubjectId());
@@ -207,14 +192,18 @@ public class StudentService {
         return  map;
     }
 
-    public Map<String,Object> ToDoList(Long student_id){
-        Map<String,Object>map=new HashMap<String,Object>();
-        Student student=studentMapper.selectByPrimaryKey(student_id);
+    public Map<String,Object> toDoList(Long studentId){
+        Map<String,Object>map=new HashMap<>();
+        Student student=studentMapper.selectByPrimaryKey(studentId);
         map.put("emailexsit",(student.getEmail()!=null)?true:false);
         map.put("headexsit",(student.getHeadPortrait()!=null)?true:false);
         map.put("telephoneexsit",(student.getPhoneNumber()!=null)?true:false);
 
-        Boolean subject=true,open=true,mid=true,con=true,paper=true;
+        Boolean subject=true;
+        Boolean open=true;
+        Boolean mid=true;
+        Boolean con=true;
+        Boolean paper=true;
         String state=student.getState();
         switch(state){
             case "NO_SELECTION":
@@ -232,6 +221,8 @@ public class StudentService {
             case "NoConDoc":
                 con=false;
                 break;
+            default:
+                LOG.warn("未知的状态：{}",state);
         }
 
         map.put("subjectDoc",subject);
@@ -242,9 +233,9 @@ public class StudentService {
         return map;
     }
 
-    public Map<String,Object> getScore(Long student_id){
-        Map<String,Object>map=new HashMap<String,Object>();
-        Student student=studentMapper.selectByPrimaryKey(student_id);
+    public Map<String,Object> getScore(Long studentId){
+        Map<String,Object>map=new HashMap<>();
+        Student student=studentMapper.selectByPrimaryKey(studentId);
         map.put("openSc1",student.getOpenScore1());
         map.put("openSc2",student.getOpenScore2());
         map.put("openSc3",student.getOpenScore3());
@@ -260,15 +251,15 @@ public class StudentService {
         return map;
     }
 
-    public List<Subject> getSubject(Long student_id){
-        Student student=studentMapper.selectByPrimaryKey(student_id);
-        Long major_id=student.getMajorId();
+    public List<Subject> getSubject(Long studentId){
+        Student student=studentMapper.selectByPrimaryKey(studentId);
+        Long majorId=student.getMajorId();
         SubjectExample subjectExample=new SubjectExample();
         subjectExample.createCriteria()
-                .andMajorIdEqualTo(major_id);
+                .andMajorIdEqualTo(majorId);
         subjectExample.setOrderByClause("id DESC");
         List<Subject> list=subjectMapper.selectByExample(subjectExample);
-        List<Subject> recent=new ArrayList<Subject>();
+        List<Subject> recent=new ArrayList<>();
         int size=list.size();
         for(int i=0;i<5&&i<size;i++){
             recent.add(list.get(i));
@@ -278,7 +269,7 @@ public class StudentService {
 
     public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {
         long studentId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = "userImage/student/" + studentId + "/";
+        String path = "userImage/student/" + studentId + '/';
         fileService.uploadUserImage(path, multipartFile);
     }
 }

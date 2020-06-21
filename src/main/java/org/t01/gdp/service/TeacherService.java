@@ -1,7 +1,6 @@
 package org.t01.gdp.service;
 
 import com.github.pagehelper.PageInfo;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,8 +8,6 @@ import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -39,19 +36,19 @@ public class TeacherService {
         return subjectMapper.insert(subject);
     }
 
-    public String create_review(Long college_id,int start,int end,List<CrossreviewInfo> list){
+    public String createReview(Long collegeId, int start, int end, List<CrossreviewInfo> list){
         String msg="";
         Random random=new Random();
         TeacherExample teacherExample=new TeacherExample();
         teacherExample.createCriteria()
-                .andCollegeIdEqualTo(college_id);
+                .andCollegeIdEqualTo(collegeId);
         List<Teacher> teachers=teacherMapper.selectByExample(teacherExample);
         for(int i=start;i<=end;i++) {
             int cnt = 0;
             while (cnt >= 0) {
                 cnt++;
                 if (cnt > 20) {
-                    msg += "无法为" + String.valueOf(teachers.get(i).getId()) + "号课题分配交叉评阅老师";
+                    msg = msg + "无法为" + teachers.get(i).getId() + "号课题分配交叉评阅老师";
                     break;
                 }
                 int cas = random.nextInt(teachers.size());
@@ -65,22 +62,22 @@ public class TeacherService {
         return msg;
     }//分配中的子方法
 
-    public String cross_review_create(List<Subject> subjects){
+    public String crossReviewCreate(List<Subject> subjects){
         if(subjects.size()<=1)return "课题数量太少";
 
-        List<CrossreviewInfo> list=new ArrayList<CrossreviewInfo>();        //创建CrossreviewInfo数组，为了加入学院id属性。
+        List<CrossreviewInfo> list=new ArrayList<>();        //创建CrossreviewInfo数组，为了加入学院id属性。
         for (Subject subject : subjects) {
             MajorExample majorExample=new MajorExample();
             majorExample.createCriteria()
                     .andIdEqualTo(subject.getMajorId());
             List<Major> majors=majorMapper.selectByExample(majorExample);
-            Long college_id=(majors.size()>0?majors.get(0).getCollegeId():null);        //查询获得学院id
+            Long collegeId=(!majors.isEmpty()?majors.get(0).getCollegeId():null);        //查询获得学院id
 
             CrossreviewInfo temp=new CrossreviewInfo();
             temp.setId(subject.getId());
             temp.setCreateTeacherId(subject.getCreateTeacherId());
             temp.setCrossReviewTeacher(null);
-            temp.setCollegeId(college_id);
+            temp.setCollegeId(collegeId);
             list.add(temp);
         }
         Collections.sort(list, new Comparator<CrossreviewInfo>() {
@@ -90,8 +87,8 @@ public class TeacherService {
             }
         });     //根据学院ID排序
 
-        int start_id=-1;
-        int end_id=-1;
+        int startId=-1;
+        int endId=-1;
         String msg="";
 
         for (int i=0;i<list.size();i++){
@@ -102,20 +99,20 @@ public class TeacherService {
                     continue;
                 }
                 else {
-                    end_id=i-1;
-                    Long college_id=crossreviewInfo1.getCollegeId();
-                    msg+=create_review(college_id,start_id,end_id,list);
-                    start_id=i;
+                    endId=i-1;
+                    Long collegeId=crossreviewInfo1.getCollegeId();
+                    msg = msg + createReview(collegeId,startId,endId,list);
+                    startId=i;
                 }
             }
            else {
-                start_id=0;
+                startId=0;
             }
         }                                 //自动分配交叉评审老师，满足同学院非开题老师
 
-        end_id=list.size()-1;                                               //为最后一组学院的课题分配交叉评审老师
-        Long college_id=list.get(start_id).getCollegeId();
-        msg+=create_review(college_id,start_id,end_id,list);
+        endId=list.size()-1;                                               //为最后一组学院的课题分配交叉评审老师
+        Long collegeId=list.get(startId).getCollegeId();
+        msg = msg + createReview(collegeId,startId,endId,list);
 
         for (CrossreviewInfo crossreviewInfo : list) {
             Subject subject=new Subject();
@@ -128,19 +125,15 @@ public class TeacherService {
        return msg;
     }//自动分配交叉评阅老师
 
-    public PageInfo<StudentAndSubject> cross_review_select(ReviewSearchCase reviewSearchCase,int pageNo,int pageSize,Long teacher_id){
-        return subjectService.searchReview(reviewSearchCase,pageNo,pageSize);
-    }//查看交叉评阅列表
-
     public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {
         long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = "userImage/teacher/" + teacherId + "/";
+        String path = "userImage/teacher/" + teacherId + '/';
         fileService.uploadUserImage(path, multipartFile);
     }
 
-    public Map<String,Object> simpleSelect(Long teacher_id){
-        Map<String,Object> map=new HashMap<String,Object>();
-        Teacher teacher=teacherMapper.selectByPrimaryKey(teacher_id);
+    public Map<String,Object> simpleSelect(Long teacherId){
+        Map<String,Object> map=new HashMap<>();
+        Teacher teacher=teacherMapper.selectByPrimaryKey(teacherId);
         College college=collegeMapper.selectByPrimaryKey(teacher.getCollegeId());
         map.put("name",teacher.getName());
         map.put("college",college.getName());
@@ -150,18 +143,23 @@ public class TeacherService {
         return  map;
     }
 
-    public Map<String,Object> ToDoList(Long teacher_id){
-        Map<String,Object>map=new HashMap<String,Object>();
+    public Map<String,Object> toDoList(Long teacher_id){
+        Map<String,Object>map=new HashMap<>();
         Teacher teacher=teacherMapper.selectByPrimaryKey(teacher_id);
         map.put("emailexsit",(teacher.getEmail()!=null)?true:false);
         map.put("headexsit",(teacher.getHeadPortrait()!=null)?true:false);
         map.put("telephoneexsit",(teacher.getPhoneNumber()!=null)?true:false);
 
-        Boolean subjectUp=true,openReview=true,midReview=true,paperReview=true,crossReview=true,conReview=true;
+        Boolean subjectUp=true;
+        Boolean openReview=true;
+        Boolean midReview=true;
+        Boolean paperReview=true;
+        Boolean crossReview=true;
+        Boolean conReview=true;
         SubjectExample subjectExample=new SubjectExample();
         subjectExample.createCriteria().andCreateTeacherIdEqualTo(teacher.getId()).andStateEqualTo("RETURN");
         List<Subject> subjects=subjectMapper.selectByExample(subjectExample);
-        subjectUp=(subjects.size()>0)?false:true;
+        subjectUp=(!subjects.isEmpty())?false:true;
 
         //review_teacher_id1
         subjectExample.clear();
@@ -176,9 +174,9 @@ public class TeacherService {
                 if(state.equals("WaitOpenScore")&&student.getOpenScore1()==null)openReview=false;
                 if(state.equals("WaitMidScore")&&student.getMiddleScore1()==null)midReview=false;
                 if(state.equals("WaitConScore")&&student.getConclusionScore1()==null)conReview=false;
-                if(openReview==false&&midReview==false&&conReview==false)break;
+                if(!openReview&&!midReview&&!conReview)break;
             }
-            if(openReview==false&&midReview==false&&conReview==false)break;
+            if(!openReview&&!midReview&&!conReview)break;
         }
 
         //review_teacher_id2
@@ -194,9 +192,9 @@ public class TeacherService {
                 if(state.equals("WaitOpenScore")&&student.getOpenScore2()==null)openReview=false;
                 if(state.equals("WaitMidScore")&&student.getMiddleScore2()==null)midReview=false;
                 if(state.equals("WaitConScore")&&student.getConclusionScore2()==null)conReview=false;
-                if(openReview==false&&midReview==false&&conReview==false)break;
+                if(!openReview&&!midReview&&!conReview)break;
             }
-            if(openReview==false&&midReview==false&&conReview==false)break;
+            if(!openReview&&!midReview&&!conReview)break;
         }
 
         //review_teacher_id3
@@ -212,9 +210,9 @@ public class TeacherService {
                 if(state.equals("WaitOpenScore")&&student.getOpenScore3()==null)openReview=false;
                 if(state.equals("WaitMidScore")&&student.getMiddleScore3()==null)midReview=false;
                 if(state.equals("WaitConScore")&&student.getConclusionScore3()==null)conReview=false;
-                if(openReview==false&&midReview==false&&conReview==false)break;
+                if(!openReview&&!midReview&&!conReview)break;
             }
-            if(openReview==false&&midReview==false&&conReview==false)break;
+            if(!openReview&&!midReview&&!conReview)break;
         }
 
         //cross_review_teacher
@@ -228,9 +226,9 @@ public class TeacherService {
             for (Student student : students) {
                 String state=student.getState();
                 if(state.equals("WaitPaperScore")&&student.getCrossPaperScore()==null)crossReview=false;
-                if(crossReview==false)break;
+                if(!crossReview)break;
             }
-            if(crossReview==false)break;
+            if(!crossReview)break;
         }
 
         //paper_review_teacher
@@ -244,9 +242,9 @@ public class TeacherService {
             for (Student student : students) {
                 String state=student.getState();
                 if(state.equals("WaitPaperScore")&&student.getTeacherPaperScore()==null)paperReview=false;
-                if(paperReview==false)break;
+                if(!paperReview)break;
             }
-            if(paperReview==false)break;
+            if(!paperReview)break;
         }
 
         map.put("subjectUp",subjectUp);
@@ -258,25 +256,25 @@ public class TeacherService {
         return map;
     }
 
-    public List<Map<String,Object>> getReview(Long teacher_id){
+    public List<Map<String,Object>> getReview(Long teacherId){
         List<Teacher> teachers=teacherMapper.selectByExample(null);
-        Map<Long,String> teacher_map=new HashMap<Long,String>();
+        Map<Long,String> teacherMap=new HashMap<>();
         for (Teacher teacher : teachers) {
-            teacher_map.put(teacher.getId(),teacher.getName());
+            teacherMap.put(teacher.getId(),teacher.getName());
         }
         SubjectExample subjectExample=new SubjectExample();
-        subjectExample.or().andReviewTeacherId1EqualTo(teacher_id);
-        subjectExample.or().andReviewTeacherId2EqualTo(teacher_id);
-        subjectExample.or().andReviewTeacherId3EqualTo(teacher_id);
+        subjectExample.or().andReviewTeacherId1EqualTo(teacherId);
+        subjectExample.or().andReviewTeacherId2EqualTo(teacherId);
+        subjectExample.or().andReviewTeacherId3EqualTo(teacherId);
         List<Subject> subjects=subjectMapper.selectByExample(subjectExample);
-        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+        List<Map<String,Object>> list=new ArrayList<>();
         for (Subject subject : subjects) {
-            Map<String,Object> map=new HashMap<String,Object>();
+            Map<String,Object> map=new HashMap<>();
             map.put("id",subject.getId());
             map.put("name",subject.getName());
-            map.put("review1",teacher_map.get(subject.getReviewTeacherId1()));
-            map.put("review2",teacher_map.get(subject.getReviewTeacherId2()));
-            map.put("review3",teacher_map.get(subject.getReviewTeacherId3()));
+            map.put("review1",teacherMap.get(subject.getReviewTeacherId1()));
+            map.put("review2",teacherMap.get(subject.getReviewTeacherId2()));
+            map.put("review3",teacherMap.get(subject.getReviewTeacherId3()));
             list.add(map);
         }
         return list;

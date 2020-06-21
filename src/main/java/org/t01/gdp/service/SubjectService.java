@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,8 +116,8 @@ public class SubjectService {
         return studentAndSubjectPageInfo;
     }
 
-    public void updateById(Subject subject, String examine_flag) {
-            subject.setState(examine_flag);
+    public void updateById(Subject subject, String examineFlag) {
+            subject.setState(examineFlag);
             subjectMapper.updateByPrimaryKeySelective(subject);
     }
 
@@ -133,10 +132,10 @@ public class SubjectService {
         return -1;
     }
 
-    public boolean chooseSubjectByStudent(Long student_id, String subject_id){
+    public boolean chooseSubjectByStudent(Long studentId, String subjectId){
         Student student=new Student();
-        student.setSubjectId(Long.valueOf(subject_id));
-        student.setId(student_id);
+        student.setSubjectId(Long.valueOf(subjectId));
+        student.setId(studentId);
         studentMapper.updateByPrimaryKeySelective(student);
         return true;
     }
@@ -145,15 +144,6 @@ public class SubjectService {
         PageHelper.startPage(pageNo, pageSize);
         return new PageInfo<>(subjectForTeacher.selectByTeacherId(id));
     }
-
-//    public PageInfo<SubjectBrief> getSubjectsForAdministrator(int pageNo, int pageSize) {
-//        PageHelper.startPage(pageNo, pageSize);
-//
-//        SubjectExample subjectExample = new SubjectExample();
-//        subjectExample.createCriteria().andStateNotEqualTo("PASSED");
-//
-//        return new PageInfo<>(subjectMapper.selectBriefByExample(subjectExample));
-//    }
 
     public Subject getSubjectById(long id){
         return subjectMapper.selectByPrimaryKey(id);
@@ -175,9 +165,9 @@ public class SubjectService {
         return subjectMapper.deleteByPrimaryKey(subjectId);
     }
 
-    public SubjectInfo selectSubjectByStudent(String subject_id){
+    public SubjectInfo selectSubjectByStudent(String subjectId){
         SubjectInfo subjectInfo;
-        subjectInfo=sqlMapper.selectSubjectByPrimaryKey(Long.valueOf(subject_id));
+        subjectInfo=sqlMapper.selectSubjectByPrimaryKey(Long.valueOf(subjectId));
         return subjectInfo;
     }
 
@@ -204,7 +194,7 @@ public class SubjectService {
                 difficult_min,
                 difficult_max,
                 state);
-        PageInfo<SubjectInfo> subjectPageInfo=new PageInfo<>(list);
-        return subjectPageInfo;
+
+        return new PageInfo<>(list);
     }
 }

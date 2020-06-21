@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/teacher")
 public class TeacherController {
     private static final String USER_INFO = "USER_INFO";
-    private static final String LIST_FORMAT = "{\"recordsTotal\": %d,\"recordsFiltered\": %d,\"data\": %s}";;
+    private static final String LIST_FORMAT = "{\"recordsTotal\": %d,\"recordsFiltered\": %d,\"data\": %s}";
 
     @Autowired
     TeacherService teacherService;
@@ -226,7 +226,7 @@ public class TeacherController {
     @PostMapping("/crossReview/create")
     @ResponseBody
     public Object crossReviewCreate(List<Subject> subjects){
-        return Result.success(teacherService.cross_review_create(subjects));
+        return Result.success(teacherService.crossReviewCreate(subjects));
     }
 
     @RequestMapping("/crossReview/getList")
@@ -285,13 +285,13 @@ public class TeacherController {
     @ResponseBody
     public Object todoList(HttpServletRequest request){
         Long teacherId=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
-        return Result.success(teacherService.ToDoList(teacherId));
+        return Result.success(teacherService.toDoList(teacherId));
     }
 
     @GetMapping("/getReview")
     @ResponseBody
     public Object getReview(HttpServletRequest request){
-        Long teacher_id=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
-        return Result.success(teacherService.getReview(teacher_id));
+        Long teacherId=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
+        return Result.success(teacherService.getReview(teacherId));
     }
 }

@@ -74,7 +74,7 @@ public class UserController {
                         email = value;
                         break;
                     default:
-                        LOG.warn("未知的字段名称:" + key);
+                        LOG.warn("未知的字段名称:{}", key);
                 }
             }
             String message = userService.addUser(name, phoneNumber, email, role, otherInfo);
