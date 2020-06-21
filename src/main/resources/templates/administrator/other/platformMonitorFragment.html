@@ -348,7 +348,7 @@
         } else {
             xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xmlHttpRequest.open("get", "/administrator/getProcessor", true);
+        xmlHttpRequest.open("get", "/administrator/getJvmProcessors", true);
         xmlHttpRequest.send();
         xmlHttpRequest.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
