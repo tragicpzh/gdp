@@ -49,6 +49,7 @@
                 <p>学号：<span id="studentId"></span></p>
                 <p>编号：<span id="subjectId"></span></p>
                 <p>分数：<input type="number" max="100" min="0" id="score"></p>
+                <p>评价：<textarea maxlength="500" id="evaluation" placeholder="请输入主观评价"/></p>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -113,6 +114,7 @@
         $("#studentId").text(studentId);
         $("#subjectId").text(subjectId);
         $("#score").val(0);
+        $("#evaluation").val("");
     }
 </script>
 
@@ -121,6 +123,7 @@
         var studentId = $("#studentId").text();
         var subjectId = $("#subjectId").text();
         var score = $("#score").val();
+        var evaluation = $("#evaluation").val();
 
         if(score > 100 || score < 0 || score == ""){
             alert("请输入0~100之间的整数");
@@ -135,7 +138,8 @@
             data: {
                 "studentId": studentId,
                 "subjectId": subjectId,
-                "score": score
+                "score": score,
+                "evaluation": evaluation
             },
             success: function () {
                 alert("保存成功");

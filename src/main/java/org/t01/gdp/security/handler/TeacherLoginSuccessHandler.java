@@ -23,7 +23,7 @@ public class TeacherLoginSuccessHandler implements AuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String teacherId = authentication.getName();
 
-        MyLogService.info("教师用户[" + teacherId +"]成功登录管理员平台");
+        MyLogService.info("教师用户[" + teacherId +"]成功登录教师平台");
 
         TeacherExample teacherExample = new TeacherExample();
         teacherExample.createCriteria().andTeacherIdEqualTo(teacherId);

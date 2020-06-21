@@ -25,7 +25,7 @@ public class StudentLoginSuccessHandler implements AuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String studentId = authentication.getName();
 
-        MyLogService.info("学生用户[" + studentId +"]成功登录管理员平台");
+        MyLogService.info("学生用户[" + studentId +"]成功登录学生平台");
 
         StudentExample studentExample = new StudentExample();
         studentExample.createCriteria().andStudentIdEqualTo(studentId);
