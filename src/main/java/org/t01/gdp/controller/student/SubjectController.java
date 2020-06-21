@@ -16,15 +16,15 @@ public class SubjectController {
 
     @PostMapping("/subject/choose")
     @ResponseBody
-    public Object Subject_Choose(HttpServletRequest request, String subject_id2){
-        Long student_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        return Result.success(subjectService.chooseSubjectByStudent(student_id,subject_id2));
+    public Object subjectChoose(HttpServletRequest request, @RequestParam("subject_id2") String subjectId){
+        Long studentId=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(subjectService.chooseSubjectByStudent(studentId,subjectId));
     }
 
     @GetMapping("/subject/select")
     @ResponseBody
-    public Object subject_select( String subject_id){
-        return Result.success(subjectService.selectSubjectByStudent(subject_id),"详细信息");
+    public Object subjectSelect(@RequestParam("subject_id") String subjectId){
+        return Result.success(subjectService.selectSubjectByStudent(subjectId),"详细信息");
     }
 
     @GetMapping("/subject/list")

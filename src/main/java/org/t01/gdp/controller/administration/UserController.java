@@ -3,6 +3,9 @@ package org.t01.gdp.controller.administration;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.t01.gdp.service.UserService;
@@ -13,7 +16,10 @@ import java.util.*;
 @RequestMapping("/administrator")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    private UserService userService;
 
     @ResponseBody
     @RequestMapping("/addSingleUser")
@@ -67,6 +73,8 @@ public class UserController {
                     case "Email":
                         email = value;
                         break;
+                    default:
+                        LOG.warn("未知的字段名称:" + key);
                 }
             }
             String message = userService.addUser(name, phoneNumber, email, role, otherInfo);

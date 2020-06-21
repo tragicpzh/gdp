@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.t01.gdp.GrantedAuthority.MyGrantedAuthority;
+import org.t01.gdp.grantedauthority.MyGrantedAuthority;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.StudentExample;
 import org.t01.gdp.mapper.StudentMapper;

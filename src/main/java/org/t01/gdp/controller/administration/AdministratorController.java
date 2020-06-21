@@ -28,23 +28,9 @@ public class AdministratorController {
     @Autowired
     FileService fileService;
 
-    /*@GetMapping("/accountManagement/accountInfoFragment")
-    @ResponseBody
-    public UserInfo getAccountInfo(HttpServletRequest request){
-//        System.out.println((UserInfo) request.getSession(false).getAttribute("USER_INFO"));
-        return (UserInfo) request.getSession(false).getAttribute("USER_INFO");
-    }*/
-
-//    @GetMapping("/home")
-//    public String getHome(HttpServletRequest request, HttpServletResponse response, ModelMap map){
-//        map.addAttribute("position","home");
-//
-//        return "administrator/home";
-//    }
-
     @GetMapping("/timeAxis")
     @ResponseBody
-    public ArrayList<TimePoint> getTimeAxis(ModelMap map){
+    public List<TimePoint> getTimeAxis(ModelMap map){
         return TimeAxisService.getTimePoints();
     }
 
@@ -75,7 +61,6 @@ public class AdministratorController {
         ArrayList<String> states = new ArrayList<>();
         states.add("NEW");
         states.add("MODIFIED");
-//        states.add("RETURN");
         subjectSearchCase.setState(states);
         PageInfo<Subject> subjects = subjectService.searchSubjects(subjectSearchCase,start / length + 1, length);
         long total = subjects.getTotal();
@@ -110,7 +95,7 @@ public class AdministratorController {
     @ResponseBody
     public String getUserImage(HttpServletRequest request){
         long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        String path = "userImage/administrator/" + String.valueOf(teacherId) + "/userimage.jpg";
+        String path = "userImage/administrator/" + teacherId + "/userimage.jpg";
         if(fileService.fileExit(path)){
             return "../" + path;
         }
@@ -123,7 +108,7 @@ public class AdministratorController {
         if(file == null){
             return "请选择文件";
         }
-        if(!((file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1)).equals("jpg"))){
+        if(!((file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1)).equals("jpg"))){
             return "文件格式错误，只支持jpg文件格式";
         }
         administratorService.uploadNewUserImage(request, file);

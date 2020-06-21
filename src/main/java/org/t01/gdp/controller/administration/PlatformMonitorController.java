@@ -9,10 +9,11 @@ import org.t01.gdp.domain.MonitorRecord;
 import org.t01.gdp.service.MonitorService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/administrator")
-public class platformMonitorController {
+public class PlatformMonitorController {
     @Autowired
     MonitorService monitorService;
     private MonitorRecord monitorRecord;
@@ -52,7 +53,7 @@ public class platformMonitorController {
 
     @GetMapping("/getCPU")
     @ResponseBody
-    public ArrayList<Double> getCPU() {
+    public List<Double> getCPU() {
         monitorRecord = monitorService.getMonitorRecord();
         if(monitorRecord.getCpuUsage()!=null){
             return monitorRecord.getCpuUsage();

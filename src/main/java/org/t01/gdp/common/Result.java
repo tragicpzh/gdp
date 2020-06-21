@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class Result {
-    private static String SUCCESS ="success";
-    private static String DATA="data";
-    private static String MESSAGE="message";
+    private static final String SUCCESS ="success";
+    private static final String DATA="data";
+    private static final String MESSAGE="message";
     private static Map<String,String> messageMap = new HashMap();
     private Result() {
     }
@@ -82,29 +82,18 @@ public class Result {
     public static  JSONResultMap fail(){
         return getJSONResultMap().put(SUCCESS,false).put("code",200);
     }
-    /*
-    public static  JSONResultMap fail(Object data){
-        return fail().put(DATA,data);
-    }
-    public static  JSONResultMap fail(Object data,String message){
-        return fail().put(DATA,data).put(MESSAGE,message);
-    }
-    public static  JSONResultMap fail(Object data,String message,int statusCode){
-        return fail(data).put(MESSAGE,message).put("code",statusCode);
-    }*/
+
     public static  JSONResultMap fail(String message,int statusCode){
         return fail(message).put("code",statusCode);
     }
+
     public static  JSONResultMap fail(int statusCode){
         return getJSONResultMap().put(SUCCESS,false).put("code",statusCode).put(MESSAGE,messageMap.get(String.valueOf(statusCode)));
     }
+
     public static JSONResultMap fail(String message){
         return fail().put(MESSAGE,message);
     }
-
-
-
-
 
     public static class JSONResultMap implements Map<String, Object> {
         private Map<String,Object> localMap =  new HashMap<>();
@@ -156,7 +145,6 @@ public class Result {
             getLocalMap().putAll(m);
         }
 
-
         @Override
         public void clear() {
             getLocalMap().clear();
@@ -176,9 +164,6 @@ public class Result {
         public Set<Entry<String, Object>> entrySet() {
             return getLocalMap().entrySet();
         }
-
-
     }
-
 
 }

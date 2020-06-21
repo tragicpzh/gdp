@@ -1,4 +1,4 @@
-package org.t01.gdp.GrantedAuthority;
+package org.t01.gdp.grantedauthority;
 
 import org.springframework.security.core.GrantedAuthority;
 

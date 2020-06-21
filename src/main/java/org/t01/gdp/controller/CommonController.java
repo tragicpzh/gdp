@@ -20,6 +20,8 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
+    private static final String INDEX = "index";
+
     @GetMapping("/download/**")
     @ResponseBody
     public void getDownload(HttpServletRequest request, HttpServletResponse response) {
@@ -29,7 +31,7 @@ public class CommonController {
     @RequestMapping("/**/*Fragment")
     public String getFragment(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        if(TimeAxisService.isAccessible(uri) || true){
+        if(TimeAxisService.isAccessible(uri)){
             return uri;
         }else{
             return "notAccessible";
@@ -38,18 +40,18 @@ public class CommonController {
 
     @PostMapping("/retrievePassword")
     public String retrievePassword(String username, String role, String smsVerifyCode, String emailVerifyCode, String newPassword){
-        if(!smsVerifyCode.equals("") && smsVerifyCode != null){
+        if(!smsVerifyCode.equals("")){
             String phoneNumber = userService.getPhoneNumber(username, role);
             if(!verificationService.smsVerify(smsVerifyCode,phoneNumber)){
-                return "index";
+                return INDEX;
             }
-        }else if(!emailVerifyCode.equals("") && emailVerifyCode != null){
+        }else if(!emailVerifyCode.equals("")){
             String email = userService.getEmail(username, role);
             if(!verificationService.emailVerify(emailVerifyCode,email)){
-                return "index";
+                return INDEX;
             }
         }else{
-            return "index";
+            return INDEX;
         }
 
         if(userService.setPassword(username,newPassword,role)){
@@ -60,9 +62,11 @@ public class CommonController {
                     return "teacher/login";
                 case "ADM":
                     return "administrator/login";
+                default:
+                    return INDEX;
             }
         }
-        return "index";
+        return INDEX;
     }
 
     @PostMapping("/sendVerifyCode")
