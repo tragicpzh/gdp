@@ -42,6 +42,14 @@
                                data-toggle="modal" data-target="#updateEmailModal"
                                value="修改邮箱"/>
                     </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-form-label  col-1">用户头像：</label>
+                        <label class="form-control-plaintext col-2" id="userImage"></label>
+                        <input type="button" id="showUpdateUserImageModal"
+                               class="form-control btn btn-outline-primary col-1 ml-3"
+                               data-toggle="modal" data-target="#updateUserImageModal"
+                               value="上传头像"/>
+                    </div>
                 </form>
             </div>
         </div>
@@ -149,6 +157,30 @@
                 <div class="modal-footer">
                     <button id="btnCheckEmailCode" type="button" class="btn btn-primary btn-sm">确认</button>
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateUserImageModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog"
+         aria-labelledby="updateUserImageModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateUserImageLabel">选择新头像（*.jpg）</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="updateUserImage">
+                        <input type="file" accept="image/jpeg" id="newUserImage" name="file">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="return uploadUserImage()">确定上传</button>
                 </div>
             </div>
         </div>
@@ -406,6 +438,22 @@
             }
         })
     })
+
+    function uploadUserImage() {
+        $("#updateUserImage").ajaxSubmit({
+            url:"/student/uploadNewUserImage",
+            success: function (msg) {
+                alert(msg);
+                if(msg=="上传成功"){
+                    location.reload();
+                }
+            },
+            fail: function () {
+                alert("上传失败");
+            }
+        });
+        return false;
+    }
 
 </script>
 </body>

@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.AdministratorService;
+import org.t01.gdp.service.FileService;
 import org.t01.gdp.service.SubjectService;
 import org.t01.gdp.service.TimeAxisService;
 
@@ -23,6 +25,8 @@ public class AdministratorController {
     SubjectService subjectService;
     @Autowired
     AdministratorService administratorService;
+    @Autowired
+    FileService fileService;
 
     /*@GetMapping("/accountManagement/accountInfoFragment")
     @ResponseBody
@@ -99,5 +103,29 @@ public class AdministratorController {
     @ResponseBody
     public boolean deleteSubject(long subjectId) {
         return subjectService.deleteSubject(subjectId) == 1;
+    }
+
+    @PostMapping("/getUserImage")
+    @ResponseBody
+    public String getUserImage(HttpServletRequest request){
+        long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "userImage/administrator/" + String.valueOf(teacherId) + "/userimage.jpg";
+        if(fileService.fileExit(path)){
+            return "../" + path;
+        }
+        return "../Rendering/dist/img/user2-160x160.jpg";
+    }
+
+    @PostMapping("/uploadNewUserImage")
+    @ResponseBody
+    public String uploadNewUserImage(HttpServletRequest request, MultipartFile file){
+        if(file == null){
+            return "请选择文件";
+        }
+        if(!((file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1)).equals("jpg"))){
+            return "文件格式错误，只支持jpg文件格式";
+        }
+        administratorService.uploadNewUserImage(request, file);
+        return "上传成功";
     }
 }

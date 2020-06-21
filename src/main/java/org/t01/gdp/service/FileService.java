@@ -1,5 +1,6 @@
 package org.t01.gdp.service;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -120,5 +121,38 @@ public class FileService {
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path;
         File file = new File(filePath);
         return file.exists();
+    }
+
+    public boolean uploadUserImage(String subPath, MultipartFile multipartFile){
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + subPath + multipartFile.getOriginalFilename());
+        if(!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        try {
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            Thumbnails.of(file).size(160, 160).keepAspectRatio(false).toFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        File fileRename = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + subPath + "userimage.jpg");
+        if(fileRename.exists()){
+            fileRename.delete();
+        }
+        file.renameTo(fileRename);
+        return true;
     }
 }
