@@ -45,11 +45,11 @@ public class UserService {
     }
 
     private String checkNewPhoneNumberAndEmail(String phoneNumber, String email, Map<String, Object> result) {
-        if (allPhoneNumbers.contains(phoneNumber)(result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber))) {
+        if (allPhoneNumbers.contains(phoneNumber)&&(result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber))) {
             return "Phone Number Already Exist";
         }
 
-        if (allEmails.contains(email)(result.get("email") == null || !result.get("email").toString().equals(email))) {
+        if (allEmails.contains(email)&&(result.get("email") == null || !result.get("email").toString().equals(email))) {
             return "Email Already Exist";
         }
 
