@@ -28,13 +28,13 @@ public class platformMonitorController {
     public double getJvm() {
         return ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory();
     }
-//
-//    @GetMapping("/getMEM")
-//    @ResponseBody
-//    public double getMemory() {
-//        return (double) (monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory();
-//    }
-//
+
+    @GetMapping("/getMEM")
+    @ResponseBody
+    public double getMemory() {
+        return (double) (monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory();
+    }
+
 //    @GetMapping("/getFileSystem")
 //    @ResponseBody
 //    public double getFileSystem() {
