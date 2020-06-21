@@ -1,3 +1,309 @@
-<div>
-    教师首页
+<div class="info-box" id="mainBody">
+    <div class="info-box-content">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">首页</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">首页</a></li>
+                            <li class="breadcrumb-item active">教师</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    待办事项
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <ul class="todo-list" data-widget="todo-list">
+                                    <li id="subjectUp">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >修改未通过的课题</span>
+                                        <div class="tools" onclick="toSubject()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="opeReview">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >开题评审待评</span>
+                                        <div class="tools" >
+                                            <i class="fas fa-edit" onclick="toOpen()"></i>
+                                        </div>
+                                    </li>
+                                    <li id="midReview">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >中期评审待评</span>
+                                        <div class="tools" onclick="toMid()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="papReview">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >论文评审待评</span>
+                                        <div class="tools" onclick="toPaper()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="croReview">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >交叉评审待评</span>
+                                        <div class="tools" onclick="toCross()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="conReview">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >结题评审待评</span>
+                                        <div class="tools" onclick="toCon()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="emailexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >填写邮箱地址</span>
+                                        <div class="tools" onclick="toTeacher()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="headexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置头像</span>
+                                        <div class="tools" onclick="toTeacher()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="telephoneexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置手机号码</span>
+                                        <div class="tools" onclick="toTeacher()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">参与的评审团队</h3>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle" id="reviewTable">
+                                    <thead>
+                                    <tr>
+                                        <th>课题名称</th>
+                                        <th>评委1</th>
+                                        <th>评委2</th>
+                                        <th>评委3</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                        <!-- Calendar -->
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">简要信息</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="name">姓名</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="name" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="college">学院</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="college" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direction">方向</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="direction" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">邮箱</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="email" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">联系方式</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="telephone" readonly="readonly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
 </div>
+<script>
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/teacher/simpleSelect',
+            contentType: "application/json",
+            success: function (msg) {
+                $("#name").val(msg['data']['name']);
+                $("#college").val(msg['data']['college']);
+                $("#direction").val(msg['data']['direction']);
+                $("#email").val(msg['data']['email']);
+                $("#telephone").val(msg['data']['telephone']);
+            },
+            error: function () {
+                alert("获取用户信息失败")
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/teacher/ToDoList',
+            contentType: "application/json",
+            success: function (msg) {
+                if (msg['data']['subjectUp'] == true) $("#subjectUp").hide();
+                if (msg['data']['openReview'] == true) $("#opeReview").hide();
+                if (msg['data']['midReview'] == true) $("#midReview").hide();
+                if (msg['data']['paperReview'] == true) $("#papReview").hide();
+                if (msg['data']['crossReview'] == true) $("#croReview").hide();
+                if (msg['data']['conReview'] == true) $("#conReview").hide();
+                if (msg['data']['emailexsit'] == true) $("#emailexsit").hide();
+                if (msg['data']['headexsit'] == true) $("#headexsit").hide();
+                if (msg['data']['telephoneexsit'] == true) $("#telephoneexsit").hide();
+            },
+            error: function () {
+                alert("获取待办事项失败");
+            }
+        });
+        $("#reviewTable").bootstrapTable('destroy').bootstrapTable({
+            method: 'GET',
+            url: "/teacher/getReview",
+            striped: true,
+            dataField: "list",
+            totalField: "total",
+            clickToSelect: false,
+            columns: [
+                {
+                    title: 'ID',
+                    field: 'id',
+                    visible: false,
+                    width: 20
+                },
+                {
+                    title: '课题名称',
+                    field: 'name',
+                    visible: true,
+                    width: 20
+                },
+                {
+                    title: '评委1',
+                    field: 'review1',
+                    width: 20,
+                    align: 'left'
+                },
+                {
+                    title: '评委2',
+                    field: 'review2',
+                    width: 30,
+                    align: 'left'
+                },
+                {
+                    title: '评委3',
+                    width: 80,
+                    field: 'review3',
+                    width: 30,
+                    align: 'left'
+                }
+
+            ],
+            locale: 'zh-CN',
+            responseHandler: function (data) {
+                return data['data'];
+            }
+        });
+    })
+    function toSubject() {
+        $.get("subjectFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toOpen() {
+        $.get("review/openReviewFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toMid() {
+        $.get("review/middleReviewFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toPaper() {
+        $.get("review/paperReviewFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toCross() {
+        $.get("review/crossReviewFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toCon() {
+        $.get("review/conclusionReviewFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toTeacher() {
+        $.get("accountManagement/accountInfoFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+</script>
+
