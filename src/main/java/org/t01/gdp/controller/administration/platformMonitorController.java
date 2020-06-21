@@ -41,9 +41,9 @@ public class platformMonitorController {
         return (double) (monitorRecord.getFileSystemUsed()) / monitorRecord.getFileSystemTotal();
     }
 
-//    @GetMapping("/getCPU")
-//    @ResponseBody
-//    public ArrayList<Double> getCPU() {
-//        return monitorRecord.getCpuUsage();
-//    }
+    @GetMapping("/getCPU")
+    @ResponseBody
+    public ArrayList<Double> getCPU() {
+        return monitorRecord.getCpuUsage();
+    }
 }
