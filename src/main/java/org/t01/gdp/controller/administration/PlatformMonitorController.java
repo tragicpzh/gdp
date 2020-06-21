@@ -60,4 +60,14 @@ public class PlatformMonitorController {
         }
         return new ArrayList<>();
     }
+    
+    @GetMapping("/getJvmProcessors")
+    @ResponseBody
+    public Long getJvmProcessors() {
+        monitorRecord = monitorService.getMonitorRecord();
+        if(monitorRecord.getJvmProcessors()!=null){
+            return monitorRecord.getJvmProcessors();
+        }
+        return 0;
+    }
 }
