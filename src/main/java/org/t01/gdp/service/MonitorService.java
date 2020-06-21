@@ -25,7 +25,7 @@ public class MonitorService {
 
         monitorRecord.setJvmTotalMemory(runtime.totalMemory());
         monitorRecord.setJvmUsedMemory(runtime.totalMemory() - runtime.freeMemory());
-        monitorRecord.setJvmProcessors(runtime.availableProcessors());
+        monitorRecord.setJvmProcessors((long) runtime.availableProcessors());
 
         try {
             Mem mem = sigar.getMem();
@@ -72,10 +72,6 @@ public class MonitorService {
                 MyLogService.info("cpu:" + cpuUsage);
             }
         }
-    }
-
-    public String getLog() {
-        return "My log";
     }
 
     public double getJvmThreshold() {
