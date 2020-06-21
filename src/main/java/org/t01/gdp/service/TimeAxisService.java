@@ -23,11 +23,17 @@ public class TimeAxisService {
     private static Map<String,List<Integer>> pageConfig = new HashMap<>();
 
     private static void initPageConfig(){
-        pageConfig.put("/teacher/subjectManagement",Arrays.asList(new Integer[]{0}));
+        pageConfig.put("/teacher/subjectManagement/addSubjectFragment",Arrays.asList(new Integer[]{0}));
+        pageConfig.put("/teacher/review/openReviewFragment",Arrays.asList(new Integer[]{2}));
+        pageConfig.put("/teacher/review/middleReviewFragment",Arrays.asList(new Integer[]{4}));
+        pageConfig.put("/teacher/review/paperReviewFragment",Arrays.asList(new Integer[]{6}));
+        pageConfig.put("/teacher/review/crossReviewFragment",Arrays.asList(new Integer[]{6}));
+        pageConfig.put("/teacher/review/conclusionReviewFragment",Arrays.asList(new Integer[]{7}));
+        pageConfig.put("/student/selectSubjectFragment",Arrays.asList(new Integer[]{1}));
     }
 
     public static boolean isAccessible(String uri){
-        if(uri.contains("/administrator/") || uri.contains("/homeFragment") || uri.contains("/accountInfoFragment")){
+        if(uri.contains("/administrator/") || uri.contains("/homeFragment") || uri.contains("/accountInfoFragment") || uri.equals("/teacher/subjectManagement/subjectFragment") || uri.equals("/student/subjectProcessFragment")){
             return true;
         }
 
