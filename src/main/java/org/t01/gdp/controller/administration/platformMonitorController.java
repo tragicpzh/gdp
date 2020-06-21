@@ -31,24 +31,28 @@ public class platformMonitorController {
     @GetMapping("/getJVM")
     @ResponseBody
     public double getJvm() {
-        return ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory();
+//        return ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory();
+        return 0;
     }
 
     @GetMapping("/getMEM")
     @ResponseBody
     public double getMemory() {
-        return (double) (monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory();
+//        return (double) (monitorRecord.getUsedMemory()) / monitorRecord.getTotalMemory();
+        return 0;
     }
 
     @GetMapping("/getFileSystem")
     @ResponseBody
     public double getFileSystem() {
-        return (double) (monitorRecord.getFileSystemUsed()) / monitorRecord.getFileSystemTotal();
+//        return (double) (monitorRecord.getFileSystemUsed()) / monitorRecord.getFileSystemTotal();
+        return 0;
     }
 
     @GetMapping("/getCPU")
     @ResponseBody
     public ArrayList<Double> getCPU() {
-        return monitorRecord.getCpuUsage();
+//        return monitorRecord.getCpuUsage();
+        return new ArrayList<>();
     }
 }
