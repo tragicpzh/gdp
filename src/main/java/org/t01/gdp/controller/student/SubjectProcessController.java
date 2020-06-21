@@ -12,7 +12,6 @@ import org.t01.gdp.service.TimeAxisService;
 import org.t01.gdp.service.SubjectProcessService;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/student")
 public class SubjectProcessController {
     @Autowired
@@ -37,7 +36,7 @@ public class SubjectProcessController {
     }
 
     @ResponseBody
-    @RequestMapping("/getSubject")
+    @RequestMapping("/getSubjectInfo")
     public Subject getSubject(@RequestParam(name = "id") long id) {
         return subjectProcessService.getSubjectById(id);
     }

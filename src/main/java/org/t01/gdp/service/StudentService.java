@@ -2,6 +2,7 @@ package org.t01.gdp.service;
 
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,9 @@ import org.t01.gdp.mapper.*;
 import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -21,6 +25,8 @@ public class StudentService {
     private final SqlMapper sqlMapper;
     private final MajorMapper majorMapper;
     private final CollegeMapper collegeMapper;
+    @Autowired
+    FileService fileService;
 
     public Student getStudentInfoById(String id) {
         StudentExample studentExample = new StudentExample();
@@ -268,5 +274,11 @@ public class StudentService {
             recent.add(list.get(i));
         }
         return recent;
+    }
+
+    public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {
+        long studentId = ((UserInfo) request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "userImage/student/" + studentId + "/";
+        fileService.uploadUserImage(path, multipartFile);
     }
 }

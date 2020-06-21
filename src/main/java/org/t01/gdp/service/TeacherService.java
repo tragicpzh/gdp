@@ -23,6 +23,8 @@ public class TeacherService {
     MajorMapper majorMapper;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    FileService fileService;
 
     public Teacher selectTeacherById(long teacherId){
         return teacherMapper.selectByPrimaryKey(teacherId);
@@ -129,31 +131,6 @@ public class TeacherService {
     public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {
         long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path = "userImage/teacher/" + teacherId + "/";
-        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path + multipartFile.getOriginalFilename());
-        if(!file.getParentFile().exists()){
-            file.getParentFile().mkdirs();
-        }
-        if(!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            multipartFile.transferTo(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Thumbnails.of(file).size(160, 160).keepAspectRatio(false).toFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        File fileRename = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path + "userimage.jpg");
-        if(fileRename.exists()){
-            fileRename.delete();
-        }
-        file.renameTo(fileRename);
+        fileService.uploadUserImage(path, multipartFile);
     }
 }
