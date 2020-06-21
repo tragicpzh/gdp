@@ -243,6 +243,29 @@ public class TeacherController {
         return "{\"recordsTotal\": " + total + ",\"recordsFiltered\": " + total + ",\"data\":" + list + "}";
     }
 
+    @PostMapping("/getUserImage")
+    @ResponseBody
+    public String getUserImage(HttpServletRequest request){
+        long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "userImage/teacher/" + String.valueOf(teacherId) + "/userimage.jpg";
+        if(fileService.fileExit(path)){
+            return "../" + path;
+        }
+        return "../Rendering/dist/img/user2-160x160.jpg";
+    }
+
+    @PostMapping("/uploadNewUserImage")
+    @ResponseBody
+    public String uploadNewUserImage(HttpServletRequest request, MultipartFile file){
+        if(file == null){
+            return "请选择文件";
+        }
+        if(!((file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1)).equals("jpg"))){
+            return "文件格式错误，只支持jpg文件格式";
+        }
+        teacherService.uploadNewUserImage(request, file);
+        return "上传成功";
+    }
     @PostMapping("/crossReview/score")
     @ResponseBody
     public void crossReviewScoring(int score, String evaluation, long studentId, long subjectId, HttpServletRequest request) {
