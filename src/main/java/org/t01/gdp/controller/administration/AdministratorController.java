@@ -70,6 +70,7 @@ public class AdministratorController {
         SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
         ArrayList<String> states = new ArrayList<>();
         states.add("NEW");
+        states.add("MODIFIED");
 //        states.add("RETURN");
         subjectSearchCase.setState(states);
         PageInfo<Subject> subjects = subjectService.searchSubjects(subjectSearchCase,start / length + 1, length);

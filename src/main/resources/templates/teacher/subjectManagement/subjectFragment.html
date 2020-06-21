@@ -1,4 +1,3 @@
-
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">与我相关的题目列表</h3>
@@ -111,6 +110,33 @@
 
 <script>
     function onDetail(subjectId) {
+        var option = {
+            url: "/teacher/getTimeState",
+            method: "get",
+            async: false,
+            success: function(data){
+                if(data != 0){
+                    $("#delete").text("当前阶段无法删除题目");
+                    $("#delete").attr("disabled",true);
+                    $("#submit").text("当前阶段无法修改题目");
+                    $("#submit").attr("disabled",true);
+                }else{
+                    $("#delete").text("删除");
+                    $("#delete").attr("disabled",false);
+                    $("#submit").text("保存");
+                    $("#submit").attr("disabled",false);
+                }
+            },
+            error: function () {
+                $("#delete").text("当前无法删除题目");
+                $("#delete").attr("disabled",true);
+                $("#submit").text("当前无法修改题目");
+                $("#submit").attr("disabled",true);
+            }
+        }
+
+        $.ajax(option);
+
         var setting = {
             url: "/teacher/searchSubject/detail",
             method: "get",
