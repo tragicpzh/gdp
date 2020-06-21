@@ -8,6 +8,7 @@ import org.t01.gdp.domain.Administrator;
 import org.t01.gdp.domain.AdministratorExample;
 import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.mapper.AdministratorMapper;
+import org.t01.gdp.service.MyLogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,9 @@ public class AdministratorLoginSuccessHandler implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String adminId = authentication.getName();
+
+        MyLogService.info("管理员用户[" + adminId +"]成功登录管理员平台");
+
         AdministratorExample administratorExample = new AdministratorExample();
         administratorExample.createCriteria().andAdminIdEqualTo(adminId);
         Administrator administrator = administratorMapper.selectByExample(administratorExample).get(0);

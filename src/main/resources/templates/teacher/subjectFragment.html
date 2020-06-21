@@ -129,7 +129,7 @@
                 $("#describe").val(data.describe);
 
                 if(data.document!=null && data.document!=""){
-                    $("#downloadFile").html("<br>" + data.document + "<a type='button' class='btn btn-primary' href='/download/" + data.document + "' >下载</a><button type='button' class='btn btn-danger' onclick='onDeleteFile(" +  data.id + ")' >删除</button>")
+                    $("#downloadFile").html("<br>" + data.document + "<a type='button' class='btn btn-primary' href='/download/" + data.document + "' >下载</a>\n<button type='button' class='btn btn-danger' onclick='onDeleteFile(" +  data.id + ")' >删除</button>")
                 }else{
                     $("#downloadFile").html("")
                 }

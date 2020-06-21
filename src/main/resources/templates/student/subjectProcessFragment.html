@@ -40,6 +40,7 @@
                             <div class="card-header bg-transparent border-dark">
                                 <span class="label">开题报告:</span>
                                 <span id="openDocument" class="label"></span>
+                                <span class="float-right" id="openDocumentBtn"></span>
                             </div>
                             <div class="card-body">
                                 <div id="openScoresRow" class="list-group list-group-flush" style="display: none;">
@@ -64,6 +65,7 @@
                             <div class="card-header bg-transparent border-dark">
                                 <span class="label">中期报告:</span>
                                 <span id="midDocument" class="label">未提交</span>
+                                <span class="float-right" id="middleDocumentBtn"></span>
                             </div>
                             <div class="card-body">
                                 <div id="midScoresRow" class="list-group list-group-flush" style="display: none;">
@@ -88,6 +90,7 @@
                             <div class="card-header bg-transparent border-dark">
                                 <span class="label">评阅论文:</span>
                                 <span id="paperDocument" class="label">未提交</span>
+                                <span class="float-right" id="paperDocumentBtn"></span>
                             </div>
                             <div class="card-body">
                                 <div id="paperScoresRow" class="list-group list-group-flush" style="display: none;">
@@ -110,6 +113,7 @@
                             <div class="card-header bg-transparent border-dark">
                                 <span class="label">毕业论文:</span>
                                 <span id="concludeDocument" class="label">未提交</span>
+                                <span class="float-right" id="conclusionDocumentBtn"></span>
                             </div>
                             <div class="card-body">
                                 <div id="concludeScoresRow" class="list-group list-group-flush" style="display: none;">
@@ -134,6 +138,8 @@
         </div>
     </div>
 </div>
+
+
 <script th:inline="javascript">
     Infos = {
         id: [[${session.USER_INFO.getId()}]],
@@ -171,15 +177,25 @@
         }
     })
     $(function () {
+        initialize();
+    });
+
+    function initialize() {
         getStudentInfo(Infos['id']);
         let testState = '8'
         $('#currentTime').html(TimeState[testState]);
+        loadFilePaths();
         handelTimeState(testState);
         handelPersonState(Infos['state']);
-    });
+    }
 
     function showElement(element) {
-        element[0].style.display = '';
+        element.show();
+    }
+
+    function showBtn(type, name) {
+        let selector = '#btn_' + type + name;
+        $(selector).show();
     }
 
     function checkInfo(info) {
@@ -399,10 +415,12 @@
 
         if (!checkInfo('openDocument')) {
             setState('NoOpenDoc');
+            showBtn('upload', 'Open');
         } else {
             setState('WaitOpenScore');
             $('#openDocument').html('已提交');
             showElement($('#openScoresRow'));
+            showBtn('download', 'Open');
             let scoreCount = 0;
             if (checkInfo('openScore1')) {
                 $('#openScore1').html(Infos['openScore1']);
@@ -421,6 +439,9 @@
                 return true;
             } else {
                 setState('WaitOpenScore');
+                if (scoreCount === 0) {
+                    showBtn('delete', 'Open')
+                }
             }
         }
         return false;
@@ -452,10 +473,12 @@
 
         if (!checkInfo('middleDocument')) {
             setState('NoMidDoc');
+            showBtn('upload', 'Middle');
         } else {
             setState('WaitMidScore');
             $('#midDocument').html('已提交');
             showElement($('#midScoresRow'));
+            showBtn('download', 'Middle');
             let scoreCount = 0;
             if (checkInfo('middleScore1')) {
                 $('#midScore1').html(Infos['middleScore1']);
@@ -474,6 +497,9 @@
                 return true;
             } else {
                 setState('WaitMidScore');
+                if (scoreCount === 0) {
+                    showBtn('delete', 'Middle');
+                }
             }
         }
         return false;
@@ -506,10 +532,12 @@
 
         if (!checkInfo('paperDocument')) {
             setState('NoPaperDoc');
+            showBtn('upload', 'Paper');
         } else {
             setState('WaitPaperScore');
             $('#paperDocument').html('已提交');
             showElement($('#paperScoresRow'));
+            showBtn('download', 'Paper');
             let scoreCount = 0;
             if (checkInfo('teacherPaperScore')) {
                 $('#teacherPaperScore').html(Infos['teacherPaperScore']);
@@ -524,6 +552,9 @@
                 return true;
             } else {
                 setState('WaitPaperScore');
+                if (scoreCount === 0) {
+                    showBtn('delete', 'Paper');
+                }
             }
         }
         return false;
@@ -542,10 +573,12 @@
 
         if (!checkInfo('conclusionDocument')) {
             setState('NoConDoc');
+            showBtn('upload', 'Conclusion');
         } else {
             setState('WaitConScore');
             $('#concludeDocument').html('已提交');
             showElement($('#concludeScoresRow'));
+            showBtn('download', 'Conclusion');
             let scoreCount = 0;
             if (checkInfo('conclusionScore1')) {
                 $('#concludeScore1').html(Infos['conclusionScore1']);
@@ -564,6 +597,9 @@
                 return true;
             } else {
                 setState('WaitConScore');
+                if (scoreCount === 0) {
+                    showBtn('delete', 'Conclusion');
+                }
             }
         }
         return false;
@@ -589,6 +625,98 @@
         }
         return false;
     }
+
+    function refresh() {
+        initialize();
+    }
+
+    function onDeleteFile(uri) {
+        $.ajax({
+            url: "/student/" + uri,
+            method: "post",
+            timeout: 6000,
+            async: false,
+            success: function () {
+                alert("删除成功");
+                refresh();
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        });
+    }
+
+    function onUploadFile(name) {
+        let formData = new FormData();
+        let selector = "#upload" + name + "Document";
+        $(selector).click();
+        $(selector).on('change', function () {
+            formData.append("multipartFile", $(selector)[0].files[0]);
+
+            let option = {
+                url: "/student/upload" + name,
+                contentType: false,
+                processData: false,
+                method: "post",
+                timeout: 6000,
+                async: false,
+                data: formData,
+                success: function () {
+                    alert("上传成功");
+                    refresh();
+                },
+                error: function () {
+                    alert("上传失败");
+                }
+            };
+
+            $.ajax(option);
+        })
+    }
+
+    function writeFileButton(tag, name, path) {
+        let selector = "#" + tag + "DocumentBtn"
+        $(selector).html(
+            '<input type="file" id="upload' + name + 'Document" style="display: none;">' +
+            '<input type="submit" id="btn_upload' + name + '" class="btn btn-sm btn-primary mr-1" onclick="onUploadFile(\'' + name + '\')" style="display: none;">' +
+            '<input type="button" id="btn_delete' + name + '" class="btn btn-sm btn-danger mr-1" onclick="onDeleteFile(\'delete' + name + '\')" value="删除" style="display: none;">' +
+            '<a type="button" id="btn_download' + name + '" class="btn btn-sm btn-primary" href="/download/' + path + '" style="display: none;">下载</a>'
+        );
+
+    }
+
+    function writeFileButtons(paths) {
+        let path;
+        path = paths["open"];
+        writeFileButton("open", "Open", path);
+
+        path = paths["middle"];
+        writeFileButton("middle", "Middle", path);
+
+        path = paths["paper"];
+        writeFileButton("paper", "Paper", path);
+
+        path = paths["conclusion"];
+        writeFileButton("conclusion", "Conclusion", path);
+    }
+
+    function loadFilePaths() {
+        let setting = {
+            url: "/student/getAllFilePath",
+            method: "get",
+            timeout: 6000,
+            async: false,
+            success: function (data) {
+                writeFileButtons(data);
+            },
+            error: function () {
+                alert("获取资料列表失败");
+            }
+        };
+
+        $.ajax(setting);
+    }
 </script>
+
 </body>
 </html>

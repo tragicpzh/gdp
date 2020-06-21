@@ -12,7 +12,7 @@ import org.t01.gdp.service.VerificationService;
 import java.util.ArrayList;
 import java.util.Date;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class GdpApplicationTests {
 	@Test
 	void contextLoads() {

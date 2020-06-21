@@ -8,6 +8,7 @@ import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.StudentExample;
 import org.t01.gdp.domain.UserInfo;
 import org.t01.gdp.mapper.StudentMapper;
+import org.t01.gdp.service.MyLogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,12 @@ public class StudentLoginSuccessHandler implements AuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        String id = authentication.getName();
+        String studentId = authentication.getName();
+
+        MyLogService.info("学生用户[" + studentId +"]成功登录学生平台");
+
         StudentExample studentExample = new StudentExample();
-        studentExample.createCriteria().andStudentIdEqualTo(id);
+        studentExample.createCriteria().andStudentIdEqualTo(studentId);
         Student student = studentMapper.selectByExample(studentExample).get(0);
         UserInfo userInfo = new UserInfo(student.getId(),student.getStudentId(),student.getName(),student.getPhoneNumber(),student.getEmail(),student.getHeadPortrait(),student.getCreateTime());
 

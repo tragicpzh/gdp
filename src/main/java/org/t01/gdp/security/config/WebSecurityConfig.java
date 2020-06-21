@@ -25,6 +25,8 @@ public class WebSecurityConfig {
         private StudentLoginSuccessHandler studentLoginSuccessHandler;
         @Autowired
         private StudentLogoutSuccessHandler studentLogoutSuccessHandler;
+        @Autowired
+        private StudentLoginFailureHandler studentLoginFailureHandler;
 
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -36,7 +38,7 @@ public class WebSecurityConfig {
                     .loginPage("/student/login")
                     .loginProcessingUrl("/student/login/check")
                     .successHandler(studentLoginSuccessHandler)
-                    .failureUrl("/student/login?failure=true")
+                    .failureHandler(studentLoginFailureHandler)
                     .permitAll()
                     .and()
                     .antMatcher("/student/**")
@@ -75,6 +77,8 @@ public class WebSecurityConfig {
         private TeacherLoginSuccessHandler teacherLoginSuccessHandler;
         @Autowired
         private TeacherLogoutSuccessHandler teacherLogoutSuccessHandler;
+        @Autowired
+        private TeacherLoginFailureHandler teacherLoginFailureHandler;
 
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -87,7 +91,7 @@ public class WebSecurityConfig {
                     .loginPage("/teacher/login")
                     .loginProcessingUrl("/teacher/login/check")
                     .successHandler(teacherLoginSuccessHandler)
-                    .failureUrl("/teacher/login?failure=true")
+                    .failureHandler(teacherLoginFailureHandler)
                     .permitAll()
                     .and()
                     .logout()
@@ -125,6 +129,8 @@ public class WebSecurityConfig {
         private AdministratorLoginSuccessHandler administratorLoginSuccessHandler;
         @Autowired
         private AdministratorLogoutSuccessHandler administratorLogoutSuccessHandler;
+        @Autowired
+        private AdministratorLoginFailureHandler administratorLoginFailureHandler;
 
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -137,7 +143,7 @@ public class WebSecurityConfig {
                     .loginPage("/administrator/login")
                     .loginProcessingUrl("/administrator/login/check")
                     .successHandler(administratorLoginSuccessHandler)
-                    .failureUrl("/administrator/login?failure=true")
+                    .failureHandler(administratorLoginFailureHandler)
                     .permitAll()
                     .and()
                     .logout()
