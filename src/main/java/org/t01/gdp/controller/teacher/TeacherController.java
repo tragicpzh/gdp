@@ -280,4 +280,25 @@ public class TeacherController {
 
         studentService.updateStudentCrossPaperScore(teacherId, studentId, subjectId, score, evaluation);
     }
+
+    @GetMapping("/simpleSelect")
+    @ResponseBody
+    public Object simpleSelect(HttpServletRequest request){
+        Long teacher_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(teacherService.simpleSelect(teacher_id));
+    }
+
+    @GetMapping("/ToDoList")
+    @ResponseBody
+    public Object ToDoList(HttpServletRequest request){
+        Long teacher_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(teacherService.ToDoList(teacher_id));
+    }
+
+    @GetMapping("/getReview")
+    @ResponseBody
+    public Object getReview(HttpServletRequest request){
+        Long teacher_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(teacherService.getReview(teacher_id));
+    }
 }
