@@ -68,18 +68,18 @@
                                 <span class="float-right" id="middleDocumentBtn"></span>
                             </div>
                             <div class="card-body">
-                                <div id="midScoresRow" class="list-group list-group-flush" style="display: none;">
+                                <div id="middleScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">中期评分1:</span>
-                                        <span id="midScore1" class="label">未打分</span>
+                                        <span id="middleScore1" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
                                         <span class="label">中期评分2:</span>
-                                        <span id="midScore2" class="label">未打分</span>
+                                        <span id="middleScore2" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
                                         <span class="label">中期评分3:</span>
-                                        <span id="midScore3" class="label">未打分</span>
+                                        <span id="middleScore3" class="label">未打分</span>
                                     </div>
                                 </div>
                             </div>
@@ -95,12 +95,12 @@
                             <div class="card-body">
                                 <div id="paperScoresRow" class="list-group list-group-flush" style="display: none;">
                                     <div class="list-group-item">
-                                        <span class="label">教师评阅评分:</span>
+                                        <span class="label">教师评分:</span>
                                         <span id="teacherPaperScore" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
-                                        <span class="label">交叉评阅评分:</span>
-                                        <span id="studentPaperScore2" class="label">未打分</span>
+                                        <span class="label">交叉评分:</span>
+                                        <span id="crossPaperScore" class="label">未打分</span>
                                     </div>
                                 </div>
                             </div>
@@ -116,18 +116,19 @@
                                 <span class="float-right" id="conclusionDocumentBtn"></span>
                             </div>
                             <div class="card-body">
-                                <div id="concludeScoresRow" class="list-group list-group-flush" style="display: none;">
+                                <div id="conclusionScoresRow" class="list-group list-group-flush"
+                                     style="display: none;">
                                     <div class="list-group-item">
                                         <span class="label">答辩评分1:</span>
-                                        <span id="concludeScore1" class="label">未打分</span>
+                                        <span id="conclusionScore1" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
                                         <span class="label">答辩评分2:</span>
-                                        <span id="concludeScore2" class="label">未打分</span>
+                                        <span id="conclusionScore2" class="label">未打分</span>
                                     </div>
                                     <div class="list-group-item">
                                         <span class="label">答辩评分3:</span>
-                                        <span id="concludeScore3" class="label">未打分</span>
+                                        <span id="conclusionScore3" class="label">未打分</span>
                                     </div>
                                 </div>
                             </div>
@@ -187,6 +188,7 @@
         loadFilePaths();
         handelTimeState(testState);
         handelPersonState(Infos['state']);
+        addEvaluationBtn();
     }
 
     function showElement(element) {
@@ -268,7 +270,7 @@
 
     function getSubject() {
         $.ajax({
-            url: '/student/getSubject',
+            url: '/student/getSubjectInfo',
             async: false,
             data: {id: Infos['subjectId']},
             dataType: 'json',
@@ -477,19 +479,19 @@
         } else {
             setState('WaitMidScore');
             $('#midDocument').html('已提交');
-            showElement($('#midScoresRow'));
+            showElement($('#middleScoresRow'));
             showBtn('download', 'Middle');
             let scoreCount = 0;
             if (checkInfo('middleScore1')) {
-                $('#midScore1').html(Infos['middleScore1']);
+                $('#middleScore1').html(Infos['middleScore1']);
                 scoreCount++;
             }
             if (checkInfo('middleScore2')) {
-                $('#midScore2').html(Infos['middleScore2']);
+                $('#middleScore2').html(Infos['middleScore2']);
                 scoreCount++;
             }
             if (checkInfo('middleScore3')) {
-                $('#midScore3').html(Infos['middleScore3']);
+                $('#middleScore3').html(Infos['middleScore3']);
                 scoreCount++;
             }
             if (scoreCount === 3) {
@@ -544,7 +546,7 @@
                 scoreCount++;
             }
             if (checkInfo('crossPaperScore')) {
-                $('#studentPaperScore2').html(Infos['crossPaperScore']);
+                $('#crossPaperScore').html(Infos['crossPaperScore']);
                 scoreCount++;
             }
             if (scoreCount === 2) {
@@ -577,19 +579,19 @@
         } else {
             setState('WaitConScore');
             $('#concludeDocument').html('已提交');
-            showElement($('#concludeScoresRow'));
+            showElement($('#conclusionScoresRow'));
             showBtn('download', 'Conclusion');
             let scoreCount = 0;
             if (checkInfo('conclusionScore1')) {
-                $('#concludeScore1').html(Infos['conclusionScore1']);
+                $('#conclusionScore1').html(Infos['conclusionScore1']);
                 scoreCount++;
             }
             if (checkInfo('conclusionScore2')) {
-                $('#concludeScore2').html(Infos['conclusionScore2']);
+                $('#conclusionScore2').html(Infos['conclusionScore2']);
                 scoreCount++;
             }
             if (checkInfo('conclusionScore3')) {
-                $('#concludeScore3').html(Infos['conclusionScore3']);
+                $('#conclusionScore3').html(Infos['conclusionScore3']);
                 scoreCount++;
             }
             if (scoreCount === 3) {
@@ -626,8 +628,28 @@
         return false;
     }
 
-    function refresh() {
-        initialize();
+    function showEvaluation(evaluation) {
+        bootbox.alert({
+            title: '评价',
+            message: evaluation,
+            size: 'small'
+        })
+    }
+
+    function addEvaluationBtn() {
+        $("span[id*='Score']").each(function () {
+            let $span = $(this);
+            if ($span.attr('id') === 'finalScore') {
+                return;
+            }
+            let regExp = new RegExp('Score', 'g');
+            let evaluationName = $span.attr('id').replace(regExp, 'Evaluation');
+            if ($span.html() !== '未打分' && $span.next().length === 0) {
+                $span.after(
+                    '<input type="button" class="btn btn-sm btn-primary float-right" onclick="showEvaluation(Infos[\'' + evaluationName + '\'])" value="查看评价">'
+                )
+            }
+        })
     }
 
     function onDeleteFile(uri) {
@@ -638,7 +660,7 @@
             async: false,
             success: function () {
                 alert("删除成功");
-                refresh();
+                initialize();
             },
             error: function () {
                 alert("删除失败");
@@ -663,7 +685,7 @@
                 data: formData,
                 success: function () {
                     alert("上传成功");
-                    refresh();
+                    initialize();
                 },
                 error: function () {
                     alert("上传失败");

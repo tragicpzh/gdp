@@ -172,6 +172,12 @@ public class TeacherController {
         return subjectService.getSubjectById(subjectId);
     }
 
+    @GetMapping("/getTimeState")
+    @ResponseBody
+    public String getTimeState(){
+        return String.valueOf(TimeAxisService.getTimeAxisState());
+    }
+
     @PostMapping("/searchSubject/modify")
     @ResponseBody
     public void modifySubject(long id,HttpServletRequest request){
@@ -185,6 +191,7 @@ public class TeacherController {
         subject.setDescribe(request.getParameter("describe"));
         subject.setDifficulty(Integer.valueOf(request.getParameter("difficulty")));
         subject.setTechnology(request.getParameter("technology"));
+        subject.setState("MODIFIED");
 
         MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
         String subPath = null,filePath = null;
