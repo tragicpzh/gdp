@@ -98,7 +98,9 @@ public class TimeAxisService {
         }
         if(!file.exists()){
             try {
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    LOG.warn("创建时间轴配置保存文件TimeAxis.save失败");
+                }
             } catch (IOException e) {
                 LOG.error(e.getMessage());
                 return false;
@@ -146,7 +148,9 @@ public class TimeAxisService {
         }
         if(!file.exists()){
             try {
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    LOG.warn("创建时间轴配置保存文件TimeAxis.save失败");
+                }
             } catch (IOException e) {
                 LOG.error(e.getMessage());
                 return false;
