@@ -13,9 +13,9 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/administrator")
 public class platformMonitorController {
-//    @Autowired
-//    MonitorService monitorService;
-//    private MonitorRecord monitorRecord;
+    @Autowired
+    MonitorService monitorService;
+    private MonitorRecord monitorRecord;
 //
 //    @GetMapping("/updateMonitorRecord")
 //    @ResponseBody
