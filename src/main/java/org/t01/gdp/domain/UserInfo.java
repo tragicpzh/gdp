@@ -1,8 +1,9 @@
 package org.t01.gdp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserInfo {
+public class UserInfo implements Serializable {
     private long id;
 
     private String roleId;

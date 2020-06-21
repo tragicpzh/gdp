@@ -1,6 +1,8 @@
 package org.t01.gdp.service;
 
 import org.hyperic.sigar.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.MonitorRecord;
 
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 
 @Service
 public class MonitorService {
+    private static final Logger LOG = LoggerFactory.getLogger(MonitorService.class);
+
     private double jvmThreshold;
     private double memThreshold;
     private double cpuThreshold;
@@ -25,14 +29,14 @@ public class MonitorService {
 
         monitorRecord.setJvmTotalMemory(runtime.totalMemory());
         monitorRecord.setJvmUsedMemory(runtime.totalMemory() - runtime.freeMemory());
-        monitorRecord.setJvmProcessors(runtime.availableProcessors());
+        monitorRecord.setJvmProcessors((long) runtime.availableProcessors());
 
         try {
             Mem mem = sigar.getMem();
             monitorRecord.setTotalMemory(mem.getTotal());
             monitorRecord.setUsedMemory(mem.getUsed());
         } catch (SigarException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
 
         try {
@@ -41,7 +45,7 @@ public class MonitorService {
                 monitorRecord.addCpuUsage(cpuPerc.getCombined());
             }
         } catch (SigarException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
 
         try {
@@ -49,7 +53,7 @@ public class MonitorService {
             monitorRecord.setFileSystemTotal(fileSystemUsage.getTotal());
             monitorRecord.setFileSystemUsed(fileSystemUsage.getUsed());
         } catch (SigarException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
 
         return monitorRecord;
@@ -72,10 +76,6 @@ public class MonitorService {
                 MyLogService.info("cpu:" + cpuUsage);
             }
         }
-    }
-
-    public String getLog() {
-        return "My log";
     }
 
     public double getJvmThreshold() {

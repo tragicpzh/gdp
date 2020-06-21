@@ -91,9 +91,9 @@
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex" type="button" onclick="$('#accountInfo').click()">
-                <div class="image">
-                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
-                         alt="User Image">
+                <div class="image" id="userImage">
+                    <!--<img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
+                         alt="User Image">-->
                 </div>
                 <div class="info">
                     <a class="d-block"><span
@@ -282,6 +282,21 @@
         $("#" + position).click();
     });
 </script>
+
+<script type="text/javascript">
+    $.ajax({
+        url:"/administrator/getUserImage",
+        method:"post",
+        success: function (url) {
+            let image = new Image();
+            image.src=url;
+            image.className="img-circle elevation-2";
+            image.alt="User Image";
+            $("#userImage").append(image);
+        }
+    })
+</script>
+
 <script id="fragmentScript"></script>
 </body>
 </html>

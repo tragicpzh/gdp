@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MonitorRecord {
     private Long jvmTotalMemory;
     private Long jvmUsedMemory;
-    private Integer jvmProcessors;
+    private Long jvmProcessors;
 
     private Long totalMemory;
     private Long usedMemory;
@@ -54,11 +54,11 @@ public class MonitorRecord {
         this.jvmUsedMemory = jvmUsedMemory;
     }
 
-    public Integer getJvmProcessors() {
+    public Long getJvmProcessors() {
         return jvmProcessors;
     }
 
-    public void setJvmProcessors(Integer jvmProcessors) {
+    public void setJvmProcessors(Long jvmProcessors) {
         this.jvmProcessors = jvmProcessors;
     }
 

@@ -8,10 +8,13 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SMSService {
+    private static final Logger LOG = LoggerFactory.getLogger(SMSService.class);
 
     public String sendVerificationCode(String verificationCode,String phoneNumbers){
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4G3iWLyMA49yi2JDhP96", "4JWFndA15V8EY4z5EQAjiiefrGyw1q");
@@ -31,10 +34,10 @@ public class SMSService {
             CommonResponse response = client.getCommonResponse(request);
             return response.getData();
         } catch (ServerException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return "SERVER_ERROR";
         } catch (ClientException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return "CLIENT_ERROR";
         }
     }

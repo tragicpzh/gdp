@@ -92,9 +92,9 @@
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex" type="button" onclick="$('#accountInfo').click()">
-                <div class="image">
-                    <img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
-                         alt="User Image">
+                <div class="image" id="userImage">
+                    <!--<img th:src="@{/Rendering/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
+                         alt="User Image">-->
                 </div>
                 <div class="info">
                     <a class="d-block"><span
@@ -153,7 +153,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" id="subject" type="button" onclick="loadFragment('subject',this)">
+                                <a class="nav-link" id="subject" type="button" onclick="loadFragment('subjectManagement/subject',this)">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>查询题目</p>
                                 </a>
@@ -333,6 +333,20 @@
 
         $("#" + position).click();
     });
+</script>
+
+<script type="text/javascript">
+    $.ajax({
+        url:"/teacher/getUserImage",
+        method:"post",
+        success: function (url) {
+            let image = new Image();
+            image.src=url;
+            image.className="img-circle elevation-2";
+            image.alt="User Image";
+            $("#userImage").append(image);
+        }
+    })
 </script>
 
 </body>
