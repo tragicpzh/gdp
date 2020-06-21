@@ -16,18 +16,18 @@ public class platformMonitorController {
     @Autowired
     MonitorService monitorService;
     private MonitorRecord monitorRecord;
-//
+
     @GetMapping("/updateMonitorRecord")
     @ResponseBody
     public void updateMonitorRecord() {
         monitorRecord = monitorService.getMonitorRecord();
     }
-//
-//    @GetMapping("/getJVM")
-//    @ResponseBody
-//    public double getJvm() {
-//        return ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory();
-//    }
+
+    @GetMapping("/getJVM")
+    @ResponseBody
+    public double getJvm() {
+        return ((double) monitorRecord.getJvmUsedMemory()) / monitorRecord.getJvmTotalMemory();
+    }
 //
 //    @GetMapping("/getMEM")
 //    @ResponseBody
