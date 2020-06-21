@@ -1,11 +1,16 @@
 package org.t01.gdp.service;
 
 import com.github.pagehelper.PageInfo;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.mapper.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -120,4 +125,35 @@ public class TeacherService {
     public PageInfo<StudentAndSubject> cross_review_select(ReviewSearchCase reviewSearchCase,int pageNo,int pageSize,Long teacher_id){
         return subjectService.searchReview(reviewSearchCase,pageNo,pageSize);
     }//查看交叉评阅列表
+
+    public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {
+        long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        String path = "userImage/teacher/" + teacherId + "/";
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path + multipartFile.getOriginalFilename());
+        if(!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thumbnails.of(file).size(160, 160).keepAspectRatio(false).toFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        File fileRename = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path + "userimage.jpg");
+        if(fileRename.exists()){
+            fileRename.delete();
+        }
+        file.renameTo(fileRename);
+    }
 }

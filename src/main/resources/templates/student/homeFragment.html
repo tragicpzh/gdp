@@ -1,3 +1,383 @@
-<div>
-    首页
+<div class="info-box" id="mainBody">
+    <div class="info-box-content">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">首页</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">首页</a></li>
+                            <li class="breadcrumb-item active">学生</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    待办事项
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <ul class="todo-list" data-widget="todo-list">
+                                    <li id="subjectDoc">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >选择合适的课题</span>
+                                        <div class="tools" onclick="toSubjectProcess()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="openDoc">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >上传开题答辩资料</span>
+                                        <div class="tools" onclick="toSubjectProcess()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="midDoc">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >上传中期答辩资料</span>
+                                        <div class="tools" onclick="toSubjectProcess()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="conDoc">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >上传结题答辩资料</span>
+                                        <div class="tools" onclick="toSubjectProcess()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="paperDoc">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >上传论文答辩资料</span>
+                                        <div class="tools" onclick="toSubjectProcess()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="emailexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >填写邮箱地址</span>
+                                        <div class="tools" onclick="toStudent()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="headexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置头像</span>
+                                        <div class="tools" onclick="toStudent()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="telephoneexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置手机号码</span>
+                                        <div class="tools" onclick="toStudent()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">课题分数</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>阶段</th>
+                                        <th>分数1</th>
+                                        <th>分数2</th>
+                                        <th>分数3</th>
+                                        <th>分数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1.</td>
+                                        <td>开题</td>
+                                        <td><span class="badge bg-success" id="openSc1"></span></td>
+                                        <td><span class="badge bg-success" id="openSc2"></span></td>
+                                        <td><span class="badge bg-success" id="openSc3"></span></td>
+                                        <td><span class="badge bg-success" id="openSc4"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>中期</td>
+                                        <td><span class="badge bg-warning" id="midSc1"></span></td>
+                                        <td><span class="badge bg-warning" id="midSc2"></span></td>
+                                        <td><span class="badge bg-warning" id="midSc3"></span></td>
+                                        <td><span class="badge bg-warning" id="midSc4"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.</td>
+                                        <td>交叉</td>
+                                        <td><span class="badge bg-cyan" id="crossSc1"></span></td>
+                                        <td><span class="badge bg-cyan" id="crossSc2"></span></td>
+                                        <td><span class="badge bg-cyan" id="crossSc3"></span></td>
+                                        <td><span class="badge bg-cyan" id="crossSc4"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.</td>
+                                        <td>论文</td>
+                                        <td><span class="badge bg-danger" id="paperSc1"></span></td>
+                                        <td><span class="badge bg-danger" id="paperSc2"></span></td>
+                                        <td><span class="badge bg-danger" id="paperSc3"></span></td>
+                                        <td><span class="badge bg-danger" id="paperSc4"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5.</td>
+                                        <td>结题</td>
+                                        <td><span class="badge bg-gradient-primary" id="conSc1"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="conSc2"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="conSc3"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="conSc4"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6.</td>
+                                        <td>最终成绩</td>
+                                        <td><span class="badge bg-gradient-primary" id="finalSc1"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="finalSc2"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="finalSc3"></span></td>
+                                        <td><span class="badge bg-gradient-primary" id="finalSc4"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <div class="card" id="subjectlist">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">新添课题</h3>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle" id="subjectTable">
+                                    <thead>
+                                    <tr>
+                                        <th>课题名称</th>
+                                        <th>方向</th>
+                                        <th>难度</th>
+                                        <th>more</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                        <!-- Calendar -->
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">简要信息</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="name">姓名</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="name" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="college">学院</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="college" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="major">专业</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="major" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">邮箱</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="email" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">联系方式</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="telephone" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subject">选题</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="subject" readonly="readonly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
 </div>
+<script>
+    $(function () {
+        $.ajax({
+            type:'GET',
+            url:'/student/simpleSelect',
+            contentType:"application/json",
+            success:function (msg) {
+                $("#name").val(msg['data']['name']);
+                $("#college").val(msg['data']['college']);
+                $("#major").val(msg['data']['major']);
+                $("#email").val(msg['data']['email']);
+                $("#telephone").val(msg['data']['telephone']);
+                $("#subject").val(msg['data']['subject']);
+            },
+            error:function () {
+                alert("获取用户信息失败")
+            }
+        });
+        $.ajax({
+            type:'GET',
+            url:'/student/ToDoList',
+            contentType:"application/json",
+            success:function (msg) {
+                if(msg['data']['subjectDoc']==true)$("#subjectDoc").hide();
+                if(msg['data']['openDoc']==true)$("#openDoc").hide();
+                if(msg['data']['midDoc']==true)$("#midDoc").hide();
+                if(msg['data']['conDoc']==true)$("#conDoc").hide();
+                if(msg['data']['paperDoc']==true)$("#paperDoc").hide();
+                if(msg['data']['emailexsit']==true)$("#emailexsit").hide();
+                if(msg['data']['headexsit']==true)$("#headexsit").hide();
+                if(msg['data']['telephoneexsit']==true)$("#telephoneexsit").hide();
+                if(msg['data']['subjectDoc']==true)$("#subjectlist").hide()
+                else {
+                    $("#subjectTable").bootstrapTable('destroy').bootstrapTable({
+                        method: 'GET',
+                        url: "/student/getSubject",
+                        striped: true,
+                        dataField: "list",
+                        totalField: "total",
+                        clickToSelect: false,
+                        columns: [
+                            {
+                                title: 'ID',
+                                field: 'id',
+                                visible: false,
+                                width: 20
+                            },
+                            {
+                                title: '课题名称',
+                                field: 'name',
+                                visible: true,
+                                width: 20
+                            },
+                            {
+                                title: '方向',
+                                field: 'direction',
+                                width: 20,
+                                align: 'left'
+                            },
+                            {
+                                title: '难度',
+                                field: 'difficulty',
+                                width: 30,
+                                align: 'left'
+                            },
+                            {
+                                title: 'more',
+                                width: 80,
+                                align: 'center',
+                                formatter: actionFormatter,
+                            }
+
+                        ],
+                        locale: 'zh-CN',
+                        responseHandler: function (data) {
+                            return data['data'];
+                        }
+                    });
+                }
+            },
+            error:function () {
+                alert("获取待办事项失败");
+            }
+        });
+        $.ajax({
+           type:'GET',
+           url:'/student/getScore',
+           contentType:'application/json',
+           success:function (msg) {
+               $("#openSc1").text(msg['data']['openSc1']);
+               $("#openSc2").text(msg['data']['openSc2']);
+               $("#openSc3").text(msg['data']['openSc3']);
+               $("#midSc1").text(msg['data']['midSc1']);
+               $("#midSc2").text(msg['data']['midSc2']);
+               $("#midSc3").text(msg['data']['midSc3']);
+               $("#paperSc4").text(msg['data']['paperSc']);
+               $("#crossSc4").text(msg['data']['crossSc']);
+               $("#conSc1").text(msg['data']['conSc1']);
+               $("#conSc2").text(msg['data']['conSc2']);
+               $("#conSc3").text(msg['data']['conSc3']);
+               $("#finalSc4").text(msg['data']['finalSc']);
+           },
+           error:function () {
+                alert("获取设计得分失败");
+           }
+        });
+    });
+    function toSubjectProcess() {
+        $.get("subjectProcessFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toStudent() {
+        $.get('accountManagement/accountInfoFragment', function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function actionFormatter(value, row, index) {
+        var subjectId=row.id;
+        var result="";
+        result+="<button type='button' class='btn btn-primary' onclick='onSubject(" + subjectId + ")' >查看</button>";
+        return result;
+    }
+    function  onSubject(subjectId) {
+        $.get('listSubject/listSubjectFragment', function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+</script>

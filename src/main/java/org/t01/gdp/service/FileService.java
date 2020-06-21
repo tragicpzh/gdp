@@ -115,4 +115,10 @@ public class FileService {
 
         return false;
     }
+
+    public boolean fileExit(String path) {
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path;
+        File file = new File(filePath);
+        return file.exists();
+    }
 }

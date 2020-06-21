@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
@@ -165,5 +166,33 @@ public class StudentController {
         paths.put("conclusion",student.getConclusionDocument());
 
         return paths;
+    }
+
+    @GetMapping("/simpleSelect")
+    @ResponseBody
+    public Object simpleSelect(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.simpleSelect(student_id));
+    }
+
+    @GetMapping("/ToDoList")
+    @ResponseBody
+    public Object ToDoList(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.ToDoList(student_id));
+    }
+
+    @GetMapping("/getScore")
+    @ResponseBody
+    public Object getScore(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.getScore(student_id));
+    }
+
+    @GetMapping("/getSubject")
+    @ResponseBody
+    public Object getSubject(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.getSubject(student_id));
     }
 }

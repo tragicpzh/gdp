@@ -1,5 +1,6 @@
 package org.t01.gdp.service;
 
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,22 +10,17 @@ import org.t01.gdp.mapper.*;
 import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    @Autowired
-    private StudentMapper studentMapper;
-    @Autowired
-    private SubjectMapper subjectMapper;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private SqlMapper sqlMapper;
+    private final StudentMapper studentMapper;
+    private final SubjectMapper subjectMapper;
+    private final UserMapper userMapper;
+    private final SqlMapper sqlMapper;
+    private final MajorMapper majorMapper;
+    private final CollegeMapper collegeMapper;
 
     public Student getStudentInfoById(String id) {
         StudentExample studentExample = new StudentExample();
@@ -190,4 +186,87 @@ public class StudentService {
         studentMapper.updateByPrimaryKeySelective(student);
     }
 
+    public Map<String,Object> simpleSelect(Long student_id){
+        Map<String,Object> map=new HashMap<String,Object>();
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        Major major=majorMapper.selectByPrimaryKey(student.getMajorId());
+        College college=collegeMapper.selectByPrimaryKey(major.getCollegeId());
+        Subject subject=subjectMapper.selectByPrimaryKey(student.getSubjectId());
+        map.put("name",student.getName());
+        map.put("college",college.getName());
+        map.put("major",major.getName());
+        map.put("email",student.getEmail());
+        map.put("telephone",student.getPhoneNumber());
+        map.put("subject",subject.getName());
+        return  map;
+    }
+
+    public Map<String,Object> ToDoList(Long student_id){
+        Map<String,Object>map=new HashMap<String,Object>();
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        map.put("emailexsit",(student.getEmail()!=null)?true:false);
+        map.put("headexsit",(student.getHeadPortrait()!=null)?true:false);
+        map.put("telephoneexsit",(student.getPhoneNumber()!=null)?true:false);
+
+        Boolean subject=true,open=true,mid=true,con=true,paper=true;
+        String state=student.getState();
+        switch(state){
+            case "NO_SELECTION":
+                subject=false;
+                break;
+            case "NoOpenDoc":
+                open=false;
+                break;
+            case "NoMidDoc":
+                mid=false;
+                break;
+            case "NoPaperDoc":
+                paper=false;
+                break;
+            case "NoConDoc":
+                con=false;
+                break;
+        }
+
+        map.put("subjectDoc",subject);
+        map.put("openDoc",open);
+        map.put("midDoc",mid);
+        map.put("conDoc",con);
+        map.put("paperDoc",paper);
+        return map;
+    }
+
+    public Map<String,Object> getScore(Long student_id){
+        Map<String,Object>map=new HashMap<String,Object>();
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        map.put("openSc1",student.getOpenScore1());
+        map.put("openSc2",student.getOpenScore2());
+        map.put("openSc3",student.getOpenScore3());
+        map.put("midSc1",student.getMiddleScore1());
+        map.put("midSc2",student.getMiddleScore2());
+        map.put("midSc3",student.getMiddleScore3());
+        map.put("paperSc",student.getCrossPaperScore());
+        map.put("crossSc",student.getCrossPaperScore());
+        map.put("conSc1",student.getConclusionScore1());
+        map.put("conSc2",student.getConclusionScore2());
+        map.put("conSc3",student.getConclusionScore3());
+        map.put("finalSc",student.getFinalScore());
+        return map;
+    }
+
+    public List<Subject> getSubject(Long student_id){
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        Long major_id=student.getMajorId();
+        SubjectExample subjectExample=new SubjectExample();
+        subjectExample.createCriteria()
+                .andMajorIdEqualTo(major_id);
+        subjectExample.setOrderByClause("id DESC");
+        List<Subject> list=subjectMapper.selectByExample(subjectExample);
+        List<Subject> recent=new ArrayList<Subject>();
+        int size=list.size();
+        for(int i=0;i<5&&i<size;i++){
+            recent.add(list.get(i));
+        }
+        return recent;
+    }
 }
