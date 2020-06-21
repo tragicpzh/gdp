@@ -6,7 +6,7 @@
                     <i class="far fa-chart-bar"></i>
                     JVM资源状况
                 </h3>
-                <div style="float: right">
+                <div style="float: right" id="processor">
                     可用处理器数量：8
                 </div>
             </div>
@@ -338,6 +338,23 @@
                 return false
             }
         })
+    })
+</script>
+<script>
+    $(function () {
+        let xmlHttpRequest;
+        if (window.XMLHttpRequest) {
+            xmlHttpRequest = new XMLHttpRequest();
+        } else {
+            xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlHttpRequest.open("get", "/administrator/getProcessor", true);
+        xmlHttpRequest.send();
+        xmlHttpRequest.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("processor").innerHTML="可用处理器数量：" + xmlHttpRequest.responseText;
+            }
+        }
     })
 </script>
 <script type="text/javascript">
