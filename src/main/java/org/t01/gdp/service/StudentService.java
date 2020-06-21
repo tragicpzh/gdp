@@ -1,5 +1,6 @@
 package org.t01.gdp.service;
 
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -212,7 +213,34 @@ public class StudentService {
     public Map<String,Object> getScore(Long student_id){
         Map<String,Object>map=new HashMap<String,Object>();
         Student student=studentMapper.selectByPrimaryKey(student_id);
-       // map.put("open",(student.getOpenScore1()));
+        map.put("openSc1",student.getOpenScore1());
+        map.put("openSc2",student.getOpenScore2());
+        map.put("openSc3",student.getOpenScore3());
+        map.put("midSc1",student.getMiddleScore1());
+        map.put("midSc2",student.getMiddleScore2());
+        map.put("midSc3",student.getMiddleScore3());
+        map.put("paperSc",student.getCrossPaperScore());
+        map.put("crossSc",student.getCrossPaperScore());
+        map.put("conSc1",student.getConclusionScore1());
+        map.put("conSc2",student.getConclusionScore2());
+        map.put("conSc3",student.getConclusionScore3());
+        map.put("finalSc",student.getFinalScore());
         return map;
+    }
+
+    public List<Subject> getSubject(Long student_id){
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        Long major_id=student.getMajorId();
+        SubjectExample subjectExample=new SubjectExample();
+        subjectExample.createCriteria()
+                .andMajorIdEqualTo(major_id);
+        subjectExample.setOrderByClause("id DESC");
+        List<Subject> list=subjectMapper.selectByExample(subjectExample);
+        List<Subject> recent=new ArrayList<Subject>();
+        int size=list.size();
+        for(int i=0;i<5&&i<size;i++){
+            recent.add(list.get(i));
+        }
+        return recent;
     }
 }

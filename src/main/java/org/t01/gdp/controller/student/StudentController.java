@@ -160,10 +160,18 @@ public class StudentController {
         Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
         return Result.success(studentService.ToDoList(student_id));
     }
+
     @GetMapping("/getScore")
     @ResponseBody
     public Object getScore(HttpServletRequest request){
         Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
         return Result.success(studentService.getScore(student_id));
+    }
+
+    @GetMapping("/getSubject")
+    @ResponseBody
+    public Object getSubject(HttpServletRequest request){
+        Long student_id=((UserInfo)(request.getSession(true).getAttribute("USER_INFO"))).getId();
+        return Result.success(studentService.getSubject(student_id));
     }
 }
