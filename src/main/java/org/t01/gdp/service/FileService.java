@@ -1,6 +1,8 @@
 package org.t01.gdp.service;
 
 import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,16 +13,19 @@ import java.net.URLDecoder;
 
 @Service
 public class FileService {
+    private static final Logger LOG = LoggerFactory.getLogger(FileService.class);
 
     public void deleteFile(String subPath){
         try {
             String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + URLDecoder.decode(subPath==null?"":subPath,"UTF-8");
             File file = new File(filePath);
             if(file.exists() && file.isFile()){
-                file.delete();
+                if(!file.delete()){
+                    LOG.warn("文件\""+filePath+"\"未成功删除");
+                }
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
     }
 
@@ -38,9 +43,11 @@ public class FileService {
         }
         if(!dest.exists()){
             try {
-                dest.createNewFile();
+                if(!dest.createNewFile()){
+                    LOG.warn("文件\""+filePath+"\"创建失败");
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
                 return 2;
             }
         }
@@ -49,7 +56,7 @@ public class FileService {
             file.transferTo(dest);
             return 0;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return 3;
     }
@@ -63,7 +70,7 @@ public class FileService {
         try {
             filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file" + URLDecoder.decode(uri,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         }
 
@@ -93,22 +100,22 @@ public class FileService {
                 return true;
 
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
             }finally {
                 if(bis != null){
                     try{
                         bis.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOG.error(e.getMessage());
                     }
                 }
                 if(fis != null){
                     try{
                         fis.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOG.error(e.getMessage());
                     }
                 }
             }
@@ -130,27 +137,32 @@ public class FileService {
         }
         if(!file.exists()){
             try {
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    LOG.warn("文件\""+ subPath + multipartFile.getOriginalFilename()+"\"未创建成功");
+                    return false;
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage());
                 return false;
             }
         }
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         }
         try {
             Thumbnails.of(file).size(160, 160).keepAspectRatio(false).toFile(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             return false;
         }
         File fileRename = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + subPath + "userimage.jpg");
         if(fileRename.exists()){
-            fileRename.delete();
+            if(!fileRename.delete()){
+                LOG.warn("文件\""+ subPath + "userimage.jpg" + "\"未删除成功");
+            }
         }
         file.renameTo(fileRename);
         return true;
