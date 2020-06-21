@@ -68,6 +68,6 @@ public class PlatformMonitorController {
         if(monitorRecord.getJvmProcessors()!=null){
             return monitorRecord.getJvmProcessors();
         }
-        return 0;
+        return 0L;
     }
 }
