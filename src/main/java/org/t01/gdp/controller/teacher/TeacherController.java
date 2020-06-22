@@ -31,6 +31,15 @@ public class TeacherController {
     @Autowired
     StudentService studentService;
 
+    @GetMapping("/getMajorList")
+    @ResponseBody
+    public List<Major> getMajorList(HttpServletRequest request){
+        Long id = ((UserInfo) request.getSession(true).getAttribute(USER_INFO)).getId();
+
+        Teacher teacher = teacherService.selectTeacherById(id);
+        return majorService.selectMajorByCollege(teacher.getCollegeId());
+    }
+
     @PostMapping("/addSubject")
     @ResponseBody
     public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
@@ -60,7 +69,7 @@ public class TeacherController {
 
     @RequestMapping("/paperReview/getList")
     @ResponseBody
-    public String getPaperReviewList(int start, int length, @RequestParam("search[value]") String search, HttpServletRequest request) {
+    public String getPaperReviewList(int start, int length, HttpServletRequest request) {
         long teacherId = ((UserInfo) request.getSession(true).getAttribute(USER_INFO)).getId();
         ReviewSearchCase reviewSearchCase = new ReviewSearchCase();
         reviewSearchCase.setCreateTeacherId(teacherId);
@@ -150,8 +159,21 @@ public class TeacherController {
     public String getSubjectList(int start,int length, HttpServletRequest request){
         long id = ((UserInfo) request.getSession().getAttribute(USER_INFO)).getId();
 
+        String searchKey = request.getParameter("search[value]");
+        int orderColumn = Integer.valueOf(request.getParameter("order[0][column]"));
+        String orderDirection = request.getParameter("order[0][dir]");
+
+        String[] column = new String[]{"id","name","difficulty","major_id","direction","state"};
+
+        if(orderColumn < 0 || orderColumn >= column.length){
+            orderColumn = 0;
+        }
+        String orderByClause = column[orderColumn] + " " + (orderDirection.equalsIgnoreCase("desc")?"desc":"asc");
+
         SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
         subjectSearchCase.setCreateTeacherId(id);
+        subjectSearchCase.setName("%" + searchKey + "%");
+        subjectSearchCase.setOrderByClause(orderByClause);
 
         PageInfo<Subject> subjectsByTeacherId = subjectService.searchSubjects(subjectSearchCase,start/length+1,length);
         long total = subjectsByTeacherId.getTotal();

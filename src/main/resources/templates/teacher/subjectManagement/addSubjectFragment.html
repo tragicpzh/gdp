@@ -4,9 +4,7 @@
         <div class="form-group">
             <label>所属专业</label>
             <label>
-                <select class="form-control" name="major">
-                    <option>高能物理</option>
-                    <option>天体物理</option>
+                <select class="form-control" name="major" id="major">
                 </select>
             </label>
         </div>
@@ -54,6 +52,26 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(function () {
+        var setting = {
+            url: "/teacher/getMajorList",
+            method: "get",
+            async: false,
+            success: function (data) {
+                for(var i = 0; i < data.length; ++i){
+                    $("#major").append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>")
+                }
+            },
+            error: function () {
+                alert("获取专业列表失败");
+            }
+        };
+
+        $.ajax(setting);
+    })
+</script>
 
 <script>
     function btnAddSubject() {

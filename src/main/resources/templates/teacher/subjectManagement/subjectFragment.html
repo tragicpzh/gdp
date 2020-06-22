@@ -47,16 +47,15 @@
                 <p>题目名称：</p>
                 <p><input type="text" style="width: 100%" maxlength="50" id="subjectName"></p>
                 <p>
-                    专业编号：
-<!--                    <select id="majorId">-->
-<!--                    </select>-->
+                    专业：
+                    <select id="majorId">
+                    </select>
                 </p>
-                <p><input type="number" id="majorId"></p>
                 <p>方向：</p>
                 <p><input type="text" style="width: 100%" maxlength="50" id="direction"></p>
                 <p>难度：</p>
                 <p>
-                    <input type="number" max="99" min="0" id="difficulty">%
+                    <input type="number" max="100" min="0" id="difficulty">%
                 </p>
                 <p>相关技术：</p>
                 <p><input type="text" maxlength="255" style="width: 100%" id="technology"></p>
@@ -77,6 +76,26 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    $(function () {
+        var setting = {
+            url: "/teacher/getMajorList",
+            method: "get",
+            async: false,
+            success: function (data) {
+                for(var i = 0; i < data.length; ++i){
+                    $("#majorId").append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>")
+                }
+            },
+            error: function () {
+                alert("获取专业列表失败");
+            }
+        };
+
+        $.ajax(setting);
+    })
+</script>
 
 <script>
     $(function () {
@@ -178,7 +197,7 @@
         var difficulty = $("#difficulty").val();
 
         if(difficulty > 100 || difficulty < 0 || difficulty == ""){
-            alert("请输入0.01~0.99之间的数");
+            alert("请输入0~100之间的数");
             return;
         }
 

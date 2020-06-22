@@ -21,10 +21,9 @@ public class MajorService {
     }
 
     //通过学院查询专业
-    public List<Major> selectMajorByCollege(String college){
-//        MajorExample majorExample = new MajorExample();
-//        majorExample.createCriteria().andCollegeIdEqualTo(college);
-//        return majorMapper.selectByExample(majorExample);
-        return null;
+    public List<Major> selectMajorByCollege(Long collegeId){
+        MajorExample majorExample = new MajorExample();
+        majorExample.createCriteria().andCollegeIdEqualTo(collegeId);
+        return majorMapper.selectByExample(majorExample);
     }
 }

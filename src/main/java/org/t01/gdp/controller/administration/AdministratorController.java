@@ -58,11 +58,26 @@ public class AdministratorController {
     @GetMapping("/searchSubject/getList")
     @ResponseBody
     public String getSubjectList(int start,int length, HttpServletRequest request) {
-        SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
+        String searchKey = request.getParameter("search[value]");
+        int orderColumn = Integer.valueOf(request.getParameter("order[0][column]"));
+        String orderDirection = request.getParameter("order[0][dir]");
+
+        String[] column = new String[]{"id","name","difficulty","major_id","direction","state"};
+
+        if(orderColumn < 0 || orderColumn >= column.length){
+            orderColumn = 0;
+        }
+        String orderByClause = column[orderColumn] + " " + (orderDirection.equalsIgnoreCase("desc")?"desc":"asc");
+
         ArrayList<String> states = new ArrayList<>();
         states.add("NEW");
         states.add("MODIFIED");
+
+        SubjectSearchCase subjectSearchCase = new SubjectSearchCase();
         subjectSearchCase.setState(states);
+        subjectSearchCase.setName("%" + searchKey + "%");
+        subjectSearchCase.setOrderByClause(orderByClause);
+
         PageInfo<Subject> subjects = subjectService.searchSubjects(subjectSearchCase,start / length + 1, length);
         long total = subjects.getTotal();
         List<Subject> list = subjects.getList();

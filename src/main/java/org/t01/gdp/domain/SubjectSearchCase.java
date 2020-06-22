@@ -10,6 +10,24 @@ public class SubjectSearchCase {
     private String direction;
     private List<String> state;
     private Long createTeacherId;
+    private String orderByClause;
+    private Long majorId;
+
+    public Long getMajorId() {
+        return majorId;
+    }
+
+    public void setMajorId(Long majorId) {
+        this.majorId = majorId;
+    }
+
+    public String getOrderByClause() {
+        return orderByClause;
+    }
+
+    public void setOrderByClause(String orderByClause) {
+        this.orderByClause = orderByClause;
+    }
 
     public List<String> getState() {
         return state;

@@ -48,7 +48,7 @@ public class SubjectService {
             criteria.andIdEqualTo(subjectSearchCase.getId());
         }
         if(subjectSearchCase.getName()!=null){
-            criteria.andNameEqualTo(subjectSearchCase.getName());
+            criteria.andNameLike(subjectSearchCase.getName());
         }
         if(subjectSearchCase.getDifficulty()!=null){
             criteria.andDifficultyEqualTo(subjectSearchCase.getDifficulty());
@@ -71,6 +71,12 @@ public class SubjectService {
         }
         if(subjectSearchCase.getCreateTeacherId()!=null){
             criteria.andCreateTeacherIdEqualTo(subjectSearchCase.getCreateTeacherId());
+        }
+        if(subjectSearchCase.getOrderByClause()!=null){
+            subjectExample.setOrderByClause(subjectSearchCase.getOrderByClause());
+        }
+        if(subjectSearchCase.getMajorId()!=null){
+            criteria.andMajorIdEqualTo(subjectSearchCase.getMajorId());
         }
 
         PageHelper.startPage(pageNo,pageSize);
