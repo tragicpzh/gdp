@@ -55,7 +55,8 @@ public class AdministratorService {
         map.put("headexsit",(administrator.getHeadPortrait()!=null)?true:false);
         map.put("telephoneexsit",(administrator.getPhoneNumber()!=null)?true:false);
         SubjectExample subjectExample=new SubjectExample();
-        subjectExample.createCriteria().andStateEqualTo("NEW");
+        subjectExample.or().andStateEqualTo("NEW");
+        subjectExample.or().andStateEqualTo("MODIFIED");
         List<Subject> subjectList=subjectMapper.selectByExample(subjectExample);
         map.put("subjectExamine",(subjectList.size()==0)?true:false);
         return  map;
