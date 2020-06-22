@@ -68,4 +68,9 @@
             </if>
         </where>
     </select>
+    <select id="selectone" resultType="String">
+        select state
+        from student
+        LIMIT 1
+    </select>
 </mapper>

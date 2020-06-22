@@ -1,3 +1,252 @@
-<div>
-    首页
+<div class="info-box" id="mainBody">
+    <div class="info-box-content">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">首页</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">首页</a></li>
+                            <li class="breadcrumb-item active">教师</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Main row -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3 id="newSubject">5</h3>
+                                <p>新增题目</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a onclick="toSubject()" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3 id="subjectState">中期答辩阶段</h3>
+
+                                <p>毕业设计阶段</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a  onclick="toTimes()" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3 id="newUser">10</h3>
+                                <p>新添用户</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a onclick="toUser()" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3 id="memoryCount">50%</h3>
+                                <p>内存占用</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a onclick="toMonitor()" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    待办事项
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <ul class="todo-list" data-widget="todo-list">
+                                    <li id="subjectExamine">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >题目待审批</span>
+                                        <div class="tools" onclick="toSubject()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="emailexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >填写邮箱地址</span>
+                                        <div class="tools" onclick="toAdmin()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="headexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置头像</span>
+                                        <div class="tools" onclick="toAdmin()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                    <li id="telephoneexsit">
+                                        <span class="handle">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </span>
+                                        <span class="text" >设置手机号码</span>
+                                        <div class="tools" onclick="toAdmin()">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                        <!-- Calendar -->
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">简要信息</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="name">姓名</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="name" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">邮箱</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="email" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">联系方式</label>
+                                        <input type="text" class="form-control" style="background-color: transparent" id="telephone" readonly="readonly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
 </div>
+<script>
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/administrator/simpleSelect',
+            contentType: "application/json",
+            success: function (msg) {
+                $("#name").val(msg['data']['name']);
+                $("#email").val(msg['data']['email']);
+                $("#telephone").val(msg['data']['telephone']);
+            },
+            error: function () {
+                alert("获取用户信息失败")
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/administrator/ToDoList',
+            contentType: "application/json",
+            success: function (msg) {
+                if (msg['data']['subjectExamine'] == true) $("#subjectExamine").hide();
+                if (msg['data']['emailexsit'] == true) $("#emailexsit").hide();
+                if (msg['data']['headexsit'] == true) $("#headexsit").hide();
+                if (msg['data']['telephoneexsit'] == true) $("#telephoneexsit").hide();
+            },
+            error: function () {
+                alert("获取待办事项失败");
+            }
+        });
+        $.ajax({
+            type:'GET',
+            url:'/administrator/getLable',
+            contentType:"application/json",
+            success:function (msg) {
+                $("#newSubject").text(msg['data']['newSubject']);
+                $("#subjectState").text(msg['data']['subjectState']);
+                $("#newUser").text(msg['data']['newUser']);
+                $("#memoryCount").text(msg['data']['memoryCount']);
+            },
+            error:function () {
+                alert("获取平台信息失败");
+            }
+        })
+    })
+
+    function toSubject() {
+        $.get("subjectManagementFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toAdmin() {
+        $.get("accountManagement/accountInfoFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+    function toTimes() {
+        $.get("timeAxisFragment", function (data) {
+            document.getElementById("fragmentScript").remove();
+            var script = document.createElement('script');
+            script.id = 'fragmentScript';
+            script.src = "timeAxisFragment.js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+            sessionStorage["position"] = "timeAxis";
+            $("#mainBody").html(data);
+        })
+    }
+    function toUser() {
+        $.get("userManagement/userManagementFragment", function (data) {
+            sessionStorage["position"] = "teacherAccountManagement";
+            $("#mainBody").html(data);
+        })
+    }
+    function toMonitor() {
+        $.get("other/platformMonitorFragment", function (data) {
+            $("#mainBody").html(data);
+        })
+    }
+</script>
+
