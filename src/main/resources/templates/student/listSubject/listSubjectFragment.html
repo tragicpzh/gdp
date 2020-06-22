@@ -117,6 +117,7 @@
 
 <script>
     $(function () {
+        $("#subject_id").val(getsubjectId());
         $('#Subject_table').bootstrapTable('destroy').bootstrapTable({
             method: 'get',
             url: "/subject/list",
@@ -256,5 +257,8 @@
             }
         };
         $.ajax(option);
+    }
+    function getsubjectId(){
+        return sessionStorage['subjectId'];
     }
 </script>

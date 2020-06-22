@@ -377,6 +377,7 @@
     }
     function  onSubject(subjectId) {
         $.get('listSubject/listSubjectFragment', function (data) {
+            sessionStorage['subjectId']=subjectId;
             $("#mainBody").html(data);
         })
     }

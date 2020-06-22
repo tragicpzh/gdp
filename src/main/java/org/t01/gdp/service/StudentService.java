@@ -254,17 +254,8 @@ public class StudentService {
     public List<Subject> getSubject(Long studentId){
         Student student=studentMapper.selectByPrimaryKey(studentId);
         Long majorId=student.getMajorId();
-        SubjectExample subjectExample=new SubjectExample();
-        subjectExample.createCriteria()
-                .andMajorIdEqualTo(majorId);
-        subjectExample.setOrderByClause("id DESC");
-        List<Subject> list=subjectMapper.selectByExample(subjectExample);
-        List<Subject> recent=new ArrayList<>();
-        int size=list.size();
-        for(int i=0;i<5&&i<size;i++){
-            recent.add(list.get(i));
-        }
-        return recent;
+        List<Subject> list=sqlMapper.selectfiveById(majorId);
+        return list;
     }
 
     public void uploadNewUserImage(HttpServletRequest request, MultipartFile multipartFile) {

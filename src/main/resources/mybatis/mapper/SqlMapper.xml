@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t01.gdp.mapper.SqlMapper">
+    <resultMap id="BaseResultMap" type="org.t01.gdp.domain.Subject">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="create_teacher_id" jdbcType="BIGINT" property="createTeacherId" />
+        <result column="cross_review_teacher" jdbcType="BIGINT" property="crossReviewTeacher" />
+        <result column="major_id" jdbcType="BIGINT" property="majorId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="direction" jdbcType="VARCHAR" property="direction" />
+        <result column="difficulty" jdbcType="INTEGER" property="difficulty" />
+        <result column="technology" jdbcType="VARCHAR" property="technology" />
+        <result column="describe" jdbcType="VARCHAR" property="describe" />
+        <result column="document" jdbcType="VARCHAR" property="document" />
+        <result column="review_teacher_id1" jdbcType="BIGINT" property="reviewTeacherId1" />
+        <result column="review_teacher_id2" jdbcType="BIGINT" property="reviewTeacherId2" />
+        <result column="review_teacher_id3" jdbcType="BIGINT" property="reviewTeacherId3" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
     <select id="getUserByRole" parameterType="String" resultType="java.util.HashMap">
         select u.id,
                u.password,
@@ -73,5 +90,12 @@
         select state
         from student
         LIMIT 1
+    </select>
+    <select id="selectfiveById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from subject
+        where major_id=#{majorId}
+        ORDER BY id DESC
+        LIMIT 5
     </select>
 </mapper>

@@ -227,6 +227,7 @@
 
 <script>
     function loadFragment(fragment, e) {
+        sessionStorage['subjectId']="";
         fragment = fragment + "Fragment";
 
         $.get(fragment, function (data) {

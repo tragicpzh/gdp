@@ -54,7 +54,7 @@ public class TeacherService {
                 int cas = random.nextInt(teachers.size());
                 if (teachers.get(cas).getId().equals(list.get(i).getCreateTeacherId())) continue;
                 else {
-                    list.get(i).setCrossReviewTeacher(Long.valueOf(cas));
+                    list.get(i).setCrossReviewTeacher(teachers.get(cas).getId());
                     break;
                 }
             }
