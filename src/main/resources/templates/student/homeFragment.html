@@ -37,7 +37,7 @@
                                           <i class="fas fa-ellipsis-v"></i>
                                         </span>
                                         <span class="text" >选择合适的课题</span>
-                                        <div class="tools" onclick="toSubjectProcess()">
+                                        <div class="tools" onclick="onSubject()">
                                             <i class="fas fa-edit"></i>
                                         </div>
                                     </li>
@@ -377,6 +377,7 @@
     }
     function  onSubject(subjectId) {
         $.get('listSubject/listSubjectFragment', function (data) {
+            sessionStorage['subjectId']=subjectId;
             $("#mainBody").html(data);
         })
     }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.t01.gdp.common.Result;
 import org.t01.gdp.domain.*;
 import org.t01.gdp.service.AdministratorService;
 import org.t01.gdp.service.FileService;
@@ -113,5 +114,25 @@ public class AdministratorController {
         }
         administratorService.uploadNewUserImage(request, file);
         return "上传成功";
+    }
+
+    @GetMapping("/simpleSelect")
+    @ResponseBody
+    public Object simpleSelect(HttpServletRequest request){
+        Long admin_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return Result.success(administratorService.simpleSelect(admin_id));
+    }
+
+    @GetMapping("/ToDoList")
+    @ResponseBody
+    public Object ToDoList(HttpServletRequest request){
+        Long admin_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
+        return  Result.success(administratorService.ToDoList(admin_id));
+    }
+
+    @GetMapping("/getLable")
+    @ResponseBody
+    public Object getLable(){
+        return Result.success(administratorService.getLable());
     }
 }
