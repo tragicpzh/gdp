@@ -270,7 +270,7 @@ public class TeacherController {
     public String getUserImage(HttpServletRequest request){
         long teacherId = ((UserInfo)request.getSession(true).getAttribute(USER_INFO)).getId();
         String path = "userImage/teacher/" + teacherId + "/userimage.jpg";
-        if(fileService.fileExit(path)){
+        if(fileService.imageExit(path)){
             return "../" + path;
         }
         return "../Rendering/dist/img/user2-160x160.jpg";

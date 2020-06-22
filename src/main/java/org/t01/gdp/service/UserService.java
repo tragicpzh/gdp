@@ -1,5 +1,8 @@
 package org.t01.gdp.service;
 
+import jdk.nashorn.internal.ir.CallNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.t01.gdp.domain.*;
@@ -9,6 +12,8 @@ import java.util.*;
 
 @Service
 public class UserService {
+    private final Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     MajorMapper majorMapper;
     @Autowired
@@ -26,6 +31,9 @@ public class UserService {
     @Autowired
     AdministratorMapper administratorMapper;
 
+    private static final String PHONE_NUMBER = "phoneNumber";
+    private static final String EMAIL = "email";
+    private static final String SUCCESS = "success";
 
     private String getRandomVal() {
         StringBuilder randomVal = new StringBuilder();
@@ -45,15 +53,15 @@ public class UserService {
     }
 
     private String checkNewPhoneNumberAndEmail(String phoneNumber, String email, Map<String, Object> result) {
-        if (allPhoneNumbers.contains(phoneNumber)&&(result.get("phoneNumber") == null || !result.get("phoneNumber").toString().equals(phoneNumber))) {
+        if (allPhoneNumbers.contains(phoneNumber)&&(result.get(PHONE_NUMBER) == null || !result.get(PHONE_NUMBER).toString().equals(phoneNumber))) {
             return "Phone Number Already Exist";
         }
 
-        if (allEmails.contains(email)&&(result.get("email") == null || !result.get("email").toString().equals(email))) {
+        if (allEmails.contains(email)&&(result.get(EMAIL) == null || !result.get(EMAIL).toString().equals(email))) {
             return "Email Already Exist";
         }
 
-        return "success";
+        return SUCCESS;
     }
 
     public String addUser(String name, String phoneNumber, String email, String role, String otherInfo) {
@@ -113,7 +121,7 @@ public class UserService {
         allIds.add(id);
         allPhoneNumbers.add(phoneNumber);
         allEmails.add(email);
-        return "success";
+        return SUCCESS;
     }
 
     public String updateUser(String id, String name, String phoneNumber, String email, String role, String otherInfo) {
@@ -126,7 +134,7 @@ public class UserService {
             }
             result = userMapper.getTeacherByTeacherID(Long.parseLong(id));
             String check = checkNewPhoneNumberAndEmail(phoneNumber, email, result);
-            if (!check.equals("success")) {
+            if (!check.equals(SUCCESS)) {
                 return check;
             }
             if (userMapper.updateTeacherByTeacherID(id, name, phoneNumber, email, otherInfo) != 1) {
@@ -139,7 +147,7 @@ public class UserService {
             }
             result = userMapper.getStudentByStudentId(Long.parseLong(id));
             String check = checkNewPhoneNumberAndEmail(phoneNumber, email, result);
-            if (!check.equals("success")) {
+            if (!check.equals(SUCCESS)) {
                 return check;
             }
             if (userMapper.updateStudentByStudentId(id, name, phoneNumber, email, otherInfo) != 1) {
@@ -148,21 +156,21 @@ public class UserService {
         }
 
         if (allIds != null) {
-            if (result.get("phoneNumber") == null){
+            if (result.get(PHONE_NUMBER) == null){
                 allPhoneNumbers.add(phoneNumber);
             }
 
-            if (result.get("phoneNumber") != null && !result.get("phoneNumber").toString().equals(phoneNumber)) {
-                allPhoneNumbers.remove(result.get("phoneNumber").toString());
+            if (result.get(PHONE_NUMBER) != null && !result.get(PHONE_NUMBER).toString().equals(phoneNumber)) {
+                allPhoneNumbers.remove(result.get(PHONE_NUMBER).toString());
                 allPhoneNumbers.add(phoneNumber);
             }
 
-            if (result.get("email") != null && !result.get("email").toString().equals(email)) {
-                allEmails.remove(result.get("email").toString());
+            if (result.get(EMAIL) != null && !result.get(EMAIL).toString().equals(email)) {
+                allEmails.remove(result.get(EMAIL).toString());
                 allEmails.add(email);
             }
         }
-        return "success";
+        return SUCCESS;
     }
 
     public Map<String, Object> getUserInfo(String id, String role) {
@@ -173,8 +181,10 @@ public class UserService {
                 return userMapper.getStudentByStudentId(Long.parseLong(id));
             case "ADM":
                 return userMapper.getAdminByAdminID(Long.parseLong(id));
+            default:
+                LOG.warn("未知角色:{}",role);
+                return null;
         }
-        return null;
     }
 
     public String getUserPassword(String id, String role) {
@@ -185,8 +195,10 @@ public class UserService {
                 return studentMapper.selectByPrimaryKey(Long.parseLong(id)).getPassword();
             case "ADM":
                 return administratorMapper.selectByPrimaryKey(Long.parseLong(id)).getPassword();
+            default:
+                LOG.warn("未知角色:{}",role);
+                return null;
         }
-        return null;
     }
 
     public boolean updateUserPassword(String id, String role, String newPassword) {
@@ -206,8 +218,10 @@ public class UserService {
                 administrator.setId(Long.valueOf(id));
                 administrator.setPassword(newPassword);
                 return administratorMapper.updateByPrimaryKeySelective(administrator) == 1;
+            default:
+                LOG.warn("未知角色:{}",role);
+                return false;
         }
-        return false;
     }
 
     public boolean updatePhoneNumber(String id, String role, String phoneNumber) {
@@ -227,8 +241,10 @@ public class UserService {
                 administrator.setId(Long.valueOf(id));
                 administrator.setPhoneNumber(phoneNumber);
                 return administratorMapper.updateByPrimaryKeySelective(administrator) == 1;
+            default:
+                LOG.warn("未知角色:{}",role);
+                return false;
         }
-        return false;
     }
 
     public boolean updateEmail(String id, String role, String email) {
@@ -248,8 +264,10 @@ public class UserService {
                 administrator.setId(Long.valueOf(id));
                 administrator.setEmail(email);
                 return administratorMapper.updateByPrimaryKeySelective(administrator) == 1;
+            default:
+                LOG.warn("未知角色:{}",role);
+                return false;
         }
-        return false;
     }
 
     public List<Map<String, Object>> getUserByRole(String role) {
@@ -273,12 +291,12 @@ public class UserService {
         }
         if (flag && allIds != null) {
             allIds.remove(id);
-            if (result.get("phoneNumber") != null) {
-                allPhoneNumbers.remove(result.get("phoneNumber").toString());
+            if (result.get(PHONE_NUMBER) != null) {
+                allPhoneNumbers.remove(result.get(PHONE_NUMBER).toString());
             }
 
-            if (result.get("email") != null) {
-                allEmails.remove(result.get("email").toString());
+            if (result.get(EMAIL) != null) {
+                allEmails.remove(result.get(EMAIL).toString());
             }
         }
         return flag;
@@ -311,8 +329,10 @@ public class UserService {
                 administrator.setPassword(password);
 
                 return administratorMapper.updateByExampleSelective(administrator, administratorExample) == 1;
+            default:
+                LOG.warn("未知角色:{}",role);
+                return false;
         }
-        return false;
     }
 
     public String getEmail(String username, String role) {
@@ -341,6 +361,8 @@ public class UserService {
                     return administrators.get(0).getEmail();
                 }
                 break;
+            default:
+                LOG.warn("未知角色:{}",role);
         }
         return null;
     }
@@ -371,6 +393,8 @@ public class UserService {
                     return administrators.get(0).getPhoneNumber();
                 }
                 break;
+            default:
+                LOG.warn("未知角色:{}",role);
         }
         return null;
     }

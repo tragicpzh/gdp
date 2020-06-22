@@ -14,14 +14,16 @@ import java.net.URLDecoder;
 @Service
 public class FileService {
     private static final Logger LOG = LoggerFactory.getLogger(FileService.class);
+    private final String fileDir = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\";
+    private final String imageDir = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
 
     public void deleteFile(String subPath){
         try {
-            String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + URLDecoder.decode(subPath==null?"":subPath,"UTF-8");
+            String filePath = fileDir + URLDecoder.decode(subPath==null?"":subPath,"UTF-8");
             File file = new File(filePath);
             if(file.exists() && file.isFile()){
                 if(!file.delete()){
-                    LOG.warn("文件\""+filePath+"\"未成功删除");
+                    LOG.warn("文件\"{}\"未成功删除",filePath);
                 }
             }
         } catch (UnsupportedEncodingException e) {
@@ -35,7 +37,7 @@ public class FileService {
         }
 
         String fileName = file.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file\\" + subPath + fileName;
+        String filePath = fileDir + subPath + fileName;
         File dest = new File(filePath);
 
         if(!dest.getParentFile().exists()){
@@ -44,7 +46,7 @@ public class FileService {
         if(!dest.exists()){
             try {
                 if(!dest.createNewFile()){
-                    LOG.warn("文件\""+filePath+"\"创建失败");
+                    LOG.warn("文件\"{}\"创建失败",filePath);
                 }
             } catch (IOException e) {
                 LOG.error(e.getMessage());
@@ -64,11 +66,11 @@ public class FileService {
     public boolean downloadFile(HttpServletRequest request, HttpServletResponse response){
         String requestURI = request.getRequestURI();
 
-        String uri = requestURI.substring(requestURI.indexOf("/download")+"/download".length());
+        String uri = requestURI.substring(requestURI.indexOf("/download") +"/download".length());
 
         String filePath = null;
         try {
-            filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\file" + URLDecoder.decode(uri,"UTF-8");
+            filePath = fileDir + URLDecoder.decode(uri,"UTF-8");
         } catch (UnsupportedEncodingException e) {
             LOG.error(e.getMessage());
             return false;
@@ -79,7 +81,6 @@ public class FileService {
         File file = new File(filePath);
 
         if(file.exists()){
-//            response.setContentType("application/force-download");
 
             byte[] buffer = new byte[1024];
             FileInputStream fis = null;
@@ -99,8 +100,6 @@ public class FileService {
 
                 return true;
 
-            } catch (FileNotFoundException e) {
-                LOG.error(e.getMessage());
             } catch (IOException e) {
                 LOG.error(e.getMessage());
             }finally {
@@ -124,21 +123,21 @@ public class FileService {
         return false;
     }
 
-    public boolean fileExit(String path) {
-        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + path;
+    public boolean imageExit(String path) {
+        String filePath = imageDir + path;
         File file = new File(filePath);
         return file.exists();
     }
 
     public boolean uploadUserImage(String subPath, MultipartFile multipartFile){
-        File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + subPath + multipartFile.getOriginalFilename());
+        File file = new File( imageDir+ subPath + multipartFile.getOriginalFilename());
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
         if(!file.exists()){
             try {
                 if(!file.createNewFile()){
-                    LOG.warn("文件\""+ subPath + multipartFile.getOriginalFilename()+"\"未创建成功");
+                    LOG.warn("文件\"{}\"未创建成功",subPath + multipartFile.getOriginalFilename());
                     return false;
                 }
             } catch (IOException e) {
@@ -158,14 +157,16 @@ public class FileService {
             LOG.error(e.getMessage());
             return false;
         }
-        File fileRename = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + subPath + "userimage.jpg");
+        File fileRename = new File(imageDir + subPath + "userimage.jpg");
         if(fileRename.exists()){
             if(!fileRename.delete()){
-                LOG.warn("文件\""+ subPath + "userimage.jpg" + "\"未删除成功");
+                LOG.warn("文件\"{}userimage.jpg\"未删除成功",subPath);
+                return false;
             }
         }
-        if(file.renameTo(fileRename)){
-            LOG.warn("文件\""+ subPath + "userimage.jpg" + "\"未重命名成功");
+        if(!file.renameTo(fileRename)){
+            LOG.warn("文件\"{}userimage.jpg\"未重命名成功",subPath);
+            return false;
         }
         return true;
     }

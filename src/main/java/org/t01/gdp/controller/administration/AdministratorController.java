@@ -112,7 +112,7 @@ public class AdministratorController {
     public String getUserImage(HttpServletRequest request){
         long teacherId = ((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
         String path = "userImage/administrator/" + teacherId + "/userimage.jpg";
-        if(fileService.fileExit(path)){
+        if(fileService.imageExit(path)){
             return "../" + path;
         }
         return "../Rendering/dist/img/user2-160x160.jpg";
@@ -142,7 +142,7 @@ public class AdministratorController {
     @ResponseBody
     public Object ToDoList(HttpServletRequest request){
         Long admin_id=((UserInfo)request.getSession(true).getAttribute("USER_INFO")).getId();
-        return  Result.success(administratorService.ToDoList(admin_id));
+        return  Result.success(administratorService.toDoList(admin_id));
     }
 
     @GetMapping("/getLable")

@@ -28,12 +28,15 @@ public class WebSecurityConfig {
         @Autowired
         private StudentLoginFailureHandler studentLoginFailureHandler;
 
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String pattern = "/student/**";
+
             http
                     .authorizeRequests()
-                    .antMatchers("/student/**").access("hasRole('ROLE_STU')")
+                    .antMatchers(pattern).access("hasRole('ROLE_STU')")
                     .and()
-                    .antMatcher("/student/**")
+                    .antMatcher(pattern)
                     .formLogin()
                     .loginPage("/student/login")
                     .loginProcessingUrl("/student/login/check")
@@ -41,7 +44,7 @@ public class WebSecurityConfig {
                     .failureHandler(studentLoginFailureHandler)
                     .permitAll()
                     .and()
-                    .antMatcher("/student/**")
+                    .antMatcher(pattern)
                     .logout()
                     .logoutUrl("/student/logout")
                     .logoutSuccessHandler(studentLogoutSuccessHandler)
@@ -80,13 +83,16 @@ public class WebSecurityConfig {
         @Autowired
         private TeacherLoginFailureHandler teacherLoginFailureHandler;
 
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String pattern = "/teacher/**";
+
             http
                     .authorizeRequests()
-                    .antMatchers("/teacher/**").access("hasRole('ROLE_TEA')")
+                    .antMatchers(pattern).access("hasRole('ROLE_TEA')")
                     .anyRequest().authenticated()
                     .and()
-                    .antMatcher("/teacher/**")
+                    .antMatcher(pattern)
                     .formLogin()
                     .loginPage("/teacher/login")
                     .loginProcessingUrl("/teacher/login/check")
@@ -94,6 +100,7 @@ public class WebSecurityConfig {
                     .failureHandler(teacherLoginFailureHandler)
                     .permitAll()
                     .and()
+                    .antMatcher(pattern)
                     .logout()
                     .logoutUrl("/teacher/logout")
                     .logoutSuccessHandler(teacherLogoutSuccessHandler)
@@ -132,13 +139,16 @@ public class WebSecurityConfig {
         @Autowired
         private AdministratorLoginFailureHandler administratorLoginFailureHandler;
 
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String pattern = "/administrator/**";
+
             http
                     .authorizeRequests()
-                    .antMatchers("/administrator/**").access("hasRole('ROLE_ADM')")
+                    .antMatchers(pattern).access("hasRole('ROLE_ADM')")
                     .anyRequest().authenticated()
                     .and()
-                    .antMatcher("/administrator/**")
+                    .antMatcher(pattern)
                     .formLogin()
                     .loginPage("/administrator/login")
                     .loginProcessingUrl("/administrator/login/check")
@@ -146,6 +156,7 @@ public class WebSecurityConfig {
                     .failureHandler(administratorLoginFailureHandler)
                     .permitAll()
                     .and()
+                    .antMatcher(pattern)
                     .logout()
                     .logoutUrl("/administrator/logout")
                     .logoutSuccessHandler(administratorLogoutSuccessHandler)
@@ -183,82 +194,4 @@ public class WebSecurityConfig {
                     .csrf().disable();
         }
     }
-
-//    @Configuration
-//    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .authorizeRequests()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                    .formLogin();
-//        }
-//    }
-
-//    @Autowired
-//    private MyUserDetailService myUserDetailService;
-//    @Autowired
-//    private LoginSuccessHandler loginSuccessHandler;
-//    @Autowired
-//    private MyLogoutSuccessHandler myLogoutSuccessHandler;
-//
-//
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/index","/Rendering/**","/student/login").permitAll()
-//                .antMatchers("/administrator/**").access("hasRole('ROLE_ADM')")
-//                .antMatchers("/teacher/**").access("hasRole('ROLE_TEA')")
-//                .antMatchers("/student/**").access("hasRole('ROLE_STU')")
-//                .anyRequest().authenticated()
-//                .and()
-//                .antMatcher("/**")
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/login/check")
-//                .successHandler(loginSuccessHandler)
-//                .failureUrl("/login?failure=true")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessHandler(myLogoutSuccessHandler)
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .and()
-//                .csrf().disable()
-//                .headers().frameOptions().disable();
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(myUserDetailService).passwordEncoder(new PasswordEncoder() {
-//            @Override
-//            public String encode(CharSequence charSequence) {
-//                return charSequence.toString();
-//            }
-//
-//            @Override
-//            public boolean matches(CharSequence charSequence, String s) {
-//                return s.equals(charSequence.toString());
-//            }
-//        });
-//    }
-
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("TEA")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }

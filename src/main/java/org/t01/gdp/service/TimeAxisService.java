@@ -27,13 +27,13 @@ public class TimeAxisService {
     private static Map<String,List<Integer>> pageConfig = new HashMap<>();
 
     private static void initPageConfig(){
-        pageConfig.put("/teacher/subjectManagement/addSubjectFragment",Arrays.asList(new Integer[]{0}));
-        pageConfig.put("/teacher/review/openReviewFragment",Arrays.asList(new Integer[]{2}));
-        pageConfig.put("/teacher/review/middleReviewFragment",Arrays.asList(new Integer[]{4}));
-        pageConfig.put("/teacher/review/paperReviewFragment",Arrays.asList(new Integer[]{6}));
-        pageConfig.put("/teacher/review/crossReviewFragment",Arrays.asList(new Integer[]{6}));
-        pageConfig.put("/teacher/review/conclusionReviewFragment",Arrays.asList(new Integer[]{7}));
-        pageConfig.put("/student/selectSubjectFragment",Arrays.asList(new Integer[]{1}));
+        pageConfig.put("/teacher/subjectManagement/addSubjectFragment",Arrays.asList(0));
+        pageConfig.put("/teacher/review/openReviewFragment",Arrays.asList(2));
+        pageConfig.put("/teacher/review/middleReviewFragment",Arrays.asList(4));
+        pageConfig.put("/teacher/review/paperReviewFragment",Arrays.asList(6));
+        pageConfig.put("/teacher/review/crossReviewFragment",Arrays.asList(6));
+        pageConfig.put("/teacher/review/conclusionReviewFragment",Arrays.asList(7));
+        pageConfig.put("/student/selectSubjectFragment",Arrays.asList(1));
     }
 
     public static boolean isAccessible(String uri){
@@ -76,18 +76,14 @@ public class TimeAxisService {
         }
         timeAxisState = index;
 
-        if(timeAxisState == oldState + 1){
-            return true;
-        }
-        return false;
-//        System.out.println(timeAxisState);
+        return timeAxisState == oldState + 1;
     }
 
     public static SimpleDateFormat getFormat(){
         return new SimpleDateFormat(DATE_FORMAT_YMDHMS_WITH_T);
     }
 
-    public static ArrayList<TimePoint> getTimePoints() {
+    public static List<TimePoint> getTimePoints() {
         return timePoints;
     }
 
@@ -117,13 +113,10 @@ public class TimeAxisService {
 
             bos.write(jsonString.getBytes());
             return true;
-        } catch (FileNotFoundException e) {
-            LOG.error(e.getMessage());
-            return false;
         } catch (IOException e) {
             LOG.error(e.getMessage());
             return false;
-        }finally {
+        } finally {
             if(bos!=null){
                 try {
                     bos.close();
@@ -168,7 +161,7 @@ public class TimeAxisService {
 
             int i = bis.read(buffer);
             while(i != -1){
-                jsonString += new String(buffer);
+                jsonString = jsonString + new String(buffer);
                 i = bis.read(buffer);
             }
 
@@ -186,9 +179,6 @@ public class TimeAxisService {
                 LOG.error(e.getMessage());
                 return false;
             }
-        } catch (FileNotFoundException e) {
-            LOG.error(e.getMessage());
-            return false;
         } catch (IOException e) {
             LOG.error(e.getMessage());
             return false;
@@ -234,7 +224,6 @@ public class TimeAxisService {
         }
 
         saveTimeAxis();
-//        System.out.println(timePoints);
     }
 
     public static int setTimePoint(int index,TimePoint timePoint){
@@ -255,9 +244,5 @@ public class TimeAxisService {
         timePoints.set(index,timePoint);
         saveTimeAxis();
         return 0;
-    }
-
-    public static boolean setDate(int index,Date date){
-        return true;
     }
 }

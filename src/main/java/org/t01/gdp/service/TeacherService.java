@@ -1,6 +1,5 @@
 package org.t01.gdp.service;
 
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +47,7 @@ public class TeacherService {
             while (cnt >= 0) {
                 cnt++;
                 if (cnt > 20) {
-                    msg = msg + "无法为" + String.valueOf(list.get(i).getId()) + "号课题分配交叉评阅老师";
+                    msg = msg + "无法为" + list.get(i).getId() + "号课题分配交叉评阅老师";
                     break;
                 }
                 int cas = random.nextInt(teachers.size());
@@ -145,9 +144,9 @@ public class TeacherService {
         return  map;
     }
 
-    public Map<String,Object> toDoList(Long teacher_id){
+    public Map<String,Object> toDoList(Long teacherId){
         Map<String,Object>map=new HashMap<>();
-        Teacher teacher=teacherMapper.selectByPrimaryKey(teacher_id);
+        Teacher teacher=teacherMapper.selectByPrimaryKey(teacherId);
         map.put("emailexsit",(teacher.getEmail()!=null)?true:false);
         map.put("headexsit",(teacher.getHeadPortrait()!=null)?true:false);
         map.put("telephoneexsit",(teacher.getPhoneNumber()!=null)?true:false);
@@ -165,7 +164,7 @@ public class TeacherService {
 
         //review_teacher_id1
         subjectExample.clear();
-        subjectExample.createCriteria().andReviewTeacherId1EqualTo(teacher_id);
+        subjectExample.createCriteria().andReviewTeacherId1EqualTo(teacherId);
         List<Subject> subjects1=subjectMapper.selectByExample(subjectExample);
         for (Subject subject : subjects1) {
             StudentExample studentExample=new StudentExample();
@@ -183,7 +182,7 @@ public class TeacherService {
 
         //review_teacher_id2
         subjectExample.clear();
-        subjectExample.createCriteria().andReviewTeacherId2EqualTo(teacher_id);
+        subjectExample.createCriteria().andReviewTeacherId2EqualTo(teacherId);
         List<Subject> subjects2=subjectMapper.selectByExample(subjectExample);
         for (Subject subject : subjects2) {
             StudentExample studentExample=new StudentExample();
@@ -201,7 +200,7 @@ public class TeacherService {
 
         //review_teacher_id3
         subjectExample.clear();
-        subjectExample.createCriteria().andReviewTeacherId3EqualTo(teacher_id);
+        subjectExample.createCriteria().andReviewTeacherId3EqualTo(teacherId);
         List<Subject> subjects3=subjectMapper.selectByExample(subjectExample);
         for (Subject subject : subjects3) {
             StudentExample studentExample=new StudentExample();
@@ -219,7 +218,7 @@ public class TeacherService {
 
         //cross_review_teacher
         subjectExample.clear();
-        subjectExample.createCriteria().andCrossReviewTeacherEqualTo(teacher_id);
+        subjectExample.createCriteria().andCrossReviewTeacherEqualTo(teacherId);
         List<Subject> subjects4=subjectMapper.selectByExample(subjectExample);
         for (Subject subject : subjects4) {
             StudentExample studentExample=new StudentExample();
@@ -235,7 +234,7 @@ public class TeacherService {
 
         //paper_review_teacher
         subjectExample.clear();
-        subjectExample.createCriteria().andCreateTeacherIdEqualTo(teacher_id);
+        subjectExample.createCriteria().andCreateTeacherIdEqualTo(teacherId);
         List<Subject> subjects5=subjectMapper.selectByExample(subjectExample);
         for (Subject subject : subjects5) {
             StudentExample studentExample=new StudentExample();
