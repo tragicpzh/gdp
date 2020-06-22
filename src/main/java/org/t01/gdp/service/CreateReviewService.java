@@ -17,9 +17,9 @@ public class CreateReviewService {
     @Autowired
     SubjectMapper subjectMapper;
     //自动分配评审团队
-    public boolean create_review(List<String> subjects) {
-        for (String subject_id : subjects) {
-            Subject subject=subjectMapper.selectByPrimaryKey(Long.valueOf(subject_id));       //获取课题信息
+    public boolean create_review() {
+        List<Subject> subjects=subjectMapper.selectByExample(null);
+        for (Subject subject : subjects) {
             Teacher teacher=teacherMapper.selectByPrimaryKey(subject.getCreateTeacherId());   //获得出题人信息
             Long college_id=teacher.getCollegeId();                                         //获得学院id
             TeacherExample example=new TeacherExample();

@@ -223,10 +223,10 @@ public class TeacherController {
         return subjectService.deleteSubject(subjectId)==1;
     }
 
-    @PostMapping("/crossReview/create")
+    @PostMapping("/crossReview/create")//返回值为分配的具体信息（指哪些课题无法分配交叉评阅老师）
     @ResponseBody
-    public Object crossReviewCreate(List<Subject> subjects){
-        return Result.success(teacherService.crossReviewCreate(subjects));
+    public Object crossReviewCreate(){
+        return Result.success(teacherService.crossReviewCreate());
     }
 
     @RequestMapping("/crossReview/getList")

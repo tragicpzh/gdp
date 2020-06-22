@@ -48,7 +48,7 @@ public class TeacherService {
             while (cnt >= 0) {
                 cnt++;
                 if (cnt > 20) {
-                    msg = msg + "无法为" + teachers.get(i).getId() + "号课题分配交叉评阅老师";
+                    msg = msg + "无法为" + String.valueOf(list.get(i).getId()) + "号课题分配交叉评阅老师";
                     break;
                 }
                 int cas = random.nextInt(teachers.size());
@@ -62,7 +62,9 @@ public class TeacherService {
         return msg;
     }//分配中的子方法
 
-    public String crossReviewCreate(List<Subject> subjects){
+    public String crossReviewCreate(){
+        List<Subject> subjects=subjectMapper.selectByExample(null);
+
         if(subjects.size()<=1)return "课题数量太少";
 
         List<CrossreviewInfo> list=new ArrayList<>();        //创建CrossreviewInfo数组，为了加入学院id属性。

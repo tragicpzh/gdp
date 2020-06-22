@@ -17,7 +17,7 @@ public class CreateReviewController {
     //自动分配评审团队
     @PostMapping("/CreateReview")
     @ResponseBody
-    public Object reviewCreate(List<String> subjects){
-        return Result.success(createReviewService.create_review(subjects));
+    public Object reviewCreate(){
+        return Result.success(createReviewService.create_review());
     }
 }
