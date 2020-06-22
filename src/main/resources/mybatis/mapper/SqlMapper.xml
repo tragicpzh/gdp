@@ -23,7 +23,8 @@
                 s.technology as technology,
                 s.describe as `describe`,
                 t.name as createTeacher,
-                m.name as major
+                m.name as major,
+                s.document as document
         from subject s
                 left join teacher t on t.id=s.create_teacher_id
                 left join major m on m.id=s.major_id
@@ -49,7 +50,7 @@
                 and s.name like CONCAT('%',#{subject_name},'%')
             </if>
             <if test="subject_direction!=''">
-                and s.direction=#{subject_direction}
+                and s.direction like CONCAT ('%',#{subject_direction},'%')
             </if>
             <if test="difficult_min!=null">
                 and s.difficulty &gt;= #{difficult_min}
@@ -58,10 +59,10 @@
                 and s.difficulty &lt;= #{difficult_max}
             </if>
             <if test="subject_major!=''">
-                and m.name=#{subject_major}
+                and m.name like CONCAT ('%',#{subject_major},'%')
             </if>
             <if test="subject_teacher!=''">
-                and t.name=#{subject_teacher}
+                and t.name like CONCAT ('%',#{subject_teacher},'%')
             </if>
             <if test="subject_state!=''">
                 and s.state=#{subject_state}

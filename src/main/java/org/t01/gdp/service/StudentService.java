@@ -188,7 +188,7 @@ public class StudentService {
         map.put("major",major.getName());
         map.put("email",student.getEmail());
         map.put("telephone",student.getPhoneNumber());
-        map.put("subject",subject.getName());
+        map.put("subject",(subject!=null)?subject.getName():null);
         return  map;
     }
 

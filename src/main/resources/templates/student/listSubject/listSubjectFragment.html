@@ -4,18 +4,37 @@
         <h3 class="card-title">课题列表</h3>
     </div>
     <!-- /.box-header -->
-    <div>
-        <b>课题名称：</b><input type="text" id="subject_name" class="abc input-default">
-        <b>开题老师：</b><input type="text" id="subject_teacher" class="abc input-default">
-        <b>所属专业:</b><input type="text" id="subject_major" class="abc input-default">
-        <b>课题编号：</b><input type="text" id="subject_id" class="abc input-default">
-        <b>所属方向：</b><input type="text" id="subject_direction" class="abc input-default">
-    </div>
-    <div>
-        <b>难度系数：</b><input type="text" id="difficult_min" class="abc input-default">
-        <b>-</b>
-        <b><input type="text" id="difficult_max" class="abc input-default"></b>
-        <button type="button" onclick="reloadTable()" class="btn btn-primary">查询</button>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-md-3">
+                    <b>课题名称：</b><input type="text" id="subject_name" class="abc input-default">
+                </section>
+                <section class="col-md-3">
+                    <b>开题老师：</b><input type="text" id="subject_teacher" class="abc input-default">
+                </section>
+                <section class="col-md-3">
+                    <b>所属专业: </b><input type="text" id="subject_major" class="abc input-default">
+                </section>
+                <section class="col-md-3">
+                    <b>所属方向：</b><input type="text" id="subject_direction" class="abc input-default">
+                </section>
+            </div>
+            <br>
+            <div class="row">
+                <section class="col-md-3">
+                    <b>课题编号：</b><input type="text" id="subject_id" class="abc input-default ">
+                </section>
+                <section class="col-md-8">
+                    <b>难度系数：</b><input type="text" id="difficult_min" class="abc input-default">
+                    <b>-</b>
+                    <b><input type="text" id="difficult_max" class="abc input-default"></b>
+                </section>
+                <section class="col-md-1">
+                    <button type="button" onclick="reloadTable()" class="btn btn-outline-success">搜索</button>
+                </section>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <table id="Subject_table" class="table table-bordered table-hover">
@@ -58,32 +77,36 @@
             <div class="modal-body">
                 <p>
                     <span>开题老师：</span>
-                    <span id="create_teacher_id">1</span>
+                    <span id="create_teacher_id"></span>
                 </p>
                 <p>
                     <span>课题名称：</span>
-                    <span id="name">3</span>
+                    <span id="name"></span>
                 </p>
                 <p>
                     <span>课题专业：</span>
-                    <span id="major_id">2</span>
+                    <span id="major_id"></span>
                 </p>
 
                 <p>
                     <span>所属方向：</span>
-                    <span id="direction">4</span>
+                    <span id="direction"></span>
                 </p>
                 <p>
                     <span>难度系数：</span>
-                    <span id="difficulty">5</span>
+                    <span id="difficulty"></span>
                 </p>
                 <p>
                     <span>所需技术：</span>
-                    <span id="technology">6</span>
+                    <span id="technology"></span>
                 </p>
                 <p>
                     <span>具体描述：</span>
-                    <span id="describe">7</span>
+                    <textarea rows="10" style="width: 100%" maxlength="1023" id="describe" readonly="readonly"></textarea>
+                </p>
+                <p>
+                    <span>相关资料</span>：
+                    <a type="button" class="btn btn-danger" id="download">下载</a>
                 </p>
             </div>
         </div>
@@ -138,24 +161,30 @@
                     title: '课题名称',
                     field: 'name',
                     visible: true,
-                    width: 80
+                    width: 120
+                },
+                {
+                    title: '专业',
+                    field: 'major',
+                    width: 40,
+                    align: 'left'
                 },
                 {
                     title: '方向',
                     field: 'direction',
-                    width: 80,
+                    width: 40,
                     align: 'left'
                 },
                 {
                     title: '技术',
                     field: 'technology',
-                    width: 80,
+                    width: 40,
                     align: 'left'
                 },
                 {
                     title: '难度',
                     field: 'difficulty',
-                    width: 80,
+                    width: 40,
                     align: 'left'
                 },
                 {
@@ -180,7 +209,8 @@
         var subject_id2=row.id;
         var result="";
         result+="<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-default\" onclick='onSubject(" + subject_id + ")' >查看</button>";
-        result+="<button type='button' class='btn btn-primary' data-toggle=\"modal\" data-target=\"#modal-choose\" onclick='onShow(" + subject_id2 + ")' >选择</button>";
+        result+="<b>&emsp;</b>"
+        result+="<button type='button' class='btn btn-secondary' data-toggle=\"modal\" data-target=\"#modal-choose\" onclick='onShow(" + subject_id2 + ")' >选择</button>";
         return result;
     }
     function onSubject (subject_id) {
@@ -197,6 +227,7 @@
                 $("#difficulty").text(msg['data']['difficulty']);
                 $("#technology").text(msg['data']['technology']);
                 $("#describe").text(msg['data']['describe']);
+                $("#download").attr("href","/download/"+msg['data']['document']);
             },
             error:function () {
                 alert("失败")
