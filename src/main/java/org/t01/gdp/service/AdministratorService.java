@@ -80,64 +80,9 @@ public class AdministratorService {
         }
         map.put("newSubject",cnt);
 
-        String state=sqlMapper.selectone();
-        String subjectState="";
-        switch (state) {
-            case "NO_SELECTION":
-                subjectState+= "选题阶段";
-                break;
-            case "SELECT_COMPLETE":
-                subjectState+= "选题阶段";
-                break;
-            case "NoOpenDoc":
-                subjectState+= "开题阶段";
-                break;
-            case "WaitOpenScore":
-                subjectState+= "开题阶段";
-                break;
-            case "OpenComplete":
-                subjectState+= "开题阶段";
-                break;
-            case "Working":
-                subjectState+= "论文编写阶段";
-                break;
-            case "NoMidDoc":
-                subjectState+= "中期答辩阶段";
-                break;
-            case "WaitMidScore":
-                subjectState+= "中期答辩阶段";
-                break;
-            case "MidComplete":
-                subjectState+= "中期答辩阶段";
-                break;
-            case "NoPaperDoc":
-                subjectState+= "论文评阅阶段";
-                break;
-            case "WaitPaperScore":
-                subjectState+= "论文评阅阶段";
-                break;
-            case "PaperComplete":
-                subjectState+= "论文评阅阶段";
-                break;
-            case "NoConDoc":
-                subjectState+= "毕业答辩阶段";
-                break;
-            case "WaitConScore":
-                subjectState+= "毕业答辩阶段";
-                break;
-            case "ConComplete":
-                subjectState+= "毕业答辩阶段";
-                break;
-            case "WaitFinalScore":
-                subjectState+= "最终阶段";
-                break;
-            case "Finished":
-                subjectState+= "最终阶段";
-                break;
-            default:
-                LOG.warn("未知阶段:{}",state);
-        }
-        map.put("subjectState",subjectState);
+        TimePoint timePoint=TimeAxisService.getNowTimePoint();
+        String subjectState=timePoint.getName();
+        map.put("subjectState",TimeAxisService.getTimeAxisState());
 
         int sum=0;
         List<Administrator>administrators=administratorMapper.selectByExample(null);
@@ -277,8 +222,8 @@ public class AdministratorService {
         List<Subject> subjects=subjectMapper.selectByExample(null);
         String msg="";
         for (Subject subject : subjects) {
-            Teacher teacher=teacherMapper.selectByPrimaryKey(subject.getCreateTeacherId());   //获得出题人信息
-            Long college_id=teacher.getCollegeId();                                         //获得学院id
+            Major major=majorMapper.selectByPrimaryKey(subject.getMajorId());   //获得出题人信息
+            Long college_id=major.getCollegeId();                                         //获得学院id
             TeacherExample example=new TeacherExample();
             example.createCriteria()
                     .andCollegeIdEqualTo(college_id)
