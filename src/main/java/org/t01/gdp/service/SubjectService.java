@@ -186,7 +186,9 @@ public class SubjectService {
                                                       String subject_direction,
                                                       String difficult_mn,
                                                       String difficult_mx,
-                                                      String state) {
+                                                      String state,
+                                                      String sort,
+                                                      String type) {
         Integer difficult_min=(difficult_mn!=""?new Integer(difficult_mn):null);
         Integer difficult_max=(difficult_mx!=""?new Integer(difficult_mx):null);
         Long subject_id=(subject_ID!=""?new Long(subject_ID):null);
@@ -199,7 +201,9 @@ public class SubjectService {
                 subject_direction,
                 difficult_min,
                 difficult_max,
-                state);
+                state,
+                sort,
+                type);
 
         return new PageInfo<>(list);
     }

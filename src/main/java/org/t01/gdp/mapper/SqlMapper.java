@@ -11,7 +11,7 @@ import java.util.List;
 public interface SqlMapper {
     SubjectInfo selectSubjectByPrimaryKey(Long id) ;
     List<HashMap<String, Object>> getUserByRole(String role);
-    List<SubjectInfo> selectBycondition(String subject_name, String subject_teacher, String subject_major, Long subject_id, String subject_direction, Integer difficult_min, Integer difficult_max,String subject_state);
+    List<SubjectInfo> selectBycondition(String subject_name, String subject_teacher, String subject_major, Long subject_id, String subject_direction, Integer difficult_min, Integer difficult_max,String subject_state,String sort,String type);
     String selectone();
     List<Subject> selectfiveById(Long majorId);
 }

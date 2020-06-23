@@ -85,6 +85,9 @@
                 and s.state=#{subject_state}
             </if>
         </where>
+        <if test="sort!=null and sort!='' and type!=null and type!=''">
+            ORDER BY ${sort} ${type}
+        </if>
     </select>
     <select id="selectone" resultType="String">
         select state

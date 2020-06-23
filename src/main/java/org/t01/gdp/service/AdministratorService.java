@@ -29,6 +29,8 @@ public class AdministratorService {
     StudentMapper studentMapper;
     @Autowired
     MonitorService monitorService;
+    @Autowired
+    MajorMapper majorMapper;
 
     public void getUserInfo(long id){
         administratorMapper.selectByPrimaryKey(id);
@@ -178,4 +180,154 @@ public class AdministratorService {
         map.put("memoryCount",mems);
         return map;
     }
+
+    public String createReview(Long collegeId, int start, int end, List<CrossreviewInfo> list){
+        String msg="";
+        Random random=new Random();
+        TeacherExample teacherExample=new TeacherExample();
+        teacherExample.createCriteria()
+                .andCollegeIdEqualTo(collegeId);
+        List<Teacher> teachers=teacherMapper.selectByExample(teacherExample);
+        for(int i=start;i<=end;i++) {
+            int cnt = 0;
+            while (cnt >= 0) {
+                cnt++;
+                if (cnt > 20) {
+                    msg = msg + "无法为" + list.get(i).getId() + "号课题分配交叉评阅老师";
+                    break;
+                }
+                int cas = random.nextInt(teachers.size());
+                if (teachers.get(cas).getId().equals(list.get(i).getCreateTeacherId())) continue;
+                else {
+                    list.get(i).setCrossReviewTeacher(teachers.get(cas).getId());
+                    break;
+                }
+            }
+        }
+        return msg;
+    }//分配中的子方法
+
+    public String crossReviewCreate(){
+        List<Subject> subjects=subjectMapper.selectByExample(null);
+
+        if(subjects.size()<=1)return "课题数量太少";
+
+        List<CrossreviewInfo> list=new ArrayList<>();        //创建CrossreviewInfo数组，为了加入学院id属性。
+        for (Subject subject : subjects) {
+            MajorExample majorExample=new MajorExample();
+            majorExample.createCriteria()
+                    .andIdEqualTo(subject.getMajorId());
+            List<Major> majors=majorMapper.selectByExample(majorExample);
+            Long collegeId=(!majors.isEmpty()?majors.get(0).getCollegeId():null);        //查询获得学院id
+
+            CrossreviewInfo temp=new CrossreviewInfo();
+            temp.setId(subject.getId());
+            temp.setCreateTeacherId(subject.getCreateTeacherId());
+            temp.setCrossReviewTeacher(null);
+            temp.setCollegeId(collegeId);
+            list.add(temp);
+        }
+        Collections.sort(list, new Comparator<CrossreviewInfo>() {
+            @Override
+            public int compare(CrossreviewInfo o1, CrossreviewInfo o2) {
+                return o1.getCollegeId().intValue()-o2.getCollegeId().intValue();
+            }
+        });     //根据学院ID排序
+
+        int startId=-1;
+        int endId=-1;
+        String msg="";
+
+        for (int i=0;i<list.size();i++){
+            CrossreviewInfo crossreviewInfo=list.get(i);
+            if(i>0){
+                CrossreviewInfo crossreviewInfo1=list.get(i-1);
+                if(crossreviewInfo.getCollegeId().equals(crossreviewInfo1.getCollegeId())){
+                    continue;
+                }
+                else {
+                    endId=i-1;
+                    Long collegeId=crossreviewInfo1.getCollegeId();
+                    msg = msg + createReview(collegeId,startId,endId,list);
+                    startId=i;
+                }
+            }
+            else {
+                startId=0;
+            }
+        }                                 //自动分配交叉评审老师，满足同学院非开题老师
+
+        endId=list.size()-1;                                               //为最后一组学院的课题分配交叉评审老师
+        Long collegeId=list.get(startId).getCollegeId();
+        msg = msg + createReview(collegeId,startId,endId,list);
+
+        for (CrossreviewInfo crossreviewInfo : list) {
+            Subject subject=new Subject();
+            subject.setCrossReviewTeacher(crossreviewInfo.getCrossReviewTeacher());
+            SubjectExample subjectExample=new SubjectExample();
+            subjectExample.createCriteria()
+                    .andIdEqualTo(crossreviewInfo.getId());
+            subjectMapper.updateByExampleSelective(subject,subjectExample);
+        }                   //更新subject表中的数据
+        return msg;
+    }//自动分配交叉评阅老师
+
+    public boolean create_review() {
+        List<Subject> subjects=subjectMapper.selectByExample(null);
+        for (Subject subject : subjects) {
+            Teacher teacher=teacherMapper.selectByPrimaryKey(subject.getCreateTeacherId());   //获得出题人信息
+            Long college_id=teacher.getCollegeId();                                         //获得学院id
+            TeacherExample example=new TeacherExample();
+            example.createCriteria()
+                    .andCollegeIdEqualTo(college_id)
+                    .andDirectionEqualTo(subject.getDirection())
+                    .andIdNotEqualTo(subject.getCreateTeacherId());                           //根据学院和方向进行查询
+            List<Teacher> teachers=teacherMapper.selectByExample(example);
+            int size=teachers.size();
+
+            if(size<3){
+                TeacherExample example1=new TeacherExample();
+                example1.createCriteria()
+                        .andCollegeIdEqualTo(college_id)
+                        .andIdNotEqualTo(subject.getCreateTeacherId());                       //根据学院进行查询
+                List<Teacher> teachers1=teacherMapper.selectByExample(example1);
+                Set<Long> set=new HashSet<Long>();
+                Random r=new Random();
+                int size1=teachers1.size();
+
+                if(size1==1){                                                                   //满足方向的老师优先选择
+                    set.add(teachers1.get(0).getId());
+                }
+                else if(size1==2){
+                    set.add(teachers1.get(0).getId());
+                    set.add(teachers1.get(1).getId());
+                }
+
+                while(set.size()<3){                                                            //剩余的老师从同学院选出
+                    set.add(teachers1.get(r.nextInt(size1)).getId());
+                }
+
+                Iterator<Long> iterator = set.iterator();
+                subject.setReviewTeacherId1(iterator.next());
+                subject.setReviewTeacherId2(iterator.next());
+                subject.setReviewTeacherId3(iterator.next());
+            }
+            else {
+                Set<Integer> set=new HashSet<>();
+                Random r=new Random();
+
+                while(set.size()<3){                                                            //从满足学院和方向的老师中随机选择
+                    set.add(r.nextInt(size));
+                }
+
+                Iterator<Integer> iterator = set.iterator();
+                subject.setReviewTeacherId1(teachers.get(iterator.next()).getId());
+                subject.setReviewTeacherId2(teachers.get(iterator.next()).getId());
+                subject.setReviewTeacherId3(teachers.get(iterator.next()).getId());
+            }
+            subjectMapper.updateByPrimaryKeySelective(subject);                                 //更新课题信息
+        }
+        return true;
+    }//自动分配评审团队
+
 }
