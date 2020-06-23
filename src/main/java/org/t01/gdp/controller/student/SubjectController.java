@@ -37,7 +37,9 @@ public class SubjectController {
                                  String subject_id,
                                  String subject_direction,
                                  String difficult_min,
-                                 String difficult_max
+                                 String difficult_max,
+                                 String sort,
+                                 String type
     ){
         return Result.success(subjectService.listSubjectByCondition(pageNo,
                 pageSize,
@@ -48,6 +50,8 @@ public class SubjectController {
                 subject_direction,
                 difficult_min,
                 difficult_max,
-                "PASSED"),"课题查询");
+                "PASSED",
+                sort,
+                type),"课题查询");
     }
 }
