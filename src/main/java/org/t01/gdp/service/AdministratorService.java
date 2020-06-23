@@ -264,6 +264,7 @@ public class AdministratorService {
         for (CrossreviewInfo crossreviewInfo : list) {
             Subject subject=new Subject();
             subject.setCrossReviewTeacher(crossreviewInfo.getCrossReviewTeacher());
+            if(subject.getCrossReviewTeacher()==null)continue;
             SubjectExample subjectExample=new SubjectExample();
             subjectExample.createCriteria()
                     .andIdEqualTo(crossreviewInfo.getId());
