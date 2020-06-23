@@ -60,6 +60,7 @@
             method: "get",
             async: false,
             success: function (data) {
+                $("#major").html("");
                 for(var i = 0; i < data.length; ++i){
                     $("#major").append("<option value=\"" + data[i].id + "\">" + data[i].name + "</option>")
                 }

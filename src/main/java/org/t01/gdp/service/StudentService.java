@@ -19,12 +19,19 @@ import java.util.*;
 public class StudentService {
     private static final Logger LOG = LoggerFactory.getLogger(StudentService.class);
 
-    private final StudentMapper studentMapper;
-    private final SubjectMapper subjectMapper;
-    private final UserMapper userMapper;
-    private final SqlMapper sqlMapper;
-    private final MajorMapper majorMapper;
-    private final CollegeMapper collegeMapper;
+    @Autowired
+    private StudentMapper studentMapper;
+    @Autowired
+    private SubjectMapper subjectMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private SqlMapper sqlMapper;
+    @Autowired
+    private MajorMapper majorMapper;
+    @Autowired
+    private CollegeMapper collegeMapper;
+
     @Autowired
     FileService fileService;
 

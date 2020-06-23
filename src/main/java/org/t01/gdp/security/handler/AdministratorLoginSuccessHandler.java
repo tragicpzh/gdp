@@ -34,6 +34,7 @@ public class AdministratorLoginSuccessHandler implements AuthenticationSuccessHa
 
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("USER_INFO", userInfo);
+        session.setAttribute("loginFailure",false);
 
         String basePath = httpServletRequest.getScheme()+"://"+httpServletRequest.getServerName()+":"+httpServletRequest.getServerPort()+"/";
         httpServletResponse.sendRedirect(basePath+"administrator/mainPage");

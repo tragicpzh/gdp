@@ -18,6 +18,8 @@ public class TeacherLogoutSuccessHandler implements LogoutSuccessHandler {
         if(session != null){
             session.removeAttribute("USER_INFO");
         }
+        request.getSession(true).setAttribute("logout",true);
+        request.getSession(true).setAttribute("loginFailure",false);
         response.sendRedirect("/teacher/login");
     }
 }
