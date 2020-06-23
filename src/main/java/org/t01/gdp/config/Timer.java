@@ -13,6 +13,8 @@ public class Timer {
     MonitorService monitorService;
     @Autowired
     AdministratorService administratorService;
+    @Autowired
+    StudentService studentService;
 
     @Scheduled(cron = "${time.cron-for-time-axis}")
     public void checkTimeAxis(){
@@ -30,6 +32,8 @@ public class Timer {
             if(!crossReview.equals("")){
                 noticeService.sendMessageNoticeToAdministrators(crossReview);
             }
+        }else if(TimeAxisService.getTimeAxisState() == 8 && oldTimeAxisState == 7){
+            studentService.updateFinalScore();
         }
     }
 

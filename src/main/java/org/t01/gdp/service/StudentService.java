@@ -12,6 +12,7 @@ import org.t01.gdp.mapper.StudentMapper;
 import org.t01.gdp.mapper.SubjectMapper;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -31,9 +32,64 @@ public class StudentService {
     private MajorMapper majorMapper;
     @Autowired
     private CollegeMapper collegeMapper;
-
     @Autowired
-    FileService fileService;
+    private FileService fileService;
+
+    public void updateFinalScore(){
+        StudentExample studentExample = new StudentExample();
+        List<Student> students = studentMapper.selectByExample(studentExample);
+
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()){
+            Student studentFinalScore = new Student();
+            Student next = iterator.next();
+
+            if(next.getOpenScore1() == null){
+                next.setOpenScore1(0);
+            }
+            if(next.getOpenScore2() == null){
+                next.setOpenScore2(0);
+            }
+            if(next.getOpenScore3() == null){
+                next.setOpenScore3(0);
+            }
+            if(next.getMiddleScore1() == null){
+                next.setMiddleScore1(0);
+            }
+            if(next.getMiddleScore2() == null){
+                next.setMiddleScore2(0);
+            }
+            if(next.getMiddleScore3() == null){
+                next.setMiddleScore3(0);
+            }
+            if(next.getConclusionScore1() == null){
+                next.setConclusionScore1(0);
+            }
+            if(next.getConclusionScore2() == null){
+                next.setConclusionScore2(0);
+            }
+            if(next.getConclusionScore3() == null){
+                next.setConclusionScore3(0);
+            }
+            if(next.getTeacherPaperScore() == null){
+                next.setTeacherPaperScore(0);
+            }
+            if(next.getCrossPaperScore() == null){
+                next.setCrossPaperScore(0);
+            }
+
+            studentFinalScore.setId(next.getId());
+
+            float finalScore = ((float)next.getOpenScore1() + next.getOpenScore2() + next.getOpenScore3()) / 15
+                    + ((float)next.getMiddleScore1() + next.getMiddleScore2() + next.getMiddleScore3()) / 15
+                    + ((float)next.getConclusionScore1() + next.getConclusionScore2() + next.getConclusionScore3()) / 15
+                    + (float)next.getTeacherPaperScore() / 5
+                    + (float)next.getCrossPaperScore() / 5;
+            studentFinalScore.setFinalScore(new BigDecimal(finalScore));
+
+            studentMapper.updateByPrimaryKeySelective(studentFinalScore);
+        }
+    }
 
     public Student getStudentInfoById(String id) {
         StudentExample studentExample = new StudentExample();
