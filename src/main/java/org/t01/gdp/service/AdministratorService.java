@@ -193,7 +193,7 @@ public class AdministratorService {
             while (cnt >= 0) {
                 cnt++;
                 if (cnt > 20) {
-                    msg = msg + "无法为" + list.get(i).getId() + "号课题分配交叉评阅老师";
+                    msg = msg + "无法为" + list.get(i).getId() + "号课题分配交叉评阅老师;";
                     break;
                 }
                 int cas = random.nextInt(teachers.size());
@@ -274,6 +274,7 @@ public class AdministratorService {
 
     public boolean createReview() {
         List<Subject> subjects=subjectMapper.selectByExample(null);
+        String msg="";
         for (Subject subject : subjects) {
             Teacher teacher=teacherMapper.selectByPrimaryKey(subject.getCreateTeacherId());   //获得出题人信息
             Long college_id=teacher.getCollegeId();                                         //获得学院id
@@ -286,25 +287,30 @@ public class AdministratorService {
             int size=teachers.size();
 
             if(size<3){
-                TeacherExample example1=new TeacherExample();
-                example1.createCriteria()
+                TeacherExample simple_example=new TeacherExample();
+                simple_example.createCriteria()
                         .andCollegeIdEqualTo(college_id)
                         .andIdNotEqualTo(subject.getCreateTeacherId());                       //根据学院进行查询
-                List<Teacher> teachers1=teacherMapper.selectByExample(example1);
+                List<Teacher> simple_teachers=teacherMapper.selectByExample(simple_example);
                 Set<Long> set=new HashSet<Long>();
                 Random r=new Random();
-                int size1=teachers1.size();
+                int simple_size=simple_teachers.size();
 
-                if(size1==1){                                                                   //满足方向的老师优先选择
-                    set.add(teachers1.get(0).getId());
+
+                if(size+simple_size<3){
+                    msg+="无法为"+subject.getId()+"号课题分配评审团队;";
+                    continue;
                 }
-                else if(size1==2){
-                    set.add(teachers1.get(0).getId());
-                    set.add(teachers1.get(1).getId());
+                else if(size==1){                                                                   //满足方向的老师优先选择
+                    set.add(teachers.get(0).getId());
+                }
+                else if(size==2){
+                    set.add(teachers.get(0).getId());
+                    set.add(teachers.get(1).getId());
                 }
 
                 while(set.size()<3){                                                            //剩余的老师从同学院选出
-                    set.add(teachers1.get(r.nextInt(size1)).getId());
+                    set.add(simple_teachers.get(r.nextInt(simple_size)).getId());
                 }
 
                 Iterator<Long> iterator = set.iterator();
@@ -327,7 +333,7 @@ public class AdministratorService {
             }
             subjectMapper.updateByPrimaryKeySelective(subject);                                 //更新课题信息
         }
-        return true;
+        return msg;
     }//自动分配评审团队
 
 }
