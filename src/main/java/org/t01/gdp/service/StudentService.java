@@ -85,7 +85,7 @@ public class StudentService {
                     + ((float)next.getConclusionScore1() + next.getConclusionScore2() + next.getConclusionScore3()) / 15
                     + (float)next.getTeacherPaperScore() / 5
                     + (float)next.getCrossPaperScore() / 5;
-            studentFinalScore.setFinalScore(new BigDecimal(finalScore));
+            studentFinalScore.setFinalScore(BigDecimal.valueOf(finalScore));
 
             studentMapper.updateByPrimaryKeySelective(studentFinalScore);
         }
