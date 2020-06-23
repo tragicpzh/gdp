@@ -20,7 +20,7 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
-    private static final String FORGOTPASSWORD = "forgotPassword";
+    private static final String RETIVEACCOUNT = "forgotPassword";
 
     @RequestMapping({"/index","/"})
     public String getIndex(HttpServletRequest request){
@@ -32,7 +32,7 @@ public class CommonController {
     public String getForgetPassword(HttpServletRequest request){
         request.getSession(true).setAttribute("loginFailure",false);
         request.getSession(true).setAttribute("verifyFailure",false);
-        return FORGOTPASSWORD;
+        return RETIVEACCOUNT;
     }
 
     @GetMapping("/download/**")
@@ -57,17 +57,17 @@ public class CommonController {
             String phoneNumber = userService.getPhoneNumber(username, role);
             if(!verificationService.smsVerify(smsVerifyCode,phoneNumber)){
                 request.getSession(true).setAttribute("verifyFailure",true);
-                return FORGOTPASSWORD;
+                return RETIVEACCOUNT;
             }
         }else if(!emailVerifyCode.equals("")){
             String email = userService.getEmail(username, role);
             if(!verificationService.emailVerify(emailVerifyCode,email)){
                 request.getSession(true).setAttribute("verifyFailure",true);
-                return FORGOTPASSWORD;
+                return RETIVEACCOUNT;
             }
         }else{
             request.getSession(true).setAttribute("verifyFailure",true);
-            return FORGOTPASSWORD;
+            return RETIVEACCOUNT;
         }
 
         if(userService.setPassword(username,newPassword,role)){
@@ -80,11 +80,11 @@ public class CommonController {
                     return "administrator/login";
                 default:
                     request.getSession(true).setAttribute("verifyFailure",true);
-                    return FORGOTPASSWORD;
+                    return RETIVEACCOUNT;
             }
         }
         request.getSession(true).setAttribute("verifyFailure",true);
-        return FORGOTPASSWORD;
+        return RETIVEACCOUNT;
     }
 
     @PostMapping("/sendVerifyCode")
