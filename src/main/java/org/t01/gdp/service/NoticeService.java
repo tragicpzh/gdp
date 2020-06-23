@@ -47,8 +47,6 @@ public class NoticeService {
             Teacher next = iterator.next();
             if(next.getEmail()!=null){
                 mailAddresses.add(next.getEmail());
-                System.out.println(next.getEmail());
-                System.out.println("TEA_notice = " + notice);
             }
         }
 
@@ -64,8 +62,6 @@ public class NoticeService {
             Student next = iterator.next();
             if(next.getEmail()!=null){
                 mailAddresses.add(next.getEmail());
-                System.out.println(next.getEmail());
-                System.out.println("STU_notice = " + notice);
             }
         }
 
@@ -81,8 +77,6 @@ public class NoticeService {
             Administrator next = iterator.next();
             if(next.getEmail()!=null){
                 mailAddresses.add(next.getEmail());
-                System.out.println(next.getEmail());
-                System.out.println("ADM_notice = " + notice);
             }
         }
 

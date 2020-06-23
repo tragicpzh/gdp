@@ -3,10 +3,7 @@ package org.t01.gdp.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.t01.gdp.service.MonitorService;
-import org.t01.gdp.service.NoticeService;
-import org.t01.gdp.service.TimeAxisService;
-import org.t01.gdp.service.VerificationService;
+import org.t01.gdp.service.*;
 
 @Component
 public class Timer {
@@ -14,11 +11,17 @@ public class Timer {
     NoticeService noticeService;
     @Autowired
     MonitorService monitorService;
+    @Autowired
+    AdministratorService administratorService;
 
     @Scheduled(cron = "${time.cron-for-time-axis}")
     public void checkTimeAxis(){
         if(TimeAxisService.checkTimeAxis()){
             noticeService.sendMessageNotice();
+        }
+        if(TimeAxisService.getTimeAxisState() == 1){
+//            administratorService.createReview();
+//            administratorService.crossReviewCreate();
         }
     }
 
