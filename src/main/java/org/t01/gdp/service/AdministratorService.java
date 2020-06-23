@@ -272,7 +272,7 @@ public class AdministratorService {
         return msg;
     }//自动分配交叉评阅老师
 
-    public boolean createReview() {
+    public String createReview() {
         List<Subject> subjects=subjectMapper.selectByExample(null);
         String msg="";
         for (Subject subject : subjects) {

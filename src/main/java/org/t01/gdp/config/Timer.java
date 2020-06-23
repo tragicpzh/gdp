@@ -16,12 +16,20 @@ public class Timer {
 
     @Scheduled(cron = "${time.cron-for-time-axis}")
     public void checkTimeAxis(){
+        int oldTimeAxisState = TimeAxisService.getTimeAxisState();
+
         if(TimeAxisService.checkTimeAxis()){
             noticeService.sendMessageNotice();
         }
-        if(TimeAxisService.getTimeAxisState() == 1){
-//            administratorService.createReview();
-//            administratorService.crossReviewCreate();
+        if(TimeAxisService.getTimeAxisState() == 1 && oldTimeAxisState == 0){
+            String review = administratorService.createReview();
+            String crossReview = administratorService.crossReviewCreate();
+            if(!review.equals("")){
+                noticeService.sendMessageNoticeToAdministrators(review);
+            }
+            if(!crossReview.equals("")){
+                noticeService.sendMessageNoticeToAdministrators(crossReview);
+            }
         }
     }
 
