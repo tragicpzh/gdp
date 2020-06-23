@@ -42,16 +42,11 @@ public class TeacherController {
 
     @PostMapping("/addSubject")
     @ResponseBody
-    public void addSubjectPost(HttpServletRequest request, Subject subject, String major, MultipartFile file) {
+    public void addSubjectPost(HttpServletRequest request, Subject subject, Long major, MultipartFile file) {
         //获取教师信息
         UserInfo userInfo = (UserInfo) request.getSession(true).getAttribute(USER_INFO);
         Teacher teacher = teacherService.selectTeacherById(userInfo.getId());
-        //获取专业信息
-        List<Major> majorList = majorService.selectMajorByName(major);
-        //subject信息添加并插入
-        if (!majorList.isEmpty()) {
-            subject.setMajorId(majorList.get(0).getId());
-        }
+        subject.setMajorId(major);
         subject.setCreateTeacherId(teacher.getId());
         subject.setCreateTime(new Date());
         subject.setState("NEW");

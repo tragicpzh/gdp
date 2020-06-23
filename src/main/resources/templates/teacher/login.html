@@ -25,7 +25,7 @@
 	<div class="card">
 		<div class="card-body login-card-body">
 			<p class="login-box-msg">教师登录</p>
-			<span th:if="${param.failure}" style="color: red">登录失败!</span>
+			<span th:if="${session.loginFailure}" style="color: red">登录失败</span>
 			<span th:if="${param.logout}">您已成功登出</span>
 			<form th:action="@{/teacher/login/check}" method="post">
 				<div class="input-group mb-3">

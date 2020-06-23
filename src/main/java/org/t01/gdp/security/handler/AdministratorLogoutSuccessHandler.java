@@ -18,6 +18,8 @@ public class AdministratorLogoutSuccessHandler implements LogoutSuccessHandler {
         if(session != null){
             session.removeAttribute("USER_INFO");
         }
+        request.getSession(true).setAttribute("logout",true);
+        request.getSession(true).setAttribute("loginFailure",false);
         response.sendRedirect("/administrator/login");
     }
 }

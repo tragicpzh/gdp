@@ -16,6 +16,7 @@ public class TeacherLoginFailureHandler implements AuthenticationFailureHandler 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         MyLogService.warn("设备[" + request.getRemoteAddr() + "] 尝试登录教师平台");
+        request.getSession(true).setAttribute("loginFailure",true);
         response.sendRedirect("/teacher/login");
     }
 }

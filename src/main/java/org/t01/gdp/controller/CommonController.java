@@ -20,7 +20,20 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
-    private static final String INDEX = "index";
+    private static final String FORGOTPASSWORD = "forgotPassword";
+
+    @RequestMapping({"/index","/"})
+    public String getIndex(HttpServletRequest request){
+        request.getSession(true).setAttribute("loginFailure",false);
+        return "index";
+    }
+
+    @RequestMapping("/forgotPassword")
+    public String getForgetPassword(HttpServletRequest request){
+        request.getSession(true).setAttribute("loginFailure",false);
+        request.getSession(true).setAttribute("verifyFailure",false);
+        return FORGOTPASSWORD;
+    }
 
     @GetMapping("/download/**")
     @ResponseBody
@@ -39,19 +52,22 @@ public class CommonController {
     }
 
     @PostMapping("/retrievePassword")
-    public String retrievePassword(String username, String role, String smsVerifyCode, String emailVerifyCode, String newPassword){
+    public String retrievePassword(String username, String role, String smsVerifyCode, String emailVerifyCode, String newPassword, HttpServletRequest request){
         if(!smsVerifyCode.equals("")){
             String phoneNumber = userService.getPhoneNumber(username, role);
             if(!verificationService.smsVerify(smsVerifyCode,phoneNumber)){
-                return INDEX;
+                request.getSession(true).setAttribute("verifyFailure",true);
+                return FORGOTPASSWORD;
             }
         }else if(!emailVerifyCode.equals("")){
             String email = userService.getEmail(username, role);
             if(!verificationService.emailVerify(emailVerifyCode,email)){
-                return INDEX;
+                request.getSession(true).setAttribute("verifyFailure",true);
+                return FORGOTPASSWORD;
             }
         }else{
-            return INDEX;
+            request.getSession(true).setAttribute("verifyFailure",true);
+            return FORGOTPASSWORD;
         }
 
         if(userService.setPassword(username,newPassword,role)){
@@ -63,10 +79,12 @@ public class CommonController {
                 case "ADM":
                     return "administrator/login";
                 default:
-                    return INDEX;
+                    request.getSession(true).setAttribute("verifyFailure",true);
+                    return FORGOTPASSWORD;
             }
         }
-        return INDEX;
+        request.getSession(true).setAttribute("verifyFailure",true);
+        return FORGOTPASSWORD;
     }
 
     @PostMapping("/sendVerifyCode")
