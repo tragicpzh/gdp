@@ -199,9 +199,17 @@ public class StudentController {
         studentService.uploadNewUserImage(request, file);
         return "上传成功";
     }
+
     @GetMapping("/getConfirm")
     @ResponseBody
     public Object getConfirm(){
         return Result.success(administratorService.getConfirm());
+    }
+
+    @GetMapping("/getMajorlist")
+    @ResponseBody
+    public Object getMajorlist(HttpServletRequest request){
+        Long studentId=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
+        return Result.success(studentService.getMajorlist(studentId));
     }
 }

@@ -14,7 +14,9 @@
                     <b>开题老师：</b><input type="text" id="subject_teacher" class="abc input-default">
                 </section>
                 <section class="col-md-3">
-                    <b>所属专业: </b><input type="text" id="subject_major" class="abc input-default">
+                    <b>所属专业: </b>
+                    <select  id="subject_major" style="width:200px">
+                    </select>
                 </section>
                 <section class="col-md-3">
                     <b>所属方向：</b><input type="text" id="subject_direction" class="abc input-default">
@@ -136,6 +138,21 @@
 <script>
     $(function () {
         $("#subject_id").val(getsubjectId());
+        $.ajax({
+           type:'GET',
+           url:'/student/getMajorlist',
+           contentType: 'application/json',
+           success:function (msg) {
+               var nameopt="<option value='' selected='selected'>-请选择-</option>";
+               for(var i=0;i<msg['data'].length;i++){
+                   nameopt+="<option>"+msg['data'][i]+"</option>";
+               }
+               $("#subject_major").html(nameopt);
+           } ,
+           error:function () {
+                alert("获取专业下拉列表失败");
+           }
+        });
         $('#Subject_table').bootstrapTable('destroy').bootstrapTable({
             method: 'get',
             url: "/subject/list",

@@ -326,4 +326,18 @@ public class StudentService {
         String path = "userImage/student/" + studentId + '/';
         fileService.uploadUserImage(path, multipartFile);
     }
+
+    public List<String> getMajorlist(Long student_id){
+        MajorService majorService=new MajorService();
+        Student student=studentMapper.selectByPrimaryKey(student_id);
+        Major major=majorMapper.selectByPrimaryKey(student.getMajorId());
+        MajorExample majorExample = new MajorExample();
+        majorExample.createCriteria().andCollegeIdEqualTo(major.getCollegeId());
+        List<Major> majors=majorMapper.selectByExample(majorExample);
+        List<String> list=new ArrayList<String>();
+        for (Major major1 : majors) {
+            list.add(major1.getName());
+        }
+        return list;
+    }
 }
