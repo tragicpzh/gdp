@@ -30,6 +30,8 @@ public class TeacherController {
     SubjectService subjectService;
     @Autowired
     StudentService studentService;
+    @Autowired
+    AdministratorService administratorService;
 
     @GetMapping("/getMajorList")
     @ResponseBody
@@ -304,5 +306,11 @@ public class TeacherController {
     public Object getReview(HttpServletRequest request){
         Long teacherId=((UserInfo)(request.getSession(true).getAttribute(USER_INFO))).getId();
         return Result.success(teacherService.getReview(teacherId));
+    }
+
+    @GetMapping("/getConfirm")
+    @ResponseBody
+    public Object getConfirm(){
+        return Result.success(administratorService.getConfirm());
     }
 }

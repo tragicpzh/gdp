@@ -80,6 +80,24 @@
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7 connectedSortable">
+                        <div class="card direct-chat direct-chat-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">首页通知</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <!-- Conversations are loaded here -->
+                                <textarea class="form-control" readonly="readonly" id="confirm" style="background-color: transparent"></textarea>
+                            <!-- /.card-body -->
+                             </div>
+                          </div>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
@@ -133,6 +151,7 @@
                                 </ul>
                             </div>
                         </div>
+
                     </section>
                     <!-- /.Left col -->
                     <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -213,8 +232,19 @@
             error:function () {
                 alert("获取平台信息失败");
             }
-        })
-        /*$.ajax({
+        });
+        $.ajax({
+           type:'GET',
+           url:'/administrator/getConfirm',
+           contentType:'application/json',
+           success:function (msg) {
+                $("#confirm").text(msg['message']);
+           },
+           error:function () {
+                alert("获取首页通知失败")
+           }
+        });
+       /*$.ajax({
             type:'GET',
             url:'/test/create',
             contentType:'application/json',

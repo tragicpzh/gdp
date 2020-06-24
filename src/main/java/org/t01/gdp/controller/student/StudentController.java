@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.t01.gdp.domain.Student;
 import org.t01.gdp.domain.Subject;
 import org.t01.gdp.domain.UserInfo;
+import org.t01.gdp.service.AdministratorService;
 import org.t01.gdp.service.FileService;
 import org.t01.gdp.service.StudentService;
 import org.t01.gdp.service.SubjectService;
@@ -32,6 +33,8 @@ public class StudentController {
     FileService fileService;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    AdministratorService administratorService;
 
     @GetMapping("selectSubject/getList")
     @ResponseBody
@@ -195,5 +198,10 @@ public class StudentController {
         }
         studentService.uploadNewUserImage(request, file);
         return "上传成功";
+    }
+    @GetMapping("/getConfirm")
+    @ResponseBody
+    public Object getConfirm(){
+        return Result.success(administratorService.getConfirm());
     }
 }

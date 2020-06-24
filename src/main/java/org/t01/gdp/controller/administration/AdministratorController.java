@@ -150,4 +150,10 @@ public class AdministratorController {
     public Object getLable(){
         return Result.success(administratorService.getLable());
     }
+
+    @GetMapping("/getConfirm")
+    @ResponseBody
+    public Object getConfirm(){
+        return Result.success(administratorService.getConfirm());
+    }
 }

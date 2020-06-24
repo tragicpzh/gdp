@@ -82,7 +82,7 @@ public class AdministratorService {
 
         TimePoint timePoint=TimeAxisService.getNowTimePoint();
         String subjectState=timePoint.getName();
-        map.put("subjectState",TimeAxisService.getTimeAxisState());
+        map.put("subjectState",subjectState);
 
         int sum=0;
         List<Administrator>administrators=administratorMapper.selectByExample(null);
@@ -281,5 +281,10 @@ public class AdministratorService {
         }
         return msg;
     }//自动分配评审团队
+
+    public String getConfirm(){
+        TimePoint timePoint=TimeAxisService.getNowTimePoint();
+        return timePoint.getHomePageNotice();
+    }
 
 }
