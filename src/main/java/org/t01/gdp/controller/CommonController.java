@@ -52,23 +52,7 @@ public class CommonController {
     }
 
     @PostMapping("/retrievePassword")
-    public String retrievePassword(String username, String role, String smsVerifyCode, String emailVerifyCode, String newPassword, HttpServletRequest request){
-        if(!smsVerifyCode.equals("")){
-            String phoneNumber = userService.getPhoneNumber(username, role);
-            if(!verificationService.smsVerify(smsVerifyCode,phoneNumber)){
-                request.getSession(true).setAttribute("verifyFailure",true);
-                return RETIVEACCOUNT;
-            }
-        }else if(!emailVerifyCode.equals("")){
-            String email = userService.getEmail(username, role);
-            if(!verificationService.emailVerify(emailVerifyCode,email)){
-                request.getSession(true).setAttribute("verifyFailure",true);
-                return RETIVEACCOUNT;
-            }
-        }else{
-            request.getSession(true).setAttribute("verifyFailure",true);
-            return RETIVEACCOUNT;
-        }
+    public String retrievePassword(String username, String role,String newPassword, HttpServletRequest request){
 
         if(userService.setPassword(username,newPassword,role)){
             switch (role){

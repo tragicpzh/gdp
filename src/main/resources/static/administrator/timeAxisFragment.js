@@ -2,8 +2,20 @@ var timeAxis;
 var len;
 
 $.get("/administrator/timeAxis",function (result) {
+    console.log(result)
    timeAxis = result;
    len = timeAxis.length;
+   console.log(timeAxis)
+   len>0&&timeAxis.forEach(item=>{
+       const  date=new Date(item.dateTime);
+       date.setHours(date.getHours()+8);
+       var year = date.getFullYear().toString().padStart(4, "0");
+       var month = (date.getMonth() + 1).toString().padStart(2, "0");
+       var day = date.getDate().toString().padStart(2, "0");
+       var hour = date.getHours().toString().padStart(2, "0");
+       var minute = date.getMinutes().toString().padStart(2, "0");
+       item.dateTime=`${year}-${month}-${day}T${hour}:${minute}`;
+    });
    afterLoad();
 });
 
